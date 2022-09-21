@@ -1,0 +1,139 @@
+2022-09-21 00:51:16,043 INFO    StreamThr :11401 [internal.py:wandb_internal():90] W&B internal server running at pid: 11401, started at: 2022-09-21 00:51:16.042916
+2022-09-21 00:51:16,046 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: status
+2022-09-21 00:51:16,047 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: status
+2022-09-21 00:51:16,049 DEBUG   SenderThread:11401 [sender.py:send():302] send: header
+2022-09-21 00:51:16,049 INFO    WriterThread:11401 [datastore.py:open_for_write():75] open: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/run-2z00dzne.wandb
+2022-09-21 00:51:16,115 DEBUG   SenderThread:11401 [sender.py:send():302] send: run
+2022-09-21 00:51:16,347 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: check_version
+2022-09-21 00:51:16,350 INFO    SenderThread:11401 [dir_watcher.py:__init__():216] watching files in: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files
+2022-09-21 00:51:16,351 INFO    SenderThread:11401 [sender.py:_start_run_threads():913] run started: 2z00dzne with start time 1663721476.038457
+2022-09-21 00:51:16,351 DEBUG   SenderThread:11401 [sender.py:send():302] send: summary
+2022-09-21 00:51:16,351 INFO    SenderThread:11401 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-21 00:51:16,351 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: check_version
+2022-09-21 00:51:16,413 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: run_start
+2022-09-21 00:51:16,424 DEBUG   HandlerThread:11401 [meta.py:__init__():35] meta init
+2022-09-21 00:51:16,424 DEBUG   HandlerThread:11401 [meta.py:__init__():50] meta init done
+2022-09-21 00:51:16,424 DEBUG   HandlerThread:11401 [meta.py:probe():216] probe
+2022-09-21 00:51:16,431 DEBUG   HandlerThread:11401 [meta.py:_setup_git():206] setup git
+2022-09-21 00:51:16,448 DEBUG   HandlerThread:11401 [meta.py:_setup_git():213] setup git done
+2022-09-21 00:51:16,448 DEBUG   HandlerThread:11401 [meta.py:_save_pip():54] save pip
+2022-09-21 00:51:16,449 DEBUG   HandlerThread:11401 [meta.py:_save_pip():68] save pip done
+2022-09-21 00:51:16,450 DEBUG   HandlerThread:11401 [meta.py:_save_conda():75] save conda
+2022-09-21 00:51:17,353 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_created():275] file/dir created: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/requirements.txt
+2022-09-21 00:51:17,354 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_created():275] file/dir created: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/wandb-summary.json
+2022-09-21 00:51:17,354 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_created():275] file/dir created: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/conda-environment.yaml
+2022-09-21 00:51:21,158 DEBUG   HandlerThread:11401 [meta.py:_save_conda():85] save conda done
+2022-09-21 00:51:21,158 DEBUG   HandlerThread:11401 [meta.py:probe():254] probe done
+2022-09-21 00:51:21,317 DEBUG   SenderThread:11401 [sender.py:send():302] send: files
+2022-09-21 00:51:21,318 INFO    SenderThread:11401 [sender.py:_save_file():1156] saving file wandb-metadata.json with policy now
+2022-09-21 00:51:21,324 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:51:21,324 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:51:21,356 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/conda-environment.yaml
+2022-09-21 00:51:21,356 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_created():275] file/dir created: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/wandb-metadata.json
+2022-09-21 00:51:21,417 DEBUG   SenderThread:11401 [sender.py:send():302] send: telemetry
+2022-09-21 00:51:21,740 INFO    Thread-16 :11401 [upload_job.py:push():138] Uploaded file /tmp/tmpkoblqg5zwandb/yrk6rxt8-wandb-metadata.json
+2022-09-21 00:51:24,357 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_created():275] file/dir created: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:51:26,358 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:51:27,359 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:51:34,712 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:51:36,427 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:51:36,428 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:51:37,364 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:51:44,670 DEBUG   SenderThread:11401 [sender.py:send():302] send: stats
+2022-09-21 00:51:47,369 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/config.yaml
+2022-09-21 00:51:51,558 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:51:51,558 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:52:06,467 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:52:06,686 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:52:06,686 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:52:09,379 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:52:11,161 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:52:11,165 DEBUG   SenderThread:11401 [sender.py:send():302] send: history
+2022-09-21 00:52:11,165 DEBUG   SenderThread:11401 [sender.py:send():302] send: summary
+2022-09-21 00:52:11,166 INFO    SenderThread:11401 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-21 00:52:11,380 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/wandb-summary.json
+2022-09-21 00:52:13,381 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:52:14,902 DEBUG   SenderThread:11401 [sender.py:send():302] send: stats
+2022-09-21 00:52:21,784 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:52:21,785 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:52:36,888 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:52:36,888 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:52:45,124 DEBUG   SenderThread:11401 [sender.py:send():302] send: stats
+2022-09-21 00:52:51,991 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:52:51,992 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:52:54,503 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:52:57,400 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:52:59,791 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:52:59,793 DEBUG   SenderThread:11401 [sender.py:send():302] send: history
+2022-09-21 00:52:59,793 DEBUG   SenderThread:11401 [sender.py:send():302] send: summary
+2022-09-21 00:52:59,794 INFO    SenderThread:11401 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-21 00:53:00,419 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/wandb-summary.json
+2022-09-21 00:53:01,420 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:53:07,105 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:53:07,106 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:53:15,361 DEBUG   SenderThread:11401 [sender.py:send():302] send: stats
+2022-09-21 00:53:22,202 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:53:22,203 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:53:37,315 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:53:37,316 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:53:42,643 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:53:45,439 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:53:45,618 DEBUG   SenderThread:11401 [sender.py:send():302] send: stats
+2022-09-21 00:53:47,160 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:53:47,161 DEBUG   SenderThread:11401 [sender.py:send():302] send: history
+2022-09-21 00:53:47,161 DEBUG   SenderThread:11401 [sender.py:send():302] send: summary
+2022-09-21 00:53:47,162 INFO    SenderThread:11401 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-21 00:53:47,440 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/wandb-summary.json
+2022-09-21 00:53:49,441 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:53:52,434 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:53:52,435 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:54:07,554 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:54:07,554 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:54:15,845 DEBUG   SenderThread:11401 [sender.py:send():302] send: stats
+2022-09-21 00:54:22,654 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:54:22,654 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:54:31,663 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:54:33,466 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:54:37,760 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:54:37,760 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:54:38,607 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:54:38,608 DEBUG   SenderThread:11401 [sender.py:send():302] send: history
+2022-09-21 00:54:38,608 DEBUG   SenderThread:11401 [sender.py:send():302] send: summary
+2022-09-21 00:54:38,609 INFO    SenderThread:11401 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-21 00:54:39,468 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/wandb-summary.json
+2022-09-21 00:54:41,469 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:54:46,108 DEBUG   SenderThread:11401 [sender.py:send():302] send: stats
+2022-09-21 00:54:52,862 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:54:52,863 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:55:07,957 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:55:07,958 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:55:16,349 DEBUG   SenderThread:11401 [sender.py:send():302] send: stats
+2022-09-21 00:55:21,827 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:55:23,085 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:55:23,085 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:55:23,487 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:55:26,773 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:55:26,775 DEBUG   SenderThread:11401 [sender.py:send():302] send: history
+2022-09-21 00:55:26,775 DEBUG   SenderThread:11401 [sender.py:send():302] send: summary
+2022-09-21 00:55:26,775 INFO    SenderThread:11401 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-21 00:55:27,489 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/wandb-summary.json
+2022-09-21 00:55:29,491 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:55:38,194 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:55:38,194 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:55:46,579 DEBUG   SenderThread:11401 [sender.py:send():302] send: stats
+2022-09-21 00:55:53,293 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:55:53,293 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:56:08,398 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:56:08,398 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:56:10,399 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:56:13,510 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:56:15,223 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-21 00:56:15,225 DEBUG   SenderThread:11401 [sender.py:send():302] send: history
+2022-09-21 00:56:15,225 DEBUG   SenderThread:11401 [sender.py:send():302] send: summary
+2022-09-21 00:56:15,226 INFO    SenderThread:11401 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-21 00:56:15,511 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/wandb-summary.json
+2022-09-21 00:56:16,820 DEBUG   SenderThread:11401 [sender.py:send():302] send: stats
+2022-09-21 00:56:17,512 INFO    Thread-12 :11401 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_005116-2z00dzne/files/output.log
+2022-09-21 00:56:23,526 DEBUG   HandlerThread:11401 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-21 00:56:23,526 DEBUG   SenderThread:11401 [sender.py:send_request():316] send_request: stop_status
+2022-09-21 00:56:33,499 INFO    MainThread:11401 [internal.py:handle_exit():80] Internal process exited

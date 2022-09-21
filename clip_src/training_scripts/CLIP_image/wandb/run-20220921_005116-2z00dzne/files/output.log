@@ -1,0 +1,36 @@
+/home/ec2-user/.local/lib/python3.9/site-packages/torchmetrics/utilities/prints.py:36: UserWarning: Metric `AUC` will save all targets and predictions in buffer. For large datasets this may lead to large memory footprint.
+  warnings.warn(*args, **kwargs)
+Starting from step 0
+Training for 801 steps
+10 Loss: 6.47
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+10 10.493805408477783
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+logging
+20 Loss: 4.15
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+20 46.9984974861145
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+logging
+30 Loss: 2.84
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+30 95.51042294502258
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+logging
+40 Loss: 2.65
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+40 142.90113162994385
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+logging
+50 Loss: 2.59
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+50 194.4351785182953
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+logging
+60 Loss: 2.61
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+60 242.5159831047058
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0
+logging
+70 Loss: 2.6
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f099cf21b20> 0

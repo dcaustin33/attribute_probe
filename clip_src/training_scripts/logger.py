@@ -1,4 +1,4 @@
-import wandb
+import torchmetrics
 
 def log_metrics(metrics: dict, 
                 step: int,
@@ -7,6 +7,8 @@ def log_metrics(metrics: dict,
                 train = True,
                 ) -> None:
     metrics['Accuracy'] = metrics['Accuracy'] / metrics['total']
+    metrics['Majority Accuracy'] = metrics['Majority Accuracy'] / metrics['total']
+    metrics['AUC'] = metrics['AUC'].compute()
 
     if train:
         print(step, "Loss:", round(metrics['Total Loss'].item(), 2))
@@ -22,5 +24,7 @@ def log_metrics(metrics: dict,
             wandb.log(new_metrics, step = step)
         else:
             wandb.log(metrics, step = step)
+
+    metrics['AUC'] = torchmetrics.AUC(reorder=True)
         
     return

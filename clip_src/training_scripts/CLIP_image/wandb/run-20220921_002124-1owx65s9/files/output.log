@@ -1,0 +1,83 @@
+Starting from step 0
+Training for 801 steps
+10 10.6166090965271
+20 14.306879758834839
+30 19.15993332862854
+40 24.86343741416931
+50 32.07711100578308
+60 37.26568818092346
+70 42.66341948509216
+80 48.30964660644531
+90 52.65516757965088
+100 Loss: 31.73
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fc139ed1d00> 0
+100 60.85586380958557
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fc139ed1d00> 0
+logging
+110 96.58734488487244
+120 100.45471096038818
+130 105.64555096626282
+140 113.32149291038513
+150 118.3051540851593
+160 123.74697542190552
+170 130.24642086029053
+180 134.07626056671143
+190 141.08656215667725
+200 Loss: 26.17
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fc139ed1d00> 0
+200 146.90026545524597
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fc139ed1d00> 0
+logging
+210 194.59708523750305
+220 199.0176820755005
+230 203.05256581306458
+240 211.56833720207214
+250 217.0227882862091
+260 221.71902632713318
+270 227.09313416481018
+280 233.9423668384552
+290 239.58168506622314
+300 Loss: 25.75
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fc139ed1d00> 0
+300 245.42250084877014
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fc139ed1d00> 0
+logging
+310 294.4792764186859
+320 297.76932644844055
+
+330 305.88579845428467
+340 310.9409956932068
+350 316.70783734321594
+360 322.13594913482666
+370 329.13656067848206
+380 333.56648230552673
+390 339.7133593559265
+400 Loss: 25.52
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fc139ed1d00> 0
+400 345.1461429595947
+Traceback (most recent call last):
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/train_clip_image.py", line 327, in <module>
+    wandb = wandb)
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/trainer.py", line 104, in train
+    loss = self.validation_step(val_data, self.model, self.val_metrics, steps, log = False, wandb = self.wandb, args = self.args)
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/train_clip_image.py", line 152, in validation_step
+    certainty = certainty.cuda()
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/nn/parallel/distributed.py", line 1008, in forward
+    output = self._run_ddp_forward(*inputs, **kwargs)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/nn/parallel/distributed.py", line 969, in _run_ddp_forward
+    return module_to_run(*inputs[0], **kwargs[0])
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ec2-user/attribute_probe/clip_src/models/clip_pretrained.py", line 24, in forward
+    outputs = self.clip(**inputs)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/transformers/models/clip/modeling_clip.py", line 1034, in forward
+    text_outputs = self.text_model(
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1130, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/transformers/models/clip/modeling_clip.py", line 641, in forward
+    causal_attention_mask = self._build_causal_attention_mask(bsz, seq_len, hidden_states.dtype).to(
+KeyboardInterrupt

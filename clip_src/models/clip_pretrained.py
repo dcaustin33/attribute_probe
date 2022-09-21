@@ -18,7 +18,9 @@ class CLIP_image(nn.Module):
     def forward(self, images):
         text = ['']
         inputs = self.processor(text=text, return_tensors="pt", padding=True)
-        inputs['pixel_values'] = images
+        for i in inputs:
+            inputs[i] = inputs[i].cuda()
+        inputs['pixel_values'] = images.cuda()
         outputs = self.clip(**inputs)
         binary_pred = self.linear(outputs.image_embeds)
-        return binary_pred
+        return binary_pred, outputs.logits_per_image

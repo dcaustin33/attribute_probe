@@ -7,6 +7,7 @@ from collections import defaultdict
 import torch
 import numpy as np
 import torchvision
+import torchvision.transforms as transforms
 
 
 class Cub2011(Dataset):
@@ -19,7 +20,7 @@ class Cub2011(Dataset):
 
     def __init__(self, root, args, train=True, loader=default_loader, download=False,):
         self.root = os.path.expanduser(root)
-        self.transform = transform
+        #self.transform = transform
         self.loader = default_loader
         self.train = train
 
@@ -46,16 +47,16 @@ class Cub2011(Dataset):
             raise RuntimeError('Dataset not found or corrupted.' +
                                ' You can use download=True to download it')
 
-        self.train_transform = torchvision.transforms.Compose([
+        self.transform = torchvision.transforms.Compose([
                                 transforms.RandomApply(
-                                    [transforms.ColorJitter(args.brightness, args.contrast, args.saturation, args.hue)],
-                                    p=args.color_jitter_prob,
+                                    [transforms.ColorJitter(args['brightness'], args['contrast'], args['saturation'], args['hue'])],
+                                    p=args['color_jitter_prob'],
                                 ),
-                            torchvision.transforms.Resize((224, 224)),
-                            transforms.RandomResizedCrop((args.crop_size, args.crop_size), scale=(args.min_scale, args.max_scale),
-                                    interpolation=transforms.InterpolationMode.BICUBIC, return_hw = True),
+                            #torchvision.transforms.Resize((224, 224)),
+                            transforms.RandomResizedCrop((args['crop_size'], args['crop_size']), scale=(args['min_scale'], args['max_scale']),
+                                    interpolation=transforms.InterpolationMode.BICUBIC),
                             torchvision.transforms.ToTensor(),
-                            torchvision.transforms.RandomHorizontalFlip(p=args.orizontal_flip_prob),
+                            torchvision.transforms.RandomHorizontalFlip(p=args['horizontal_flip_prob']),
                             torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                                                 std=[0.229, 0.224, 0.225])
                             ])  
@@ -88,7 +89,6 @@ class Cub2011(Dataset):
             self._load_metadata()
         except Exception:
             return False
-
         for index, row in self.data.iterrows():
             filepath = os.path.join(self.root, self.base_folder, row.filepath)
             if not os.path.isfile(filepath):
@@ -103,12 +103,13 @@ class Cub2011(Dataset):
             print('Files already downloaded and verified')
             return
 
+        if not os.path.exists(self.root): os.mkdir(self.root)
         os.system('wget ' + self.url)
         os.system('unzip ' + self.filename)
         os.system('rm ' + self.filename)
         os.system('tar -zxf ' + self.tarfile)
         os.system('rm ' + self.tarfile)
-        os.system('mv ' + self.directory + ' ' + self.root)
+        os.system('mv ' + self.directory + ' ' + self.root + '/CUB_200_2011')
         os.system('rm segmentations.tgz')
 
     def get_attribute(self, idx):
@@ -120,8 +121,8 @@ class Cub2011(Dataset):
 
     def __getitem__(self, idx):
         sample = self.data.iloc[idx]
-        attributes = torch.Tensor(self.attributes.iloc[idx, 1:].values.astype(np.int8))[0]
-        certainty = torch.Tensor(self.certainty.iloc[idx, 1:].values.astype(np.int8))[0]
+        attributes = torch.Tensor(self.attributes.iloc[idx, 1:].values.astype(np.int8))
+        certainty = torch.Tensor(self.certainty.iloc[idx, 1:].values.astype(np.int8))
         path = os.path.join(self.root, self.base_folder, sample.filepath)
         target = sample.target - 1  # Targets start at 1 by default, so shift to 0
         img = self.loader(path)
@@ -132,7 +133,7 @@ class Cub2011(Dataset):
         return img, target, attributes, certainty
 
 
-if __name__ == '__main__':
+'''if __name__ == '__main__':
     import matplotlib.pyplot as plt
     import torchvision.transforms as transforms
 
@@ -145,7 +146,7 @@ if __name__ == '__main__':
     ])
 
     dataset = Cub2011(root='../data', train=True, transform=transform, download=True)
-    '''img, target, attributes, certainty = dataset[0]
+    img, target, attributes, certainty = dataset[0]
     print(img.shape)
     print(target)
     print(attributes)

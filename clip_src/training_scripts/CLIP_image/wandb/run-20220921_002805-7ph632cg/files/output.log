@@ -1,0 +1,38 @@
+Starting from step 0
+Training for 801 steps
+10 10.518931150436401
+20 14.541030645370483
+30 19.37154197692871
+40 24.996572971343994
+50 32.185972690582275
+60 37.95578980445862
+70 42.88433909416199
+80 48.532994747161865
+90 53.814936876297
+100 Loss: 31.72
+In Logging <wandb.sdk.wandb_run.Run object at 0x7eff41a55c10> 0
+100 61.41245484352112
+Traceback (most recent call last):
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/train_clip_image.py", line 329, in <module>
+    trainer.train()
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/trainer.py", line 98, in train
+    for k, val_data in enumerate(self.val_dataloader):
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 652, in __next__
+    data = self._next_data()
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1330, in _next_data
+    idx, data = self._get_data()
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1296, in _get_data
+    success, data = self._try_get_data()
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1134, in _try_get_data
+    data = self._data_queue.get(timeout=timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/queues.py", line 113, in get
+    if not self._poll(timeout):
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/connection.py", line 262, in poll
+    return self._poll(timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/connection.py", line 429, in _poll
+    r = wait([self], timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/connection.py", line 936, in wait
+    ready = selector.select(timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/selectors.py", line 416, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt

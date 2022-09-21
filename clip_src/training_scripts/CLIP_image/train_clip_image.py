@@ -6,6 +6,7 @@ from torch.utils.data import DataLoader
 from torch.utils import data
 from torch.multiprocessing import Pool, Process, set_start_method
 import torch.distributed as dist
+import torchmetrics
 
 #imports defined in folder
 from cub_dataset import Cub2011
@@ -31,9 +32,10 @@ torch.backends.cudnn.benchmark = True
 
 #prepare the data for SimCLR
 def prepare_data(dataset_args, val_dataset_args):
+    download = False
     
     #create the dataset
-    train_dataset = Cub2011(dataset_args.root, dataset_args, download=False)
+    train_dataset = Cub2011(dataset_args['root'], dataset_args, download=download)
     sampler = data.DistributedSampler(train_dataset)
     dataloader = DataLoader(
         train_dataset,
@@ -45,7 +47,7 @@ def prepare_data(dataset_args, val_dataset_args):
         persistent_workers=True
     )
 
-    val_dataset = Cub2011(dataset_args.root, val_dataset_args, download=False, Train = False)
+    val_dataset = Cub2011(dataset_args['root'], val_dataset_args, download=download, train = False)
     val_sampler = data.DistributedSampler(val_dataset)
     val_dataloader = DataLoader(
         val_dataset,
@@ -62,8 +64,8 @@ def prepare_data(dataset_args, val_dataset_args):
 def get_params(model: nn.Module, 
                args):
     params = [  
-                #{'params': model.model.clip.parameters()},
-                {"params": model.classifier.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {'params': model.clip.parameters()},
+                {"params": model.linear.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 ]
     return params
 
@@ -73,7 +75,17 @@ def cross_entropy_loss(classification, labels, truth):
 
 
 def return_accuracy(classification, labels, truth):
-    return torch.sum(classification[truth] == labels[truth])
+    majority_classifier = torch.zeros(classification.shape).cuda()
+
+    classification = torch.sigmoid(classification)
+    classification = classification > 0.5
+
+    return torch.sum(classification[truth] == labels[truth]), torch.sum(majority_classifier[truth] == labels[truth])
+
+def return_auc(classification, labels, truth, metric):
+
+
+    return metric.update(torch.sigmoid(classification[truth]), labels[truth])
 
 def reset_metrics(metrics, val = False):
     if not val:
@@ -101,12 +113,21 @@ def training_step(data: dict,
                args = None) -> torch.Tensor:
     
     images, target, attributes, certainty = data
-    truth = certainty == 4
-    
-    out = model(images)
+    attributes = attributes.cuda()
+    certainty = certainty.cuda()
 
-    loss = cross_entropy_loss(out, attributes, truth)
-    accuracy = return_accuracy(out, attributes, truth)
+
+    truth = certainty == 4
+
+    
+    
+    out, clip_image_logits = model(images.cuda())
+
+
+    #adding second term to loss function so gradients are not zero
+    loss = cross_entropy_loss(out, attributes, truth) + clip_image_logits.sum() * 0
+    accuracy, maj_accuracy = return_accuracy(out, attributes, truth)
+    return_auc(out, attributes, truth, metrics['AUC'])
 
 
     metrics['total'] += torch.sum(truth)
@@ -114,6 +135,7 @@ def training_step(data: dict,
     metrics['Total Loss'] += loss
     metrics['CE Loss'] += loss
     metrics['Accuracy'] += accuracy
+    metrics['Majority Accuracy'] += maj_accuracy
     
     #logging protocol
     if log and args.rank == 0:
@@ -133,21 +155,26 @@ def validation_step(data: list,
 
     with torch.no_grad():
         images, target, attributes, certainty = data
+        attributes = attributes.cuda()
+        certainty = certainty.cuda()
         truth = certainty == 4
+        out, clip_image_logits = model(images.cuda())
 
-        out = model(images)
+        accuracy, maj_accuracy = return_accuracy(out, attributes, truth)
 
-        loss = cross_entropy_loss(out, attributes, truth)
-        accuracy = return_accuracy(out, attributes, truth)
 
         metrics['total'] += torch.sum(truth)
         metrics['class total'] += torch.sum(truth)
         metrics['Accuracy'] += accuracy
-
+        metrics['Majority Accuracy'] += maj_accuracy
+        return_auc(out, attributes, truth, metrics['AUC'])
+        
         #logging protocol
         if log and args.rank == 0:
             logger(metrics, step, wandb = wandb, train = False, args = args)
             reset_metrics(metrics, val = True)
+        
+        return None
 
 
     
@@ -239,6 +266,8 @@ if __name__ == '__main__':
     metrics['Total Loss'] = 0
     metrics['CE Loss'] = 0
     metrics['Accuracy'] = 0
+    metrics['Majority Accuracy'] = 0
+    metrics['AUC'] = torchmetrics.AUC(reorder = True)
     
 
     val_metrics = {}
@@ -246,6 +275,8 @@ if __name__ == '__main__':
     val_metrics['class total'] = 0
     val_metrics['class total2'] = 0
     val_metrics['Accuracy'] = 0
+    val_metrics['Majority Accuracy'] = 0
+    val_metrics['AUC'] = torchmetrics.AUC(reorder=True)
     
     if args.checkpoint:
         checkpoint = torch.load('{name}'.format(name = args.checkpoint_path))
@@ -288,7 +319,8 @@ if __name__ == '__main__':
         model,
         device_ids=[args.gpu_id]
     )
-    
+    import os
+    os.environ["TOKENIZERS_PARALLELISM"] = "false" 
     
     trainer = trainer.Trainer(
                              model,
