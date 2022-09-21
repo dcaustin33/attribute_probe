@@ -1,0 +1,10 @@
+Now Evaluating
+Evaluating for 50 steps
+Traceback (most recent call last):
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/eval_clip_image.py", line 205, in <module>
+    evaluator.evaluate()
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/evaluator.py", line 46, in evaluate
+    loss = self.validation_step(val_data, self.model, self.val_metrics, val_steps, log = False, wandb = self.wandb, args = self.args)
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/eval_clip_image.py", line 98, in validation_step
+    metrics['attributes'].append(attributes[truth].detach().cpu())
+AttributeError: 'int' object has no attribute 'append'

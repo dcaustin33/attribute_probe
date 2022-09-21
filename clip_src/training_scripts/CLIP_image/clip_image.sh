@@ -8,7 +8,15 @@ torchrun --nproc_per_node 1 train_clip_image.py \
                             --log_n_train_steps 500 \
                             --log_n_steps 500 \
                             --lr 0.001 \
-                            --steps 8000 \
+                            --steps 4000 \
                             -log;
 
-sudo shutdown -h;
+torchrun --nproc_per_node 1 eval_clip_image.py \
+                            --batch_size 256 \
+                            --name Eval_Clip_image \
+                            --dist_url env:// \
+                            --workers 8 \
+                            --saved_path checkpoints/CLIP_image/CLIP_image_Final.pt \
+                            -log;
+
+#sudo shutdown -h;

@@ -1,0 +1,32 @@
+Now Evaluating
+Evaluating for 50 steps
+/opt/conda/envs/pytorch/lib/python3.9/site-packages/sklearn/utils/multiclass.py:151: FutureWarning: The input object of type 'Tensor' is an array-like implementing one of the corresponding protocols (`__array__`, `__array_interface__` or `__array_struct__`); but not a sequence (or 0-D). In the future, this object will be coerced as if it was first converted using `np.array(obj)`. To retain the old behaviour, you have to either modify the type 'Tensor', or assign to an empty array created with `np.empty(correct_shape, dtype=object)`.
+  y = np.asarray(y)
+/opt/conda/envs/pytorch/lib/python3.9/site-packages/sklearn/utils/multiclass.py:155: FutureWarning: The input object of type 'Tensor' is an array-like implementing one of the corresponding protocols (`__array__`, `__array_interface__` or `__array_struct__`); but not a sequence (or 0-D). In the future, this object will be coerced as if it was first converted using `np.array(obj)`. To retain the old behaviour, you have to either modify the type 'Tensor', or assign to an empty array created with `np.empty(correct_shape, dtype=object)`.
+  y = np.array(y, dtype=object)
+/opt/conda/envs/pytorch/lib/python3.9/site-packages/sklearn/utils/multiclass.py:286: FutureWarning: The input object of type 'Tensor' is an array-like implementing one of the corresponding protocols (`__array__`, `__array_interface__` or `__array_struct__`); but not a sequence (or 0-D). In the future, this object will be coerced as if it was first converted using `np.array(obj)`. To retain the old behaviour, you have to either modify the type 'Tensor', or assign to an empty array created with `np.empty(correct_shape, dtype=object)`.
+  y = np.asarray(y)
+/opt/conda/envs/pytorch/lib/python3.9/site-packages/sklearn/utils/multiclass.py:290: FutureWarning: The input object of type 'Tensor' is an array-like implementing one of the corresponding protocols (`__array__`, `__array_interface__` or `__array_struct__`); but not a sequence (or 0-D). In the future, this object will be coerced as if it was first converted using `np.array(obj)`. To retain the old behaviour, you have to either modify the type 'Tensor', or assign to an empty array created with `np.empty(correct_shape, dtype=object)`.
+  y = np.asarray(y, dtype=object)
+/opt/conda/envs/pytorch/lib/python3.9/site-packages/sklearn/utils/validation.py:738: FutureWarning: The input object of type 'Tensor' is an array-like implementing one of the corresponding protocols (`__array__`, `__array_interface__` or `__array_struct__`); but not a sequence (or 0-D). In the future, this object will be coerced as if it was first converted using `np.array(obj)`. To retain the old behaviour, you have to either modify the type 'Tensor', or assign to an empty array created with `np.empty(correct_shape, dtype=object)`.
+  array = np.asarray(array, order=order, dtype=dtype)
+/opt/conda/envs/pytorch/lib/python3.9/site-packages/sklearn/utils/validation.py:738: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  array = np.asarray(array, order=order, dtype=dtype)
+/opt/conda/envs/pytorch/lib/python3.9/site-packages/sklearn/utils/fixes.py:39: DeprecationWarning: elementwise comparison failed; this will raise an error in the future.
+  return X != X
+Traceback (most recent call last):
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/eval_clip_image.py", line 205, in <module>
+    evaluator.evaluate()
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/evaluator.py", line 44, in evaluate
+    loss = self.validation_step(val_data, self.model, self.val_metrics, val_steps, log = True, wandb = self.wandb, args = self.args)
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/eval_clip_image.py", line 106, in validation_step
+    logger(metrics, step, wandb = wandb, train = False, args = args)
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/logger.py", line 13, in log_metrics
+    metrics['AUC'] = roc_auc_score(metrics['attributes'], metrics['logits'])
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/sklearn/metrics/_ranking.py", line 544, in roc_auc_score
+    y_true = check_array(y_true, ensure_2d=False, dtype=None)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/sklearn/utils/validation.py", line 792, in check_array
+    _assert_all_finite(array, allow_nan=force_all_finite == "allow-nan")
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/sklearn/utils/validation.py", line 121, in _assert_all_finite
+    if _object_dtype_isnan(X).any():
+AttributeError: 'bool' object has no attribute 'any'

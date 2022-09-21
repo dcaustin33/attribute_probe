@@ -23,6 +23,7 @@ class Cub2011(Dataset):
         #self.transform = transform
         self.loader = default_loader
         self.train = train
+        self.num_attributes = 312
 
         if download:
             self._download()
@@ -110,6 +111,7 @@ class Cub2011(Dataset):
         os.system('tar -zxf ' + self.tarfile)
         os.system('rm ' + self.tarfile)
         os.system('mv ' + self.directory + ' ' + self.root + '/CUB_200_2011')
+        os.system('mv attributes.txt ' + self.root + '/CUB_200_2011')
         os.system('rm segmentations.tgz')
 
     def get_attribute(self, idx):
@@ -130,7 +132,13 @@ class Cub2011(Dataset):
         if self.transform is not None:
             img = self.transform(img)
 
-        return img, target, attributes, certainty
+        batch = {}
+        batch['image'] = img
+        batch['class'] = target
+        batch['attributes'] = attributes
+        batch['certainty'] = certainty
+
+        return batch
 
 
 '''if __name__ == '__main__':

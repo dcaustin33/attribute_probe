@@ -1,0 +1,26 @@
+2022-09-21 12:23:04,075 INFO    MainThread:28289 [wandb_setup.py:_flush():76] Configure stats pid to 28289
+2022-09-21 12:23:04,075 INFO    MainThread:28289 [wandb_setup.py:_flush():76] Loading settings from /home/ec2-user/.config/wandb/settings
+2022-09-21 12:23:04,075 INFO    MainThread:28289 [wandb_setup.py:_flush():76] Loading settings from /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/settings
+2022-09-21 12:23:04,075 INFO    MainThread:28289 [wandb_setup.py:_flush():76] Loading settings from environment variables: {'_require_service': 'True'}
+2022-09-21 12:23:04,075 INFO    MainThread:28289 [wandb_setup.py:_flush():76] Inferring run settings from compute environment: {'program_relpath': 'clip_src/training_scripts/CLIP_image/eval_clip_image.py', 'program': '/home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/eval_clip_image.py'}
+2022-09-21 12:23:04,075 INFO    MainThread:28289 [wandb_init.py:_log_setup():461] Logging user logs to /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_122304-3mljz7xn/logs/debug.log
+2022-09-21 12:23:04,075 INFO    MainThread:28289 [wandb_init.py:_log_setup():462] Logging internal logs to /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/wandb/run-20220921_122304-3mljz7xn/logs/debug-internal.log
+2022-09-21 12:23:04,075 INFO    MainThread:28289 [wandb_init.py:init():495] calling init triggers
+2022-09-21 12:23:04,076 INFO    MainThread:28289 [wandb_init.py:init():498] wandb.init called with sweep_config: {}
+config: {'name': None, 'workers': 8, 'batch_size': 256, 'val_steps': 50, 'log': True, 'data_path': '../../../data/', 'log_n_train_steps': 100, 'saved_path': 'checkpoints/CLIP_image/CLIP_image_Final.pt', 'dist_url': 'env://', 'world_size': 1, 'rank': 0, 'job_id': 0, 'val_dataset_args': {'root': '../../../data/', 'crop_size': 224, 'brightness': 0.4, 'contrast': 0.4, 'saturation': 0.2, 'hue': 0.1, 'color_jitter_prob': 0, 'gray_scale_prob': 0, 'horizontal_flip_prob': 0.5, 'gaussian_prob': 0, 'min_scale': 0.9, 'max_scale': 1}, 'log_n_val_steps': 49, 'gpu_id': 0}
+2022-09-21 12:23:04,076 INFO    MainThread:28289 [wandb_init.py:init():548] starting backend
+2022-09-21 12:23:04,076 INFO    MainThread:28289 [wandb_init.py:init():552] setting up manager
+2022-09-21 12:23:04,078 INFO    MainThread:28289 [backend.py:_multiprocessing_setup():97] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2022-09-21 12:23:04,079 INFO    MainThread:28289 [wandb_init.py:init():558] backend started and connected
+2022-09-21 12:23:04,083 INFO    MainThread:28289 [wandb_init.py:init():636] updated telemetry
+2022-09-21 12:23:04,129 INFO    MainThread:28289 [wandb_init.py:init():667] communicating run to backend with 30 second timeout
+2022-09-21 12:23:04,429 INFO    MainThread:28289 [wandb_run.py:_on_init():1982] communicating current version
+2022-09-21 12:23:04,483 INFO    MainThread:28289 [wandb_run.py:_on_init():1986] got version response upgrade_message: "wandb version 0.13.3 is available!  To upgrade, please run:\n $ pip install wandb --upgrade"
+
+2022-09-21 12:23:04,483 INFO    MainThread:28289 [wandb_init.py:init():700] starting run threads in backend
+2022-09-21 12:23:09,495 INFO    MainThread:28289 [wandb_run.py:_console_start():1962] atexit reg
+2022-09-21 12:23:09,496 INFO    MainThread:28289 [wandb_run.py:_redirect():1820] redirect: SettingsConsole.WRAP_RAW
+2022-09-21 12:23:09,496 INFO    MainThread:28289 [wandb_run.py:_redirect():1885] Wrapping output streams.
+2022-09-21 12:23:09,496 INFO    MainThread:28289 [wandb_run.py:_redirect():1907] Redirects installed.
+2022-09-21 12:23:09,497 INFO    MainThread:28289 [wandb_init.py:init():732] run started, returning control to user process
+2022-09-21 12:23:54,584 WARNING MsgRouterThr:28289 [router.py:message_loop():76] message_loop has been closed

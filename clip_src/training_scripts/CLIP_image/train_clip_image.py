@@ -12,7 +12,7 @@ import torchmetrics
 from cub_dataset import Cub2011
 import training_scripts.trainer as trainer
 import torchvision
-from models.clip_pretrained import CLIP_image
+from models.clip_image_pretrained import CLIP_image
 from training_scripts.logger import log_metrics as logger
 from utils.gather import GatherLayer
 from utils.distributed import set_distributed_mode
@@ -23,7 +23,6 @@ from pl_bolts.optimizers.lr_scheduler import LinearWarmupCosineAnnealingLR
 import wandb
 import pytorch_lightning as pl
 import time
-find_unused_parameters=True
 
 
 torch.backends.cudnn.enabled = True 
@@ -65,7 +64,10 @@ def get_params(model: nn.Module,
                args):
     params = [  
                 {'params': model.clip.parameters()},
-                {"params": model.linear.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.linear1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.linear2.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.classifier1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.classifier2.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 ]
     return params
 
@@ -93,13 +95,21 @@ def reset_metrics(metrics, val = False):
         metrics['class total'] = 0
         metrics['Total Loss'] = 0
         metrics['CE Loss'] = 0
-        metrics['Accuracy'] = 0
+        metrics['Accuracy 1'] = 0
+        metrics['Accuracy 2'] = 0
+        metrics['Accuracy 3'] = 0
+        metrics['Accuracy 4'] = 0
+        metrics['Majority Accuracy'] = 0
 
     if val:
         val_metrics['total'] = 0
         val_metrics['class total'] = 0
         val_metrics['class total2'] = 0
-        val_metrics['Accuracy'] = 0
+        val_metrics['Accuracy 1'] = 0
+        val_metrics['Accuracy 2'] = 0
+        val_metrics['Accuracy 3'] = 0
+        val_metrics['Accuracy 4'] = 0
+        val_metrics['Majority Accuracy'] = 0
 
 
 
@@ -112,29 +122,27 @@ def training_step(data: dict,
                wandb = None,
                args = None) -> torch.Tensor:
     
-    images, target, attributes, certainty = data
-    attributes = attributes.cuda()
-    certainty = certainty.cuda()
+    images, attributes, certainty = data['image'].cuda(), data['attributes'].cuda(), data['certainty'].cuda()
 
-
-    truth = certainty == 4
-
-    
-    
-    out, clip_image_logits = model(images.cuda())
+    truth = certainty >= 3
+    classification_out, clip_image_logits = model(images)
 
 
     #adding second term to loss function so gradients are not zero
-    loss = cross_entropy_loss(out, attributes, truth) + clip_image_logits.sum() * 0
-    accuracy, maj_accuracy = return_accuracy(out, attributes, truth)
-    return_auc(out, attributes, truth, metrics['AUC'])
+    loss = clip_image_logits.sum() * 0
+    accuracys = []
+    for i in classification_out: 
+        loss += cross_entropy_loss(i, attributes, truth)
+        accuracys.append(return_accuracy(i, attributes, truth)[0])
+    _, maj_accuracy = return_accuracy(i, attributes, truth)
 
-
+    
+    for i in range(1, len(accuracys) + 1):
+        metrics['Accuracy {}'.format(i)] += accuracys[i - 1]
     metrics['total'] += torch.sum(truth)
     metrics['class total'] += torch.sum(truth)
     metrics['Total Loss'] += loss
     metrics['CE Loss'] += loss
-    metrics['Accuracy'] += accuracy
     metrics['Majority Accuracy'] += maj_accuracy
     
     #logging protocol
@@ -154,24 +162,27 @@ def validation_step(data: list,
                     args = None):
 
     with torch.no_grad():
-        images, target, attributes, certainty = data
-        attributes = attributes.cuda()
-        certainty = certainty.cuda()
-        truth = certainty == 4
-        out, clip_image_logits = model(images.cuda())
+        images, attributes, certainty = data['image'].cuda(), data['attributes'].cuda(), data['certainty'].cuda()
 
-        accuracy, maj_accuracy = return_accuracy(out, attributes, truth)
+        truth = certainty >= 3
+        classification_out, clip_image_logits = model(images)
 
+        #adding second term to loss function so gradients are not zero
+        accuracys = []
+        for i in classification_out: 
+            accuracys.append(return_accuracy(i, attributes, truth)[0])
+        _, maj_accuracy = return_accuracy(i, attributes, truth)
 
+        
+        for i in range(1, len(accuracys) + 1):
+            metrics['Accuracy {}'.format(i)] += accuracys[i - 1]
         metrics['total'] += torch.sum(truth)
         metrics['class total'] += torch.sum(truth)
-        metrics['Accuracy'] += accuracy
         metrics['Majority Accuracy'] += maj_accuracy
-        return_auc(out, attributes, truth, metrics['AUC'])
         
         #logging protocol
         if log and args.rank == 0:
-            logger(metrics, step, wandb = wandb, train = False, args = args)
+            logger(val_metrics, step, wandb = wandb, train = False, args = args, training_script = True)
             reset_metrics(metrics, val = True)
         
         return None
@@ -180,7 +191,7 @@ def validation_step(data: list,
     
 if __name__ == '__main__':
     import argparse
-    parser = argparse.ArgumentParser(description='EGO centric self-supervised learning')
+    parser = argparse.ArgumentParser(description='Attribute Probing Experiments')
     parser.add_argument('--name', type = str)
     parser.add_argument('--lr', nargs='?', default = .0001, type=float)
     parser.add_argument('--workers', nargs='?', default = 8,  type=int)
@@ -238,7 +249,7 @@ if __name__ == '__main__':
     args.steps += 1
     args.log_n_val_steps = args.val_steps - 1
     args.warmup_steps = 200
-    args.classifier_lr = .1
+    args.classifier_lr = args.lr
     args.classifier_weight_decacy = 0
 
 
@@ -265,18 +276,22 @@ if __name__ == '__main__':
     metrics['class total'] = 0
     metrics['Total Loss'] = 0
     metrics['CE Loss'] = 0
-    metrics['Accuracy'] = 0
+    metrics['Accuracy 1'] = 0
+    metrics['Accuracy 2'] = 0
+    metrics['Accuracy 3'] = 0
+    metrics['Accuracy 4'] = 0
     metrics['Majority Accuracy'] = 0
-    metrics['AUC'] = torchmetrics.AUC(reorder = True)
     
 
     val_metrics = {}
     val_metrics['total'] = 0
     val_metrics['class total'] = 0
     val_metrics['class total2'] = 0
-    val_metrics['Accuracy'] = 0
+    val_metrics['Accuracy 1'] = 0
+    val_metrics['Accuracy 2'] = 0
+    val_metrics['Accuracy 3'] = 0
+    val_metrics['Accuracy 4'] = 0
     val_metrics['Majority Accuracy'] = 0
-    val_metrics['AUC'] = torchmetrics.AUC(reorder=True)
     
     if args.checkpoint:
         checkpoint = torch.load('{name}'.format(name = args.checkpoint_path))
