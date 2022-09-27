@@ -23,3 +23,4 @@ config: {'name': 'ResNet18', 'lr': 0.001, 'workers': 6, 'steps': 8001, 'batch_si
 2022-09-21 16:08:38,718 INFO    MainThread:20193 [wandb_run.py:_redirect():1885] Wrapping output streams.
 2022-09-21 16:08:38,718 INFO    MainThread:20193 [wandb_run.py:_redirect():1907] Redirects installed.
 2022-09-21 16:08:38,719 INFO    MainThread:20193 [wandb_init.py:init():732] run started, returning control to user process
+2022-09-21 17:36:41,862 WARNING MsgRouterThr:20193 [router.py:message_loop():76] message_loop has been closed

@@ -1,0 +1,367 @@
+2022-09-27 20:53:51,216 INFO    StreamThr :28059 [internal.py:wandb_internal():90] W&B internal server running at pid: 28059, started at: 2022-09-27 20:53:51.215588
+2022-09-27 20:53:51,219 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: status
+2022-09-27 20:53:51,220 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: status
+2022-09-27 20:53:51,222 DEBUG   SenderThread:28059 [sender.py:send():302] send: header
+2022-09-27 20:53:51,222 INFO    WriterThread:28059 [datastore.py:open_for_write():75] open: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/run-rh5r3gwb.wandb
+2022-09-27 20:53:51,299 DEBUG   SenderThread:28059 [sender.py:send():302] send: run
+2022-09-27 20:53:51,598 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: check_version
+2022-09-27 20:53:51,599 INFO    SenderThread:28059 [dir_watcher.py:__init__():216] watching files in: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files
+2022-09-27 20:53:51,599 INFO    SenderThread:28059 [sender.py:_start_run_threads():913] run started: rh5r3gwb with start time 1664312031.210516
+2022-09-27 20:53:51,599 DEBUG   SenderThread:28059 [sender.py:send():302] send: summary
+2022-09-27 20:53:51,600 INFO    SenderThread:28059 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-27 20:53:51,600 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: check_version
+2022-09-27 20:53:51,674 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: run_start
+2022-09-27 20:53:51,685 DEBUG   HandlerThread:28059 [meta.py:__init__():35] meta init
+2022-09-27 20:53:51,685 DEBUG   HandlerThread:28059 [meta.py:__init__():50] meta init done
+2022-09-27 20:53:51,685 DEBUG   HandlerThread:28059 [meta.py:probe():216] probe
+2022-09-27 20:53:51,692 DEBUG   HandlerThread:28059 [meta.py:_setup_git():206] setup git
+2022-09-27 20:53:51,709 DEBUG   HandlerThread:28059 [meta.py:_setup_git():213] setup git done
+2022-09-27 20:53:51,710 DEBUG   HandlerThread:28059 [meta.py:_save_pip():54] save pip
+2022-09-27 20:53:51,711 DEBUG   HandlerThread:28059 [meta.py:_save_pip():68] save pip done
+2022-09-27 20:53:51,711 DEBUG   HandlerThread:28059 [meta.py:_save_conda():75] save conda
+2022-09-27 20:53:52,604 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_created():275] file/dir created: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/conda-environment.yaml
+2022-09-27 20:53:52,605 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_created():275] file/dir created: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/requirements.txt
+2022-09-27 20:53:52,605 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_created():275] file/dir created: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/wandb-summary.json
+2022-09-27 20:53:56,604 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/conda-environment.yaml
+2022-09-27 20:53:56,608 DEBUG   HandlerThread:28059 [meta.py:_save_conda():85] save conda done
+2022-09-27 20:53:56,609 DEBUG   HandlerThread:28059 [meta.py:probe():254] probe done
+2022-09-27 20:53:56,772 DEBUG   SenderThread:28059 [sender.py:send():302] send: files
+2022-09-27 20:53:56,772 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:53:56,772 INFO    SenderThread:28059 [sender.py:_save_file():1156] saving file wandb-metadata.json with policy now
+2022-09-27 20:53:56,774 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:53:56,865 DEBUG   SenderThread:28059 [sender.py:send():302] send: telemetry
+2022-09-27 20:53:57,188 INFO    Thread-16 :28059 [upload_job.py:push():138] Uploaded file /tmp/tmpum7onlawwandb/r44mk14h-wandb-metadata.json
+2022-09-27 20:53:57,605 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_created():275] file/dir created: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/wandb-metadata.json
+2022-09-27 20:54:04,607 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_created():275] file/dir created: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:54:06,608 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:54:11,867 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:54:11,868 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:54:19,928 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 20:54:22,615 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/config.yaml
+2022-09-27 20:54:26,994 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:54:26,994 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:54:34,620 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:54:42,099 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:54:42,100 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:54:50,147 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 20:54:54,628 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:54:57,217 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:54:57,218 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:55:12,319 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:55:12,320 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:55:16,638 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:55:20,359 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 20:55:27,426 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:55:27,426 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:55:36,646 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:55:42,529 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:55:42,529 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:55:50,578 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 20:55:57,642 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:55:57,643 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:56:00,656 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:56:12,747 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:56:12,747 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:56:20,664 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:56:20,783 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 20:56:27,851 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:56:27,852 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:56:40,672 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:56:42,976 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:56:42,976 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:56:51,014 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 20:56:58,088 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:56:58,088 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:57:00,679 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:57:13,192 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:57:13,193 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:57:20,686 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:57:21,205 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 20:57:28,287 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:57:28,288 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:57:42,695 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:57:43,391 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:57:43,391 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:57:51,445 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 20:57:58,507 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:57:58,507 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:58:02,703 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:58:14,325 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:58:14,325 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:58:21,664 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 20:58:22,711 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:58:29,422 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:58:29,422 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:58:42,719 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:58:44,518 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:58:44,518 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:58:51,866 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 20:58:59,617 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:58:59,617 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:59:04,728 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:59:14,782 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:59:14,783 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:59:22,088 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 20:59:26,736 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:59:29,883 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:59:29,884 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:59:44,743 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 20:59:44,985 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 20:59:44,986 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 20:59:52,294 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:00:00,079 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:00:00,080 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:00:04,751 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:00:15,190 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:00:15,191 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:00:22,519 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:00:24,760 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:00:30,288 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:00:30,289 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:00:45,393 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:00:45,393 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:00:48,769 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:00:52,732 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:01:00,496 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:01:00,496 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:01:08,776 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:01:15,598 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:01:15,598 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:01:22,940 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:01:28,784 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:01:30,696 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:01:30,696 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:01:45,798 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:01:45,798 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:01:48,791 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:01:53,154 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:02:00,896 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:02:00,897 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:02:10,803 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:02:15,994 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:02:15,994 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:02:23,366 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:02:31,111 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:02:31,111 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:02:34,813 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:02:46,209 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:02:46,209 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:02:53,578 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:02:54,822 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:03:01,322 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:03:01,322 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:03:16,429 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:03:16,430 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:03:16,830 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:03:23,795 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:03:31,545 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:03:31,546 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:03:36,838 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:03:46,642 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:03:46,643 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:03:54,002 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:03:58,847 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:04:01,755 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:04:01,755 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:04:16,923 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:04:16,924 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:04:18,855 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:04:24,217 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:04:32,024 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:04:32,024 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:04:35,237 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-27 21:04:36,862 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:04:42,864 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:04:47,236 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:04:47,236 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:04:54,431 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:05:02,441 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:05:02,442 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:05:17,546 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:05:17,546 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:05:24,711 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:05:29,683 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-27 21:05:30,886 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:05:32,654 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:05:32,654 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:05:47,772 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:05:47,772 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:05:52,895 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:05:54,962 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:06:02,875 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:06:02,875 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:06:12,903 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:06:17,973 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:06:17,973 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:06:25,178 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:06:33,087 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:06:33,087 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:06:34,911 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:06:48,188 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:06:48,189 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:06:55,386 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:06:56,920 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:07:03,283 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:07:03,284 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:07:16,928 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:07:18,389 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:07:18,389 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:07:25,623 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:07:33,500 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:07:33,500 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:07:38,937 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:07:48,684 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:07:48,684 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:07:55,831 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:08:00,947 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:08:04,511 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:08:04,512 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:08:19,605 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:08:19,606 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:08:22,956 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:08:26,056 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:08:34,702 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:08:34,702 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:08:42,964 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:08:49,797 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:08:49,798 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:08:56,280 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:09:02,970 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:09:04,897 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:09:04,898 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:09:20,058 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:09:20,058 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:09:22,978 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:09:26,468 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:09:35,168 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:09:35,168 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:09:46,987 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:09:50,277 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:09:50,277 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:09:56,703 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:10:05,384 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:10:05,385 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:10:06,995 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:10:20,497 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:10:20,498 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:10:26,923 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:10:29,003 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:10:35,608 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:10:35,608 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:10:49,010 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:10:50,722 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:10:50,722 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:10:57,126 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:11:05,820 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:11:05,821 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:11:09,018 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:11:20,948 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:11:20,949 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:11:27,366 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:11:33,028 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:11:36,097 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:11:36,097 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:11:51,200 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:11:51,201 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:11:55,037 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:11:57,564 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:12:06,295 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:12:06,296 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:12:15,045 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:12:21,393 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:12:21,394 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:12:27,779 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:12:35,053 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:12:36,500 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:12:36,500 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:12:51,600 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:12:51,600 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:12:57,996 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:12:59,063 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:13:06,700 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:13:06,701 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:13:19,070 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:13:21,801 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:13:21,802 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:13:28,202 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:13:36,909 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:13:36,909 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:13:39,079 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:13:52,010 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:13:52,011 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:13:58,398 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:14:01,086 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:14:07,124 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:14:07,125 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:14:21,095 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:14:22,309 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:14:22,309 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:14:28,625 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:14:37,415 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:14:37,415 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:14:47,106 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:14:52,525 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:14:52,525 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:14:58,861 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:15:07,633 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:15:07,634 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:15:09,115 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:15:22,739 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:15:22,739 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:15:29,070 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:15:30,123 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:15:37,848 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:15:37,849 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:15:50,131 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:15:52,953 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:15:52,954 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:15:59,283 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:16:08,056 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:16:08,056 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:16:10,473 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-27 21:16:10,477 DEBUG   SenderThread:28059 [sender.py:send():302] send: history
+2022-09-27 21:16:10,478 DEBUG   SenderThread:28059 [sender.py:send():302] send: summary
+2022-09-27 21:16:10,479 INFO    SenderThread:28059 [sender.py:_save_file():1156] saving file wandb-summary.json with policy end
+2022-09-27 21:16:11,140 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/wandb-summary.json
+2022-09-27 21:16:12,141 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:16:20,144 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:16:23,166 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:16:23,167 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:16:29,495 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:16:38,305 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:16:38,305 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:16:53,406 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:16:53,407 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:16:59,764 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:17:08,520 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:17:08,520 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:17:23,643 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:17:23,644 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:17:30,144 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:17:33,503 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: partial_history
+2022-09-27 21:17:36,183 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:17:38,751 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:17:38,751 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:17:53,850 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:17:53,851 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:17:58,193 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:18:00,365 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:18:08,991 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:18:08,991 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:18:18,201 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:18:24,087 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:18:24,087 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:18:30,599 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:18:38,209 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:18:39,181 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:18:39,181 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:18:54,277 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:18:54,277 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:18:58,218 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:19:00,807 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
+2022-09-27 21:19:09,391 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:19:09,391 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:19:22,228 INFO    Thread-12 :28059 [dir_watcher.py:_on_file_modified():292] file/dir modified: /home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/wandb/run-20220927_205351-rh5r3gwb/files/output.log
+2022-09-27 21:19:24,564 DEBUG   HandlerThread:28059 [handler.py:handle_request():141] handle_request: stop_status
+2022-09-27 21:19:24,565 DEBUG   SenderThread:28059 [sender.py:send_request():316] send_request: stop_status
+2022-09-27 21:19:31,068 DEBUG   SenderThread:28059 [sender.py:send():302] send: stats
