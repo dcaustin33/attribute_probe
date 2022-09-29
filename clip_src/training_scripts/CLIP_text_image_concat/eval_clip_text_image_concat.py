@@ -126,7 +126,7 @@ def eval_fn(model, classification_number, val_dataloader, args, num_attributes, 
             image, attributes, certainty = batch['image'].cuda(), batch['attributes'].cuda(), batch['certainty'].cuda()
             attributes_logits, _ = model(prompts, image)
             attributes_logits = attributes_logits[classification_number]
-            truth = certainty >= 3
+            truth = certainty >= args.certainty_threshold
             for att_id in range(num_attributes):
                 att_name = att_id
                 current_truth = truth[: , att_id]
@@ -162,6 +162,7 @@ if __name__ == '__main__':
     parser.add_argument('--data_path', default = '../../../data/', type = str)
     parser.add_argument('--log_n_train_steps', default = 100, type = int)
     parser.add_argument('--saved_path', default=None, type = str)
+    parser.add_argument('--certainty_threshold', default = 3, type = int)
     
     #distributed arguments
     parser.add_argument("--dist_url", default="tcp://localhost:40000", type=str,
@@ -228,6 +229,6 @@ if __name__ == '__main__':
     now = time.time()
     
     #testing each classification network
-    for i in range(2):
+    for i in range(4):
         eval_fn(model, i, val_dataloader, args, dataset.num_attributes, val_metrics, wandb, 0)
     print('Done in', time.time() - now)

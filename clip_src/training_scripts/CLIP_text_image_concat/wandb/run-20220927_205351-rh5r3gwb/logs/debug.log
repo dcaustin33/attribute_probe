@@ -23,3 +23,4 @@ config: {'name': 'CLIP_text_image_concat', 'lr': 0.001, 'workers': 6, 'steps': 4
 2022-09-27 20:53:56,681 INFO    MainThread:27955 [wandb_run.py:_redirect():1885] Wrapping output streams.
 2022-09-27 20:53:56,681 INFO    MainThread:27955 [wandb_run.py:_redirect():1907] Redirects installed.
 2022-09-27 20:53:56,682 INFO    MainThread:27955 [wandb_init.py:init():732] run started, returning control to user process
+2022-09-27 23:30:56,872 WARNING MsgRouterThr:27955 [router.py:message_loop():76] message_loop has been closed

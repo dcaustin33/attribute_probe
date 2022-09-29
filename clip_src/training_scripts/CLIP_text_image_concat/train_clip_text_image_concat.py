@@ -64,9 +64,10 @@ def prepare_data(dataset_args, val_dataset_args):
 def get_params(model: nn.Module, 
                args):
     params = [  
-                {'params': model.clip.parameters()},
                 {"params": model.linear1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.linear2.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 {"params": model.classifier1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.classifier2.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 ]
     return params
 
@@ -123,7 +124,7 @@ def training_step(data: dict,
     
     images, attributes, certainty = data['image'].cuda(), data['attributes'].cuda(), data['certainty'].cuda()
 
-    truth = certainty >= 3
+    truth = certainty >= args.certainty_threshold
     classification_out, clip_image_logits = model(text_prompts, images)
 
 
@@ -163,7 +164,7 @@ def validation_step(data: list,
     with torch.no_grad():
         images, attributes, certainty = data['image'].cuda(), data['attributes'].cuda(), data['certainty'].cuda()
 
-        truth = certainty >= 3
+        truth = certainty >= args.certainty_threshold
         classification_out, clip_image_logits = model(text_prompts, images)
 
 
@@ -237,6 +238,7 @@ if __name__ == '__main__':
     parser.add_argument('--log_n_train_steps', default = 100, type = int)
     parser.add_argument('-checkpoint', action='store_true')
     parser.add_argument('--checkpoint_path', default = None, type = str)
+    parser.add_argument('--certainty_threshold', default = 3, type = int)
     
     #distributed arguments
     parser.add_argument("--dist_url", default="tcp://localhost:40000", type=str,

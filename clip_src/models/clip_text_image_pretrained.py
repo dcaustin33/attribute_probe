@@ -64,9 +64,8 @@ class CLIP_text_image_concat(nn.Module):
             final_out = torch.cat((image_out, new_text_out), dim=1)
 
             lin1 = self.linear1[i](final_embed)
-            class1 = self.classifier1[i](final_embed)
-
             lin2 = self.linear2[i](final_out)
+            class1 = self.classifier1[i](final_embed)
             class2 = self.classifier2[i](final_out)
 
             inter_class = [lin1, lin2, class1, class2]

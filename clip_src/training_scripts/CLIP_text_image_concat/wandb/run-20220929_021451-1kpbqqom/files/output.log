@@ -1,0 +1,51 @@
+Starting from step 0
+Training for 4001 steps
+10 29.694278955459595
+20 51.98951435089111
+30 74.43941593170166
+40 97.0982301235199
+50 123.60804533958435
+60 146.33411836624146
+70 167.7787618637085
+80 188.97575998306274
+90 210.2123899459839
+100 235.67238306999207
+110 256.8099980354309
+120 278.8523283004761
+130 300.46522331237793
+140 323.84188580513
+150 345.2097747325897
+160 367.2609910964966
+170 389.9133949279785
+180 411.44876289367676
+190 437.16084837913513
+200 459.8207266330719
+210 482.1528172492981
+220 504.5949647426605
+230 525.4441730976105
+240 550.5659890174866
+250 571.8473703861237
+260 593.5116500854492
+270 614.5877509117126
+280 639.1855340003967
+290 660.6157610416412
+300 Loss: 453.38
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f60295535b0> 0
+300 686.5526375770569
+Traceback (most recent call last):
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/serialization.py", line 379, in save
+    _save(obj, opened_zipfile, pickle_module, pickle_protocol)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/serialization.py", line 591, in _save
+    zip_file.write_record('data.pkl', data_value, len(data_value))
+OSError: [Errno 28] No space left on device
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_text_image_concat/train_clip_text_image_concat.py", line 390, in <module>
+    trainer.train()
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/trainer.py", line 89, in train
+    torch.save({
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/serialization.py", line 380, in save
+    return
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/serialization.py", line 259, in __exit__
+    self.file_like.write_end_of_file()
+RuntimeError: [enforce fail at inline_container.cc:319] . unexpected pos 64 vs 0
