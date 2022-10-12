@@ -121,7 +121,7 @@ def training_step(data: dict,
     images, adjective_labels, noun_labels, concat_labels = data['image'].cuda(), data['adjective_labels'].cuda(), data['noun_labels'].cuda(), data['concat_labels'].cuda()
     labels = [adjective_labels, noun_labels, concat_labels] * 2
 
-    truth = data['noun_class'] != -1
+    truth = data['noun_labels'] != -1
     classification_out, clip_image_logits = model(text_prompts, images)
 
 
@@ -165,7 +165,7 @@ def validation_step(data: list,
         images, adjective_labels, noun_labels, concat_labels = data['image'].cuda(), data['adjective_labels'].cuda(), data['noun_labels'].cuda(), data['concat_labels'].cuda()
         labels = [adjective_labels, noun_labels, concat_labels] * 2
 
-        truth = data['noun_class'] != -1
+        truth = data['noun_labels'] != -1
         classification_out, clip_image_logits = model(text_prompts, images)
 
 

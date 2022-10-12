@@ -42,7 +42,6 @@ class MIT_states(Dataset):
                 concat[old_val] = len(concat.keys())
 
             items = os.listdir(os.path.join(self.root, self.directory, 'images', old_val))
-            print(items)
             for item in items:
                 if item[0] == '.': continue
                 labels = {}
@@ -70,7 +69,18 @@ class MIT_states(Dataset):
                             torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                                                 std=[0.229, 0.224, 0.225])
                             ])  
+        number_items = [i for i in range(len(self.all_items))]
+        np.random.seed(0)
+        np.random.shuffle(number_items)
+        split = int(len(self.all_items) * .8)
+        if self.train:
+            self.all_items = [self.all_items[i] for i in number_items[:split]]
+        else:
+            self.all_items = [self.all_items[i] for i in number_items[split:]]
 
+        print(len(self.adjectives))
+        print(len(self.nouns))
+        print(len(self.concat))
 
 
     def __len__(self):
@@ -85,9 +95,9 @@ class MIT_states(Dataset):
 
         batch = {}
         batch['image'] = img
-        batch['concat_class'] = label['concat']
-        batch['adjective_class'] = label['adjective']
-        batch['noun_class'] = label['noun']
+        batch['concat_labels'] = label['concat']
+        batch['adjective_labels'] = label['adjective']
+        batch['noun_labels'] = label['noun']
 
         return batch
 

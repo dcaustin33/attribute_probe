@@ -1,0 +1,55 @@
+Starting from step 0
+Training for 4001 steps
+10 13.938750267028809
+20 19.103702068328857
+30 23.955322265625
+40 30.24683141708374
+50 37.22514772415161
+60 43.27830410003662
+70 47.79296112060547
+80 53.93749475479126
+90 58.697423219680786
+100 65.68147158622742
+110 70.28622817993164
+120 76.17074608802795
+130 81.32564234733582
+140 87.06447982788086
+150 92.42932844161987
+160 98.21701455116272
+170 103.10616421699524
+180 107.65413808822632
+190 114.63542199134827
+200 120.28501415252686
+210 125.83784651756287
+220 130.71083068847656
+230 135.3366219997406
+Error in sys.excepthook:
+Traceback (most recent call last):
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/wandb/sdk/lib/exit_hooks.py", line 43, in exc_handler
+    def exc_handler(
+KeyboardInterrupt
+Original exception was:
+Traceback (most recent call last):
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/CLIP_image/train_clip_image.py", line 353, in <module>
+    trainer.train()
+  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/trainer.py", line 66, in train
+    for i, data in enumerate(self.dataloader):
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 652, in __next__
+    data = self._next_data()
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1330, in _next_data
+    idx, data = self._get_data()
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1296, in _get_data
+    success, data = self._try_get_data()
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/utils/data/dataloader.py", line 1134, in _try_get_data
+    data = self._data_queue.get(timeout=timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/queues.py", line 113, in get
+    if not self._poll(timeout):
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/connection.py", line 262, in poll
+    return self._poll(timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/connection.py", line 429, in _poll
+    r = wait([self], timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/connection.py", line 936, in wait
+    ready = selector.select(timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/selectors.py", line 416, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt

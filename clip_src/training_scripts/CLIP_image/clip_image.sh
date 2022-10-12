@@ -3,7 +3,7 @@ export OMP_NUM_THREADS=4;
 torchrun --nproc_per_node 1 train_clip_image.py \
                             --batch_size 128 \
                             --dist_url env:// \
-                            --name CLIP_image \
+                            --name CLIP_image_linear \
                             --workers 6 \
                             --log_n_train_steps 500 \
                             --log_n_steps 500 \
@@ -16,7 +16,7 @@ torchrun --nproc_per_node 1 eval_clip_image.py \
                             --name Eval_Clip_image \
                             --dist_url env:// \
                             --workers 8 \
-                            --saved_path checkpoints/CLIP_image/CLIP_image_Final.pt \
+                            --saved_path checkpoints/CLIP_image_linear/CLIP_image_linear_Final.pt \
                             -log;
 
 #sudo shutdown -h;

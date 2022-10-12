@@ -63,7 +63,6 @@ def prepare_data(dataset_args, val_dataset_args):
 def get_params(model: nn.Module, 
                args):
     params = [  
-                {'params': model.clip.parameters()},
                 {"params": model.linear1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 {"params": model.linear2.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 {"params": model.classifier1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},

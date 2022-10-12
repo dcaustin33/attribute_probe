@@ -12,10 +12,9 @@ def log_metrics(metrics: dict,
 
     if train:
         print(step, "Loss:", round(metrics['Total Loss'].item(), 2))
-    if training_script:
-        for i in metrics:
-            if 'Accuracy' in i:
-                metrics[i] = metrics[i] / metrics['class total']
+    for i in metrics:
+        if 'Accuracy' in i:
+            metrics[i] = metrics[i] / metrics['total']
 
     print('In Logging', wandb, args.rank)
     if wandb and args.rank == 0:

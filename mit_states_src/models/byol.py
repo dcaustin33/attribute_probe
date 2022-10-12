@@ -1,5 +1,6 @@
 import torch
 from torchvision import models
+import torch.nn as nn
 
 class ResNet(torch.nn.Module):
     def __init__(self, net_name, weights = None, use_fc=False):
@@ -46,7 +47,7 @@ assert (model(example) == traced_script_module(example)).all()'''
 import os
 
 class BYOL(torch.nn.Module):
-    def __init__(self, device = 'cuda'):
+    def __init__(self, adjectives: int, nouns: int, concat: int, device = 'cuda'):
         super().__init__()
         model = ResNet('resnet50', weights = None, use_fc=True)
 
@@ -64,13 +65,28 @@ class BYOL(torch.nn.Module):
         traced_script_module = torch.jit.trace(model, example)
         for p in traced_script_module.parameters():
             p.requires_grad = False
+
         self.model = model
-        self.linear1 = torch.nn.Linear(2048, 312)
-        self.classifier1 = torch.nn.Sequential(torch.nn.Linear(2048, 312), torch.nn.ReLU(), torch.nn.BatchNorm1d(312), torch.nn.Linear(312, 312))
+
+        self.linear_adjectives = nn.Linear(2048, adjectives)
+        self.linear_nouns = nn.Linear(2048, nouns)
+        self.linear_concat = nn.Linear(2048, concat)
+
+        self.classifier_adjectives =nn.Sequential(nn.Linear(2048, 312), nn.ReLU(), nn.BatchNorm1d(312), nn.Linear(312, adjectives))
+        self.classifier_nouns = nn.Sequential(nn.Linear(2048, 312), nn.ReLU(), nn.BatchNorm1d(312), nn.Linear(312, nouns))
+        self.classifier_concat = nn.Sequential(nn.Linear(2048, 312), nn.ReLU(), nn.BatchNorm1d(312), nn.Linear(312, concat))
+
     
     def forward(self, x):
         x = self.model.encoder(x)
-        x = torch.flatten(x, 1)
-        classifier_out = self.classifier1(x)
-        linear_out = self.linear1(x)
-        return (linear_out, classifier_out)
+        final_out = torch.flatten(x, 1)
+        adjective_linear = self.linear_adjectives(final_out)
+        noun_linear = self.linear_nouns(final_out)
+        concat_linear = self.linear_concat(final_out)
+
+        adjective_classifier = self.classifier_adjectives(final_out)
+        noun_classifier = self.classifier_nouns(final_out)
+        concat_classifier = self.classifier_concat(final_out)
+
+        classifications = [adjective_linear, noun_linear, concat_linear, adjective_classifier, noun_classifier, concat_classifier]
+        return (classifications, final_out)
