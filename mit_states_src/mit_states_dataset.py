@@ -56,15 +56,16 @@ class MIT_states(Dataset):
         self.concat = dict([(value, key) for key, value in concat.items()])
         self.transformation = transformation
 
+        self.initial_transforms = transforms.Compose([
+                                    transforms.RandomResizedCrop((args['crop_size'], args['crop_size']), scale=(args['min_scale'], args['max_scale']),
+                                            interpolation=transforms.InterpolationMode.BICUBIC),
+                                    torchvision.transforms.ToTensor()])
+
         self.transform = torchvision.transforms.Compose([
-                                transforms.RandomApply(
+                            transforms.RandomApply(
                                     [transforms.ColorJitter(args['brightness'], args['contrast'], args['saturation'], args['hue'])],
                                     p=args['color_jitter_prob'],
                                 ),
-                            #torchvision.transforms.Resize((224, 224)),
-                            transforms.RandomResizedCrop((args['crop_size'], args['crop_size']), scale=(args['min_scale'], args['max_scale']),
-                                    interpolation=transforms.InterpolationMode.BICUBIC),
-                            torchvision.transforms.ToTensor(),
                             torchvision.transforms.RandomHorizontalFlip(p=args['horizontal_flip_prob']),
                             torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                                                 std=[0.229, 0.224, 0.225])
@@ -78,9 +79,7 @@ class MIT_states(Dataset):
         else:
             self.all_items = [self.all_items[i] for i in number_items[split:]]
 
-        print(len(self.adjectives))
-        print(len(self.nouns))
-        print(len(self.concat))
+        print('Transforming in training loop', self.transformation)
 
 
     def __len__(self):
@@ -89,6 +88,8 @@ class MIT_states(Dataset):
     def __getitem__(self, idx):
         image_path, label = self.all_items[idx]
         img = self.loader(image_path)
+        img = self.initial_transforms(img)
+        img = torch.clamp(img, 0, 1)
 
         if self.transformation:
             img = self.transform(img)

@@ -17,7 +17,7 @@ from models.clip_text_image_pretrained import CLIP_text_image, CLIP_text_image_c
 from training_scripts.logger import log_metrics as logger
 from utils.gather import GatherLayer
 from utils.distributed import set_distributed_mode
-from utils.utils import get_accuracy
+from utils.utils import get_accuracy, get_accuracy_concat
 
 #python helper inputs
 import os
@@ -67,16 +67,14 @@ def get_params(model: nn.Module,
     params = [  
                 {"params": model.linear_adjectives.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 {"params": model.linear_nouns.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
-                {"params": model.linear_concat.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 {"params": model.classifier_adjectives.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 {"params": model.classifier_nouns.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
-                {"params": model.classifier_concat.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 ]
     return params
 
 
 def cross_entropy_loss(classification, labels, truth):
-    return F.cross_entropy_with_logits(classification[truth], labels[truth])
+    return F.cross_entropy(classification[truth], labels[truth])
 
 
 def return_accuracy(classification, labels, truth):
@@ -107,6 +105,11 @@ def reset_metrics(metrics, val = False):
         val_metrics['Classifier Noun Accuracy'] = 0
         val_metrics['Classifier Concat Accuracy'] = 0
 
+def transform_images(images):
+    for i in range(images.shape[0]):
+        images[i] = dataset.transform(images[i].cuda())
+    return images
+
 
 
 
@@ -119,26 +122,28 @@ def training_step(data: dict,
                args = None) -> torch.Tensor:
     
     images, adjective_labels, noun_labels, concat_labels = data['image'].cuda(), data['adjective_labels'].cuda(), data['noun_labels'].cuda(), data['concat_labels'].cuda()
-    labels = [adjective_labels, noun_labels, concat_labels] * 2
+    labels = [adjective_labels, noun_labels] * 2
 
     truth = data['noun_labels'] != -1
-    classification_out, clip_image_logits = model(text_prompts, images)
+    classification_out, clip_image_logits = model(images)
 
 
     #adding second term to loss function so gradients are not zero
     loss = clip_image_logits.sum() * 0
     accuracys = []
-    for idx, i in classification_out: 
+    for idx, i in enumerate(classification_out): 
         loss += cross_entropy_loss(i, labels[idx], truth)
         accuracys.append(return_accuracy(i, labels[idx], truth)[0])
+    accuracys.append(get_accuracy_concat(classification_out[0], classification_out[1], labels[0], labels[1])[0])
+    accuracys.append(get_accuracy_concat(classification_out[2], classification_out[3], labels[0], labels[1])[0])
 
     
     metrics['Linear Adjective Accuracy'] += accuracys[0]
     metrics['Linear Noun Accuracy'] += accuracys[1]
-    metrics['Linear Concat Accuracy'] += accuracys[2]
-    metrics['Classifier Adjective Accuracy'] += accuracys[3]
-    metrics['Classifier Noun Accuracy'] += accuracys[4]
-    metrics['Classifier Concat Accuracy'] += accuracys[5]
+    metrics['Classifier Adjective Accuracy'] += accuracys[2]
+    metrics['Classifier Noun Accuracy'] += accuracys[3]
+    metrics['Linear Arg Max Concat Accuracy'] += accuracys[4]
+    metrics['Classifier Arg Max Concat Accuracy'] += accuracys[5]
 
     metrics['total'] += torch.sum(truth)
     metrics['class total'] += torch.sum(truth)
@@ -163,69 +168,48 @@ def validation_step(data: list,
 
     with torch.no_grad():
         images, adjective_labels, noun_labels, concat_labels = data['image'].cuda(), data['adjective_labels'].cuda(), data['noun_labels'].cuda(), data['concat_labels'].cuda()
-        labels = [adjective_labels, noun_labels, concat_labels] * 2
+        labels = [adjective_labels, noun_labels] * 2
 
         truth = data['noun_labels'] != -1
-        classification_out, clip_image_logits = model(text_prompts, images)
+        classification_out, clip_image_logits = model(images)
 
 
         #adding second term to loss function so gradients are not zero
         loss = clip_image_logits.sum() * 0
         accuracys = []
-        for idx, i in classification_out: 
+        for idx, i in enumerate(classification_out): 
             accuracys.append(return_accuracy(i, labels[idx], truth)[0])
+        accuracys.append(get_accuracy_concat(classification_out[0], classification_out[1], labels[0], labels[1])[0])
+        accuracys.append(get_accuracy_concat(classification_out[2], classification_out[3], labels[0], labels[1])[0])
 
         
         metrics['Linear Adjective Accuracy'] += accuracys[0]
         metrics['Linear Noun Accuracy'] += accuracys[1]
-        metrics['Linear Concat Accuracy'] += accuracys[2]
-        metrics['Classifier Adjective Accuracy'] += accuracys[3]
-        metrics['Classifier Noun Accuracy'] += accuracys[4]
-        metrics['Classifier Concat Accuracy'] += accuracys[5]
+        metrics['Classifier Adjective Accuracy'] += accuracys[2]
+        metrics['Classifier Noun Accuracy'] += accuracys[3]
+        metrics['Linear Arg Max Concat Accuracy'] += accuracys[4]
+        metrics['Classifier Arg Max Concat Accuracy'] += accuracys[5]
 
         metrics['total'] += torch.sum(truth)
         metrics['class total'] += torch.sum(truth)
-        metrics['Total Loss'] += loss
-        metrics['CE Loss'] += loss
         
         #logging protocol
         if log and args.rank == 0:
-            logger(metrics, step, wandb = wandb, train = False, args = args, training_script=True)
+            logger(metrics, step, wandb = wandb, train =False, args = args, training_script=True)
             reset_metrics(metrics, val = True)
         
         return loss
 
-def create_text_prompts(args):
-    with open(args.data_path + '/CUB_200_2011/attributes.txt', 'r') as f:
-        lines = f.readlines()
+def create_text_prompts_adjectives(adjectives):
     text_prompts = []
-    for line in lines:
+    for word in adjectives:
+        text_prompts.append('This photo shows an object that is ' + word)
+    return text_prompts
 
-        #base that will be used for every image
-        start = 'The bird has a '
-
-        #get the words before seeing the descriptor
-        beginning = ''
-        seen = False
-
-
-        for i in line.split()[1].split('_'):
-
-            #:: signigifies that the attribute value is on the other side
-            if '::' in i:
-                first_half = i.split('::')[0]
-                second_half = i.split('::')[1]
-                seen = True
-
-            #if we have seen the descriptor, we are done and ( signifies that
-            if '(' in i:
-                break
-            if i != 'has':
-                if '::' in i: continue
-                if seen: second_half += ' ' + i
-                else: beginning += i + ' '
-        start += second_half + ' ' + beginning  + first_half
-        text_prompts.append(start)
+def create_text_prompts_nouns(nouns):
+    text_prompts = []
+    for word in nouns:
+        text_prompts.append('This is a ' + word)
     return text_prompts
 
 
@@ -261,6 +245,7 @@ if __name__ == '__main__':
     
     args.dataset_args = {
                  'root': args.data_path,
+                 'transformation': False,
                  'crop_size': 224,
                  'brightness': 0.4, 
                  'contrast': 0.4, 
@@ -275,6 +260,7 @@ if __name__ == '__main__':
     
     args.val_dataset_args = {
                  'root': args.data_path,
+                 'transformation': False,
                  'crop_size': 224,
                  'brightness': 0.4, 
                  'contrast': 0.4, 
@@ -328,6 +314,8 @@ if __name__ == '__main__':
     metrics['Classifier Adjective Accuracy'] = 0
     metrics['Classifier Noun Accuracy'] = 0
     metrics['Classifier Concat Accuracy'] = 0
+    metrics['Linear Arg Max Concat Accuracy'] = 0
+    metrics['Classifier Arg Max Concat Accuracy'] = 0
     
 
     val_metrics = {}
@@ -340,6 +328,8 @@ if __name__ == '__main__':
     val_metrics['Classifier Adjective Accuracy'] = 0
     val_metrics['Classifier Noun Accuracy'] = 0
     val_metrics['Classifier Concat Accuracy'] = 0
+    val_metrics['Linear Arg Max Concat Accuracy'] = 0
+    val_metrics['Classifier Arg Max Concat Accuracy'] = 0
     
     if args.checkpoint:
         checkpoint = torch.load('{name}'.format(name = args.checkpoint_path))
@@ -384,7 +374,18 @@ if __name__ == '__main__':
     )
     import os
     os.environ["TOKENIZERS_PARALLELISM"] = "false" 
-    text_prompts = create_text_prompts(args)
+
+    adjectives = []
+    for i in dataset.adjectives:
+        adjectives.append(dataset.adjectives[i])
+    nouns = []
+    for i in dataset.nouns:
+        nouns.append(dataset.nouns[i])
+
+    adjective_text_prompts = create_text_prompts_adjectives(adjectives)
+    noun_text_prompts = create_text_prompts_nouns(nouns)
+
+    model.module.create_text_embeddings(adjective_text_prompts, noun_text_prompts)
     
     trainer = trainer.Trainer(
                              model,
