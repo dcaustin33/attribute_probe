@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/ResNet18/train_resnet18.py", line 314, in <module>
-    params = get_params(model, args)
-  File "/home/ec2-user/attribute_probe/clip_src/training_scripts/ResNet18/train_resnet18.py", line 67, in get_params
-    {'params': model.clip.parameters()},
-  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/nn/modules/module.py", line 1207, in __getattr__
-    raise AttributeError("'{}' object has no attribute '{}'".format(
-AttributeError: 'ResNet18' object has no attribute 'clip'
