@@ -1,4 +1,4 @@
-l#torch inputs
+#torch inputs
 import torch
 from torch import nn
 import torch.nn.functional as F
@@ -12,11 +12,11 @@ from sklearn.metrics import roc_auc_score, roc_curve
 #imports defined in folder
 from mit_states_dataset import MIT_states
 import training_scripts.evaluator as evaluator
-from models.clip_text_image_pretrained import CLIP_text_image, CLIP_text_image_concat
+from models.clip_image_pretrained import CLIP_image
 from training_scripts.logger import log_metrics as logger
 from utils.gather import GatherLayer
 from utils.distributed import set_distributed_mode
-from utils.utils import get_accuracy, get_accuracy_concat
+from utils.utils import get_accuracy
 #python helper inputs
 import os
 from pl_bolts.optimizers.lr_scheduler import LinearWarmupCosineAnnealingLR
@@ -115,6 +115,11 @@ def create_text_prompts(args):
         text_prompts.append(start)
     return text_prompts
 
+def transform_images(images):
+    for i in range(images.shape[0]):
+        images[i] = dataset.transform(images[i].cuda())
+    return images
+
 
 def validation_step(data: list, 
                     model: nn.Module, 
@@ -126,7 +131,9 @@ def validation_step(data: list,
 
     with torch.no_grad():
         images, adjective_labels, noun_labels, concat_labels = data['image'].cuda(), data['adjective_labels'].cuda(), data['noun_labels'].cuda(), data['concat_labels'].cuda()
-        labels = [adjective_labels, noun_labels] * 2
+        if not args.val_dataset_args['transformation']:
+            images = transform_images(images)
+        labels = [adjective_labels, noun_labels, concat_labels] * 2
 
         truth = data['noun_labels'] != -1
         classification_out, clip_image_logits = model(images)
@@ -137,38 +144,23 @@ def validation_step(data: list,
         accuracys = []
         for idx, i in enumerate(classification_out): 
             accuracys.append(return_accuracy(i, labels[idx], truth)[0])
-        accuracys.append(get_accuracy_concat(classification_out[0], classification_out[1], labels[0], labels[1])[0])
-        accuracys.append(get_accuracy_concat(classification_out[2], classification_out[3], labels[0], labels[1])[0])
 
         
         metrics['Linear Adjective Accuracy'] += accuracys[0]
         metrics['Linear Noun Accuracy'] += accuracys[1]
-        metrics['Classifier Adjective Accuracy'] += accuracys[2]
-        metrics['Classifier Noun Accuracy'] += accuracys[3]
-        metrics['Linear Arg Max Concat Accuracy'] += accuracys[4]
-        metrics['Classifier Arg Max Concat Accuracy'] += accuracys[5]
+        metrics['Linear Concat Accuracy'] += accuracys[2]
+        metrics['Classifier Adjective Accuracy'] += accuracys[3]
+        metrics['Classifier Noun Accuracy'] += accuracys[4]
+        metrics['Classifier Concat Accuracy'] += accuracys[5]
 
         metrics['total'] += torch.sum(truth)
         metrics['class total'] += torch.sum(truth)
         
         #logging protocol
         if log and args.rank == 0:
-            logger(metrics, step, wandb = wandb, train =False, args = args, training_script=True)
-            reset_metrics(metrics, val = True)
+            logger(metrics, step, wandb = wandb, train = False, args = args, training_script=True)
         
         return loss
-
-def create_text_prompts_adjectives(adjectives):
-    text_prompts = []
-    for word in adjectives:
-        text_prompts.append('This photo shows an object that is ' + word)
-    return text_prompts
-
-def create_text_prompts_nouns(nouns):
-    text_prompts = []
-    for word in nouns:
-        text_prompts.append('This is a ' + word)
-    return text_prompts
 
     
 if __name__ == '__main__':
@@ -197,7 +189,6 @@ if __name__ == '__main__':
     
     args.val_dataset_args = {
                  'root': args.data_path,
-                 'transformation': True,
                  'crop_size': 224,
                  'brightness': 0.4, 
                  'contrast': 0.4, 
@@ -231,7 +222,7 @@ if __name__ == '__main__':
     nouns = len(dataset.nouns.keys())
     concat = len(dataset.concat.keys())
 
-    model = CLIP_text_image_concat(adjectives = adjectives, nouns = nouns, concat = concat, args=None)
+    model = CLIP_image(adjectives = adjectives, nouns = nouns, concat = concat, args=None)
     
     checkpoint = torch.load('{name}'.format(name = args.saved_path))
     new_dict = {}
@@ -257,21 +248,7 @@ if __name__ == '__main__':
     val_metrics['Classifier Adjective Accuracy'] = 0
     val_metrics['Classifier Noun Accuracy'] = 0
     val_metrics['Classifier Concat Accuracy'] = 0
-    val_metrics['Linear Arg Max Concat Accuracy'] = 0
-    val_metrics['Classifier Arg Max Concat Accuracy'] = 0
     now = time.time()
-
-    adjectives = []
-    for i in dataset.adjectives:
-        adjectives.append(dataset.adjectives[i])
-    nouns = []
-    for i in dataset.nouns:
-        nouns.append(dataset.nouns[i])
-
-    adjective_text_prompts = create_text_prompts_adjectives(adjectives)
-    noun_text_prompts = create_text_prompts_nouns(nouns)
-
-    model.module.create_text_embeddings(adjective_text_prompts, noun_text_prompts)
     
     evaluator = evaluator.Evaluator(
                              model,
