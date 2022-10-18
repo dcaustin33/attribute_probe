@@ -79,3 +79,43 @@ class CLIP_text_image_concat(nn.Module):
                 classifications[3] = torch.cat((classifications[3], inter_class[3]), dim=1)
 
         return classifications, outputs.logits_per_image
+
+
+
+class CLIP_text_image_with_attribute(nn.Module):
+
+    def __init__(self, args = None):
+        super().__init__()
+        self.args = args
+        self.clip = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+        self.processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+        self.linear1 = nn.Linear(1024, 312)
+        self.linear2 = nn.Linear(768 + 512, 312)
+        self.classifier1 = nn.Sequential(nn.Linear(1024, 312), nn.ReLU(), nn.BatchNorm1d(312), nn.Linear(312, 312))
+        self.classifier2 = nn.Sequential(nn.Linear(768 + 512, 312), nn.ReLU(), nn.BatchNorm1d(312), nn.Linear(312, 312))
+
+    def forward(self, prompts, images):
+        text = prompts
+        inputs = self.processor(text=text, return_tensors="pt", padding=True)
+        for i in inputs:
+            inputs[i] = inputs[i].cuda()
+        inputs['pixel_values'] = images.cuda()
+        outputs = self.clip(**inputs)
+
+        image_embed = outputs.image_embeds
+        image_out = outputs.vision_model_output['pooler_output']
+        text_embed = outputs.text_embeds
+        text_out = outputs.text_model_output['pooler_output']
+
+        classifications = []
+
+        #now we concatenate the image and text embeddings
+        embed = torch.cat((image_embed, text_embed), dim=1)
+        out = torch.cat((image_out, text_out), dim=1)
+
+        classifications.append(self.linear1(embed))
+        classifications.append(self.linear2(out))
+        classifications.append(self.classifier1(embed))
+        classifications.append(self.classifier2(out))
+
+        return classifications, outputs.logits_per_image
