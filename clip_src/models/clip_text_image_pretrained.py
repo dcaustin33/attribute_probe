@@ -94,6 +94,11 @@ class CLIP_text_image_with_attribute(nn.Module):
         self.classifier1 = nn.Sequential(nn.Linear(1024, 312), nn.ReLU(), nn.BatchNorm1d(312), nn.Linear(312, 312))
         self.classifier2 = nn.Sequential(nn.Linear(768 + 512, 312), nn.ReLU(), nn.BatchNorm1d(312), nn.Linear(312, 312))
 
+        self.class_linear1= nn.Linear(1024, 201)
+        self.class_classifier1 = nn.Sequential(nn.Linear(1024, 201), nn.ReLU(), nn.BatchNorm1d(201), nn.Linear(201, 201))
+        self.class_linear2 = nn.Linear(768 + 512, 201)
+        self.class_classifier2 = nn.Sequential(nn.Linear(768 + 512, 201), nn.ReLU(), nn.BatchNorm1d(201), nn.Linear(201, 201))
+
     def forward(self, prompts, images):
         text = prompts
         inputs = self.processor(text=text, return_tensors="pt", padding=True)
@@ -117,5 +122,10 @@ class CLIP_text_image_with_attribute(nn.Module):
         classifications.append(self.linear2(out))
         classifications.append(self.classifier1(embed))
         classifications.append(self.classifier2(out))
+        classifications.append(self.class_linear1(embed))
+        classifications.append(self.class_linear2(out))
+        classifications.append(self.class_classifier1(embed))
+        classifications.append(self.class_classifier2(out))
+
 
         return classifications, outputs.logits_per_image

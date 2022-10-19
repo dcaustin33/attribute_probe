@@ -18,6 +18,13 @@ class CLIP_image(nn.Module):
         self.classifier1 = nn.Sequential(nn.Linear(512, 312), nn.ReLU(), nn.BatchNorm1d(312), nn.Linear(312, 312))
         self.classifier2 = nn.Sequential(nn.Linear(768, 312), nn.ReLU(), nn.BatchNorm1d(312), nn.Linear(312, 312))
 
+        self.class_linear1= nn.Linear(512, 201)
+        self.class_classifier1 = nn.Sequential(nn.Linear(512, 201), nn.ReLU(), nn.BatchNorm1d(201), nn.Linear(201, 201))
+        self.class_linear2 = nn.Linear(768, 201)
+        self.class_classifier2 = nn.Sequential(nn.Linear(768, 201), nn.ReLU(), nn.BatchNorm1d(201), nn.Linear(201, 201))
+
+
+
     def forward(self, images):
         text = ['']
         inputs = self.processor(text=text, return_tensors="pt", padding=True)
@@ -31,5 +38,13 @@ class CLIP_image(nn.Module):
         classifier_pred1 = self.classifier1(outputs.image_embeds)
         classifier_pred2 = self.classifier2(outputs.vision_model_output['pooler_output'])
 
+        class_pred1 = self.class_linear1(outputs.image_embeds)
+        class_pred2 = self.class_linear2(outputs.vision_model_output['pooler_output'])
 
-        return (binary_pred1, binary_pred2, classifier_pred1, classifier_pred2), outputs.logits_per_image
+        class_classifier_pred1 = self.class_classifier1(outputs.image_embeds)
+        class_classifier_pred2 = self.class_classifier2(outputs.vision_model_output['pooler_output'])
+
+        classifications = [binary_pred1, binary_pred2, classifier_pred1, classifier_pred2, class_pred1, class_pred2, class_classifier_pred1, class_classifier_pred2]
+
+
+        return classifications, outputs.logits_per_image

@@ -16,6 +16,7 @@ from models.clip_image_pretrained import CLIP_image
 from training_scripts.logger import log_metrics as logger
 from utils.gather import GatherLayer
 from utils.distributed import set_distributed_mode
+from utils.utils import get_accuracy
 
 #python helper inputs
 import os
@@ -67,6 +68,10 @@ def get_params(model: nn.Module,
                 {"params": model.linear2.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 {"params": model.classifier1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 {"params": model.classifier2.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.class_linear1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.class_linear2.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.class_classifier1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.class_classifier2.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 ]
     return params
 
@@ -121,32 +126,41 @@ def training_step(data: dict,
                wandb = None,
                args = None) -> torch.Tensor:
     
-    images, attributes, certainty = data['image'].cuda(), data['attributes'].cuda(), data['certainty'].cuda()
+    images, attributes, certainty, class_labels = data['image'].cuda(), data['attributes'].cuda(), data['certainty'].cuda(), data['class'].cuda()
 
-    truth = certainty >= 3
+    truth = certainty >= args.certainty_threshold
     classification_out, clip_image_logits = model(images)
 
 
     #adding second term to loss function so gradients are not zero
     loss = clip_image_logits.sum() * 0
     accuracys = []
-    for i in classification_out: 
+    for i in classification_out[:4]: 
         loss += cross_entropy_loss(i, attributes, truth)
         accuracys.append(return_accuracy(i, attributes, truth)[0])
     _, maj_accuracy = return_accuracy(i, attributes, truth)
-
-    
     for i in range(1, len(accuracys) + 1):
         metrics['Accuracy {}'.format(i)] += accuracys[i - 1]
+
+    accuracys = []
+
+    for i in classification_out[4:]:
+        loss += F.cross_entropy(i, class_labels)
+        accuracys.append(get_accuracy(i, class_labels))
+    for i in range(1, len(accuracys) + 1):
+        metrics['Class Accuracy {}'.format(i)] += accuracys[i - 1][0]
+
+    
+    
     metrics['total'] += torch.sum(truth)
-    metrics['class total'] += torch.sum(truth)
+    metrics['class total'] += images.shape[0]
     metrics['Total Loss'] += loss
     metrics['CE Loss'] += loss
     metrics['Majority Accuracy'] += maj_accuracy
     
     #logging protocol
     if log and args.rank == 0:
-        logger(metrics, step, wandb = wandb, train = True, args = args)
+        logger(metrics, step, wandb = wandb, train = True, args = args, training_script=True)
         reset_metrics(metrics, val = False)
     
     return loss
@@ -161,27 +175,38 @@ def validation_step(data: list,
                     args = None):
 
     with torch.no_grad():
-        images, attributes, certainty = data['image'].cuda(), data['attributes'].cuda(), data['certainty'].cuda()
+        images, attributes, certainty, class_labels = data['image'].cuda(), data['attributes'].cuda(), data['certainty'].cuda(), data['class'].cuda()
 
-        truth = certainty >= 3
+        truth = certainty >= args.certainty_threshold
+
         classification_out, clip_image_logits = model(images)
 
+
         #adding second term to loss function so gradients are not zero
+        loss = clip_image_logits.sum() * 0
         accuracys = []
-        for i in classification_out: 
+        for i in classification_out[:4]: 
             accuracys.append(return_accuracy(i, attributes, truth)[0])
         _, maj_accuracy = return_accuracy(i, attributes, truth)
-
-        
         for i in range(1, len(accuracys) + 1):
             metrics['Accuracy {}'.format(i)] += accuracys[i - 1]
+
+        accuracys = []
+
+        for i in classification_out[4:]:
+            accuracys.append(get_accuracy(i, class_labels))
+        for i in range(1, len(accuracys) + 1):
+            metrics['Class Accuracy {}'.format(i)] += accuracys[i - 1][0]
+
+        
+        
         metrics['total'] += torch.sum(truth)
-        metrics['class total'] += torch.sum(truth)
+        metrics['class total'] += images.shape[0]
         metrics['Majority Accuracy'] += maj_accuracy
         
         #logging protocol
         if log and args.rank == 0:
-            logger(val_metrics, step, wandb = wandb, train = False, args = args, training_script = True)
+            logger(metrics, step, wandb = wandb, train = False, args = args, training_script=True)
             reset_metrics(metrics, val = True)
         
         return None
@@ -203,6 +228,7 @@ if __name__ == '__main__':
     parser.add_argument('--log_n_train_steps', default = 100, type = int)
     parser.add_argument('-checkpoint', action='store_true')
     parser.add_argument('--checkpoint_path', default = None, type = str)
+    parser.add_argument('--certainty_threshold', default = 3, type = int)
     
     #distributed arguments
     parser.add_argument("--dist_url", default="tcp://localhost:40000", type=str,
@@ -279,6 +305,10 @@ if __name__ == '__main__':
     metrics['Accuracy 2'] = 0
     metrics['Accuracy 3'] = 0
     metrics['Accuracy 4'] = 0
+    metrics['Class Accuracy 1'] = 0
+    metrics['Class Accuracy 2'] = 0
+    metrics['Class Accuracy 3'] = 0
+    metrics['Class Accuracy 4'] = 0
     metrics['Majority Accuracy'] = 0
     
 
@@ -290,6 +320,10 @@ if __name__ == '__main__':
     val_metrics['Accuracy 2'] = 0
     val_metrics['Accuracy 3'] = 0
     val_metrics['Accuracy 4'] = 0
+    val_metrics['Class Accuracy 1'] = 0
+    val_metrics['Class Accuracy 2'] = 0
+    val_metrics['Class Accuracy 3'] = 0
+    val_metrics['Class Accuracy 4'] = 0
     val_metrics['Majority Accuracy'] = 0
     
     if args.checkpoint:
