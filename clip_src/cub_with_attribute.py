@@ -18,10 +18,11 @@ class Cub2011(Dataset):
     directory = 'CUB_200_2011'
     tgz_md5 = '97eceeb196236b17998738112f37df78'
 
-    def __init__(self, root, args, train=True, loader=default_loader, download=False,):
+    def __init__(self, root, args, train=True, loader=default_loader, download=False, normalize=True):
         self.root = os.path.expanduser(root)
         #self.transform = transform
         self.loader = default_loader
+        self.normalize = normalize
         self.train = train
         self.num_attributes = 312
         self.attribute_idx_amount = args['attribute_idx_amount']
@@ -62,6 +63,23 @@ class Cub2011(Dataset):
                             torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                                                 std=[0.229, 0.224, 0.225])
                             ])  
+        self.transform_no_normalize = torchvision.transforms.Compose([
+                                transforms.RandomApply(
+                                    [transforms.ColorJitter(args['brightness'], args['contrast'], args['saturation'], args['hue'])],
+                                    p=args['color_jitter_prob'],
+                                ),
+                            #torchvision.transforms.Resize((224, 224)),
+                            transforms.RandomResizedCrop((args['crop_size'], args['crop_size']), scale=(args['min_scale'], args['max_scale']),
+                                    interpolation=transforms.InterpolationMode.BICUBIC),
+                            torchvision.transforms.ToTensor(),
+                            torchvision.transforms.RandomHorizontalFlip(p=args['horizontal_flip_prob']),
+                            ])  
+        if normalize:
+            print('Normalizing in DataLoader')
+            self.transform = self.transform
+        else:
+            print('Not normalizing in DataLoader')
+            self.transform = self.transform_no_normalize
 
 
     def _load_metadata(self):
@@ -130,8 +148,7 @@ class Cub2011(Dataset):
         target = sample.target - 1  # Targets start at 1 by default, so shift to 0
         img = self.loader(path)
 
-        if self.transform is not None:
-            img = self.transform(img)
+        if self.transform is not None: img = self.transform(img)
 
         batch = {}
         batch['image'] = img

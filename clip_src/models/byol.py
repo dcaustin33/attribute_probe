@@ -67,10 +67,15 @@ class BYOL(torch.nn.Module):
         self.model = model
         self.linear1 = torch.nn.Linear(2048, 312)
         self.classifier1 = torch.nn.Sequential(torch.nn.Linear(2048, 312), torch.nn.ReLU(), torch.nn.BatchNorm1d(312), torch.nn.Linear(312, 312))
-    
+
+        self.class_linear = torch.nn.Linear(2048, 201) 
+        self.class_classifier = torch.nn.Sequential(torch.nn.Linear(2048, 201), torch.nn.ReLU(), torch.nn.BatchNorm1d(201), torch.nn.Linear(201, 201))
+
     def forward(self, x):
         x = self.model.encoder(x)
         x = torch.flatten(x, 1)
         classifier_out = self.classifier1(x)
         linear_out = self.linear1(x)
-        return (linear_out, classifier_out)
+        class_linear_out = self.class_linear(x)
+        class_classifier_out = self.class_classifier(x)
+        return (linear_out, classifier_out, class_linear_out, class_classifier_out)

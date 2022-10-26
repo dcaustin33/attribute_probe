@@ -10,13 +10,12 @@ import torchmetrics
 from sklearn.metrics import roc_auc_score, roc_curve
 
 #imports defined in folder
-from cub_dataset import Cub2011
+from cub_with_attribute import Cub2011
 import training_scripts.evaluator as evaluator
-from models.byol import BYOL
+from models.vilt import ViLT
 from training_scripts.logger import log_metrics as logger
 from utils.gather import GatherLayer
 from utils.distributed import set_distributed_mode
-import training_scripts.evaluator as evaluator
 from utils.utils import get_accuracy
 
 #python helper inputs
@@ -51,6 +50,38 @@ def prepare_data(val_dataset_args):
     return val_dataset, val_dataloader
 
 
+def reset_metrics(metrics, val = False):
+    if not val:
+        metrics['total'] = 0
+        metrics['class total'] = 0
+        metrics['Total Loss'] = 0
+        metrics['CE Loss'] = 0
+        metrics['Accuracy 1'] = 0
+        metrics['Accuracy 2'] = 0
+        metrics['Accuracy 3'] = 0
+        metrics['Accuracy 4'] = 0
+        metrics['Class Accuracy 1'] = 0
+        metrics['Class Accuracy 2'] = 0
+        metrics['Class Accuracy 3'] = 0
+        metrics['Class Accuracy 4'] = 0
+        metrics['Majority Accuracy'] = 0
+
+    if val:
+        val_metrics['total'] = 0
+        val_metrics['class total'] = 0
+        val_metrics['class total2'] = 0
+        val_metrics['Accuracy 1'] = 0
+        val_metrics['Accuracy 2'] = 0
+        val_metrics['Accuracy 3'] = 0
+        val_metrics['Accuracy 4'] = 0
+        val_metrics['Class Accuracy 1'] = 0
+        val_metrics['Class Accuracy 2'] = 0
+        val_metrics['Class Accuracy 3'] = 0
+        val_metrics['Class Accuracy 4'] = 0
+        val_metrics['Majority Accuracy'] = 0
+
+
+
 def return_accuracy(classification, labels, truth):
     majority_classifier = torch.zeros(classification.shape).cuda()
 
@@ -62,68 +93,6 @@ def return_accuracy(classification, labels, truth):
 def return_auc(classification, labels, truth, metric):
 
     return metric.update(torch.sigmoid(classification[truth]), labels[truth])
-
-def reset_metrics(metrics, val = False):
-    if not val:
-        metrics['total'] = 0
-        metrics['class total'] = 0
-        metrics['Total Loss'] = 0
-        metrics['CE Loss'] = 0
-        metrics['Accuracy 1'] = 0
-        metrics['Accuracy 2'] = 0
-        metrics['Accuracy 3'] = 0
-        metrics['Accuracy 4'] = 0
-        metrics['Majority Accuracy'] = 0
-
-    if val:
-        val_metrics['total'] = 0
-        val_metrics['class total'] = 0
-        val_metrics['class total2'] = 0
-        val_metrics['Accuracy 1'] = 0
-        val_metrics['Accuracy 2'] = 0
-        val_metrics['Accuracy 3'] = 0
-        val_metrics['Accuracy 4'] = 0
-        val_metrics['Majority Accuracy'] = 0
-
-def validation_step(data: list, 
-                    model: nn.Module, 
-                    metrics: dict,
-                    step: int,
-                    log = False,
-                    wandb = None,
-                    args = None):
-
-    with torch.no_grad():
-        images, attributes, certainty, class_labels = data['image'].cuda(), data['attributes'].cuda(), data['certainty'].cuda(), data['class'].cuda()
-
-        truth = certainty >= args.certainty_threshold
-        classification_out = model(images)
-
-
-        #adding second term to loss function so gradients are not zero
-        accuracys = []
-        for i in classification_out[:2]: 
-            accuracys.append(return_accuracy(i, attributes, truth)[0])
-        _, maj_accuracy = return_accuracy(i, attributes, truth)
-        for i in range(1, len(accuracys) + 1):
-            metrics['Accuracy {}'.format(i)] += accuracys[i - 1]
-
-        accuracys = []
-
-        for i in classification_out[2:]:
-            accuracys.append(get_accuracy(i, class_labels))
-        for i in range(1, len(accuracys) + 1):
-            metrics['Class Accuracy {}'.format(i)] += accuracys[i - 1][0]
-
-        metrics['total'] += torch.sum(truth)
-        metrics['class total'] += images.shape[0]
-        
-        #logging protocol
-        if log and args.rank == 0:
-            logger(metrics, step, wandb = wandb, train = False, args = args, training_script=True)
-            reset_metrics(metrics, val = False)
-        
-        return None
 
 
 def create_text_prompts(args):
@@ -162,11 +131,17 @@ def create_text_prompts(args):
 
 def eval_fn(model, classification_number, val_dataloader, args, num_attributes, val_metrics, wandb, step):
     logits_by_att, labels_by_att = defaultdict(list), defaultdict(list)
-    prompts = create_text_prompts(args)
+    text_prompts = np.array(create_text_prompts(args))
+    #print(text_prompts)
     with torch.no_grad():
         for i, batch in enumerate(iter(val_dataloader)):
             image, attributes, certainty = batch['image'].cuda(), batch['attributes'].cuda(), batch['certainty'].cuda()
-            attributes_logits = model(image)
+            if args.attribute_idx_amount > 1:
+                arr = text_prompts[batch['attribute_idx']]
+                correct_prompts = ['. '.join(i) for i in list(arr)]
+            else:
+                correct_prompts = list(text_prompts[batch['attribute_idx']])
+            attributes_logits = model(correct_prompts, image)
             attributes_logits = attributes_logits[classification_number]
             truth = certainty >= args.certainty_threshold
             for att_id in range(num_attributes):
@@ -190,8 +165,56 @@ def eval_fn(model, classification_number, val_dataloader, args, num_attributes, 
     val_metrics['AUC {}'.format(classification_number + 1)] = np.mean(rocauc_list)
     val_metrics['Accuracy {}'.format(classification_number + 1)] = np.mean(acc_list)
 
-    '''if log and args.rank == 0:
-        logger(val_metrics, step, wandb = wandb, train = False, args = args, training_script = False)'''
+    if log and args.rank == 0:
+        logger(val_metrics, step, wandb = wandb, train = False, args = args, training_script = False)
+
+def validation_step(data: list, 
+                    model: nn.Module, 
+                    metrics: dict,
+                    step: int,
+                    log = False,
+                    wandb = None,
+                    args = None):
+    with torch.no_grad():
+        images, attributes, certainty, class_labels = data['image'], data['attributes'].cuda(), data['certainty'].cuda(), data['class'].cuda()
+
+        truth = certainty >= args.certainty_threshold
+
+        #give the text prompts with a real attribute for each
+        if args.attribute_idx_amount > 1:
+            arr = text_prompts[data['attribute_idx']]
+            correct_prompts = ['. '.join(i) for i in list(arr)]
+        else:
+            correct_prompts = list(text_prompts[data['attribute_idx']])
+
+        classification_out = model(correct_prompts, images)
+
+
+        #adding second term to loss function so gradients are not zero
+        accuracys = []
+        for i in classification_out[:2]: 
+            accuracys.append(return_accuracy(i, attributes, truth)[0])
+        _, maj_accuracy = return_accuracy(i, attributes, truth)
+        for i in range(1, len(accuracys) + 1):
+            metrics['Accuracy {}'.format(i)] += accuracys[i - 1]
+
+        accuracys = []
+
+        for i in classification_out[2:]:
+            accuracys.append(get_accuracy(i, class_labels))
+        for i in range(1, len(accuracys) + 1):
+            metrics['Class Accuracy {}'.format(i)] += accuracys[i - 1][0]
+
+        
+        
+        metrics['total'] += torch.sum(truth)
+        metrics['class total'] += images.shape[0]
+        metrics['Majority Accuracy'] += maj_accuracy
+        
+        #logging protocol
+        if log and args.rank == 0:
+            logger(metrics, step, wandb = wandb, train = False, args = args, training_script=True)
+            reset_metrics(metrics, val = True)
 
     
 if __name__ == '__main__':
@@ -203,9 +226,10 @@ if __name__ == '__main__':
     parser.add_argument('-log', action='store_true')
     parser.add_argument('--data_path', default = '../../../data/', type = str)
     parser.add_argument('--val_steps', default = 100, type = int)
-    parser.add_argument('--log_n_train_steps', default = 100, type = int)
     parser.add_argument('--saved_path', default=None, type = str)
     parser.add_argument('--certainty_threshold', default = 3, type = int)
+    parser.add_argument('--attribute_idx_amount', default = 1, type = int,
+                    help="""This is how many correct attributes to use as the prompt. Ex 2 would mean use Wing Color Blue and Pointy Beak""")
     
     #distributed arguments
     parser.add_argument("--dist_url", default="tcp://localhost:40000", type=str,
@@ -219,8 +243,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.data_path[-1] != '/': args.data_path = args.data_path + '/'
     args.log_n_val_steps = args.val_steps - 1
+    
     args.val_dataset_args = {
                  'root': args.data_path,
+                 'attribute_idx_amount': args.attribute_idx_amount,
                  'crop_size': 224,
                  'brightness': 0.4, 
                  'contrast': 0.4, 
@@ -249,7 +275,7 @@ if __name__ == '__main__':
         wandb = wandb.init(config = args, name = name, project = 'attribute_probe')
     else: wandb = None
         
-    model = BYOL()
+    model = ViLT(args=None)
     
     checkpoint = torch.load('{name}'.format(name = args.saved_path))
     new_dict = {}
@@ -268,17 +294,17 @@ if __name__ == '__main__':
     val_metrics = {}
     val_metrics['total'] = 0
     val_metrics['class total'] = 0
+    val_metrics['Accuracy 1'] = 0
+    val_metrics['Accuracy 2'] = 0
     val_metrics['Class Accuracy 1'] = 0
     val_metrics['Class Accuracy 2'] = 0
-    val_metrics['Class Accuracy 3'] = 0
-    val_metrics['Class Accuracy 4'] = 0
+    val_metrics['Majority Accuracy'] = 0
     
     now = time.time()
     
     #testing each classification network
-    for i in range(2):
+    for i in range(0):
         eval_fn(model, i, val_dataloader, args, dataset.num_attributes, val_metrics, wandb, 0)
-    print('Done in', time.time() - now)
 
     evaluator = evaluator.Evaluator(
                              model,
@@ -287,4 +313,6 @@ if __name__ == '__main__':
                              validation_step,
                              val_metrics,
                              wandb)
+    text_prompts = np.array(create_text_prompts(args))
     evaluator.evaluate()
+    print('Done in', time.time() - now)

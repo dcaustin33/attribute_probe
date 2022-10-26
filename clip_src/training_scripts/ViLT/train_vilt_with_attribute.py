@@ -8,16 +8,16 @@ from torch.utils import data
 from torch.multiprocessing import Pool, Process, set_start_method
 import torch.distributed as dist
 import torchmetrics
+from utils.utils import get_accuracy
 
 #imports defined in folder
-from cub_dataset import Cub2011
+from cub_with_attribute import Cub2011
 import training_scripts.trainer as trainer
 import torchvision
-from models.byol import BYOL
+from models.vilt import ViLT
 from training_scripts.logger import log_metrics as logger
 from utils.gather import GatherLayer
 from utils.distributed import set_distributed_mode
-from utils.utils import get_accuracy
 
 #python helper inputs
 import os
@@ -25,6 +25,7 @@ from pl_bolts.optimizers.lr_scheduler import LinearWarmupCosineAnnealingLR
 import wandb
 import pytorch_lightning as pl
 import time
+import numpy as np
 
 
 torch.backends.cudnn.enabled = True 
@@ -36,7 +37,7 @@ def prepare_data(dataset_args, val_dataset_args):
     download = False
     
     #create the dataset
-    train_dataset = Cub2011(dataset_args['root'], dataset_args, download=download)
+    train_dataset = Cub2011(dataset_args['root'], dataset_args, download=download, normalize = False)
     sampler = data.DistributedSampler(train_dataset)
     dataloader = DataLoader(
         train_dataset,
@@ -48,7 +49,7 @@ def prepare_data(dataset_args, val_dataset_args):
         persistent_workers=True
     )
 
-    val_dataset = Cub2011(dataset_args['root'], val_dataset_args, download=download, train = False)
+    val_dataset = Cub2011(dataset_args['root'], val_dataset_args, download=download, train = False, normalize = False)
     val_sampler = data.DistributedSampler(val_dataset)
     val_dataloader = DataLoader(
         val_dataset,
@@ -67,8 +68,8 @@ def get_params(model: nn.Module,
     params = [  
                 {"params": model.linear1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 {"params": model.classifier1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
-                {"params": model.class_linear.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
-                {"params": model.class_classifier.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.class_linear1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
+                {"params": model.class_classifier1.parameters(), "lr": args.classifier_lr, "weight_decay": 0},
                 ]
     return params
 
@@ -86,8 +87,6 @@ def return_accuracy(classification, labels, truth):
     return torch.sum(classification[truth] == labels[truth]), torch.sum(majority_classifier[truth] == labels[truth])
 
 def return_auc(classification, labels, truth, metric):
-
-
     return metric.update(torch.sigmoid(classification[truth]), labels[truth])
 
 def reset_metrics(metrics, val = False):
@@ -122,7 +121,6 @@ def reset_metrics(metrics, val = False):
 
 
 
-
 def training_step(data: dict, 
                model: nn.Module, 
                metrics: dict,
@@ -131,14 +129,23 @@ def training_step(data: dict,
                wandb = None,
                args = None) -> torch.Tensor:
     
-    images, attributes, certainty, class_labels = data['image'].cuda(), data['attributes'].cuda(), data['certainty'].cuda(), data['class'].cuda()
+    images, attributes, certainty, class_labels = data['image'], data['attributes'].cuda(), data['certainty'].cuda(), data['class'].cuda()
 
     truth = certainty >= args.certainty_threshold
-    classification_out = model(images)
 
-    #calculate the loss
-    accuracys = []
+    #give the text prompts with a real attribute for each
+    if args.attribute_idx_amount > 1:
+        arr = text_prompts[data['attribute_idx']]
+        correct_prompts = ['. '.join(i) for i in list(arr)]
+    else:
+        correct_prompts = list(text_prompts[data['attribute_idx']])
+
+    classification_out = model(correct_prompts, images)
+
+
+    #adding second term to loss function so gradients are not zero
     loss = 0
+    accuracys = []
     for i in classification_out[:2]: 
         loss += cross_entropy_loss(i, attributes, truth)
         accuracys.append(return_accuracy(i, attributes, truth)[0])
@@ -153,7 +160,6 @@ def training_step(data: dict,
         accuracys.append(get_accuracy(i, class_labels))
     for i in range(1, len(accuracys) + 1):
         metrics['Class Accuracy {}'.format(i)] += accuracys[i - 1][0]
-
 
     
     
@@ -178,12 +184,19 @@ def validation_step(data: list,
                     log = False,
                     wandb = None,
                     args = None):
-
     with torch.no_grad():
-        images, attributes, certainty, class_labels = data['image'].cuda(), data['attributes'].cuda(), data['certainty'].cuda(), data['class'].cuda()
+        images, attributes, certainty, class_labels = data['image'], data['attributes'].cuda(), data['certainty'].cuda(), data['class'].cuda()
 
         truth = certainty >= args.certainty_threshold
-        classification_out = model(images)
+
+        #give the text prompts with a real attribute for each
+        if args.attribute_idx_amount > 1:
+            arr = text_prompts[data['attribute_idx']]
+            correct_prompts = ['. '.join(i) for i in list(arr)]
+        else:
+            correct_prompts = list(text_prompts[data['attribute_idx']])
+
+        classification_out = model(correct_prompts, images)
 
 
         #adding second term to loss function so gradients are not zero
@@ -201,6 +214,8 @@ def validation_step(data: list,
         for i in range(1, len(accuracys) + 1):
             metrics['Class Accuracy {}'.format(i)] += accuracys[i - 1][0]
 
+        
+        
         metrics['total'] += torch.sum(truth)
         metrics['class total'] += images.shape[0]
         metrics['Majority Accuracy'] += maj_accuracy
@@ -208,9 +223,7 @@ def validation_step(data: list,
         #logging protocol
         if log and args.rank == 0:
             logger(metrics, step, wandb = wandb, train = False, args = args, training_script=True)
-            reset_metrics(metrics, val = False)
-        
-        return None
+            reset_metrics(metrics, val = True)
 
 def create_text_prompts(args):
     with open(args.data_path + '/CUB_200_2011/attributes.txt', 'r') as f:
@@ -263,6 +276,8 @@ if __name__ == '__main__':
     parser.add_argument('-checkpoint', action='store_true')
     parser.add_argument('--checkpoint_path', default = None, type = str)
     parser.add_argument('--certainty_threshold', default = 3, type = int)
+    parser.add_argument('--attribute_idx_amount', default = 1, type = int,
+                    help="""This is how many correct attributes to use as the prompt. Ex 2 would mean use Wing Color Blue and Pointy Beak""")
     
     #distributed arguments
     parser.add_argument("--dist_url", default="tcp://localhost:40000", type=str,
@@ -278,6 +293,7 @@ if __name__ == '__main__':
     
     args.dataset_args = {
                  'root': args.data_path,
+                 'attribute_idx_amount': args.attribute_idx_amount,
                  'crop_size': 224,
                  'brightness': 0.4, 
                  'contrast': 0.4, 
@@ -293,6 +309,7 @@ if __name__ == '__main__':
     args.val_dataset_args = {
                  'root': args.data_path,
                  'crop_size': 224,
+                 'attribute_idx_amount': args.attribute_idx_amount,
                  'brightness': 0.4, 
                  'contrast': 0.4, 
                  'saturation': .2, 
@@ -328,7 +345,7 @@ if __name__ == '__main__':
         wandb = wandb.init(config = args, name = name, project = 'attribute_probe')
     else: wandb = None
         
-    model = BYOL()
+    model = ViLT(args=None)
 
     metrics = {}
     metrics['total'] = 0
@@ -337,12 +354,8 @@ if __name__ == '__main__':
     metrics['CE Loss'] = 0
     metrics['Accuracy 1'] = 0
     metrics['Accuracy 2'] = 0
-    metrics['Accuracy 3'] = 0
-    metrics['Accuracy 4'] = 0
     metrics['Class Accuracy 1'] = 0
     metrics['Class Accuracy 2'] = 0
-    metrics['Class Accuracy 3'] = 0
-    metrics['Class Accuracy 4'] = 0
     metrics['Majority Accuracy'] = 0
     
 
@@ -352,12 +365,8 @@ if __name__ == '__main__':
     val_metrics['class total2'] = 0
     val_metrics['Accuracy 1'] = 0
     val_metrics['Accuracy 2'] = 0
-    val_metrics['Accuracy 3'] = 0
-    val_metrics['Accuracy 4'] = 0
     val_metrics['Class Accuracy 1'] = 0
     val_metrics['Class Accuracy 2'] = 0
-    val_metrics['Class Accuracy 3'] = 0
-    val_metrics['Class Accuracy 4'] = 0
     val_metrics['Majority Accuracy'] = 0
     
     if args.checkpoint:
@@ -403,7 +412,7 @@ if __name__ == '__main__':
     )
     import os
     os.environ["TOKENIZERS_PARALLELISM"] = "false" 
-    text_prompts = create_text_prompts(args)
+    text_prompts = np.array(create_text_prompts(args))
     
     trainer = trainer.Trainer(
                              model,
