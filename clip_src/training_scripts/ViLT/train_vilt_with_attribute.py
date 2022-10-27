@@ -137,8 +137,12 @@ def training_step(data: dict,
     if args.attribute_idx_amount > 1:
         arr = text_prompts[data['attribute_idx']]
         correct_prompts = ['. '.join(i) for i in list(arr)]
+    elif args.attribute_idx_amount == 1:
+        correct_prompts = list(text_prompts[data['attribute_idx']])
     else:
         correct_prompts = list(text_prompts[data['attribute_idx']])
+        for i in range(len(correct_prompts)):
+            correct_prompts[i] = 'This is a picture of a bird.'
 
     classification_out = model(correct_prompts, images)
 
@@ -193,8 +197,12 @@ def validation_step(data: list,
         if args.attribute_idx_amount > 1:
             arr = text_prompts[data['attribute_idx']]
             correct_prompts = ['. '.join(i) for i in list(arr)]
+        elif args.attribute_idx_amount == 1:
+            correct_prompts = list(text_prompts[data['attribute_idx']])
         else:
             correct_prompts = list(text_prompts[data['attribute_idx']])
+            for i in range(len(correct_prompts)):
+                correct_prompts[i] = 'This is a picture of a bird.'
 
         classification_out = model(correct_prompts, images)
 

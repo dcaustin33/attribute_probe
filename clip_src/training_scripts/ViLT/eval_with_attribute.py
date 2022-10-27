@@ -184,8 +184,10 @@ def validation_step(data: list,
         if args.attribute_idx_amount > 1:
             arr = text_prompts[data['attribute_idx']]
             correct_prompts = ['. '.join(i) for i in list(arr)]
-        else:
+        elif args.attribute_idx_amount == 1:
             correct_prompts = list(text_prompts[data['attribute_idx']])
+        else:
+            correct_prompts = ['' for i in range(len(images))]
 
         classification_out = model(correct_prompts, images)
 
