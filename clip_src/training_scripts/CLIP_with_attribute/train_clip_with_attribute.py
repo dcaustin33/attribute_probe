@@ -138,11 +138,15 @@ def training_step(data: dict,
     truth = certainty >= args.certainty_threshold
 
     #give the text prompts with a real attribute for each
+    prompt = 'The bird has a '
     if args.attribute_idx_amount > 1:
         arr = text_prompts[data['attribute_idx']]
-        correct_prompts = ['. '.join(i) for i in list(arr)]
+        
+        correct_prompts = [prompt + ', '.join(i) + '.' for i in list(arr)]
     else:
-        correct_prompts = list(text_prompts[data['attribute_idx']])
+        arr = text_prompts[data['attribute_idx']]
+        correct_prompts = [prompt + i + '.' for i in list(arr)]
+
     classification_out, clip_image_logits = model(correct_prompts, images)
 
 
@@ -194,11 +198,14 @@ def validation_step(data: list,
         truth = certainty >= args.certainty_threshold
 
         #give the text prompts with a real attribute for each
+        prompt = 'The bird has a '
         if args.attribute_idx_amount > 1:
             arr = text_prompts[data['attribute_idx']]
-            correct_prompts = ['. '.join(i) for i in list(arr)]
+            
+            correct_prompts = [prompt + ', '.join(i) + '.' for i in list(arr)]
         else:
-            correct_prompts = list(text_prompts[data['attribute_idx']])
+            arr = text_prompts[data['attribute_idx']]
+            correct_prompts = [prompt + i + '.' for i in list(arr)]
         classification_out, clip_image_logits = model(correct_prompts, images)
 
 
@@ -238,7 +245,7 @@ def create_text_prompts(args):
     for line in lines:
 
         #base that will be used for every image
-        start = 'The bird has a '
+        start = ''
 
         #get the words before seeing the descriptor
         beginning = ''

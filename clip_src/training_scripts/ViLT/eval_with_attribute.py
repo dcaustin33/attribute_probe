@@ -168,6 +168,60 @@ def eval_fn(model, classification_number, val_dataloader, args, num_attributes, 
     if log and args.rank == 0:
         logger(val_metrics, step, wandb = wandb, train = False, args = args, training_script = False)
 
+
+def eval_fn_with_attribute(model, classification_number, val_dataloader, args, num_attributes, val_metrics, wandb, step):
+    logits_by_att, labels_by_att = [[], []], [[], []]
+    text_prompts = np.array(create_text_prompts(args))
+    #print(text_prompts)
+    with torch.no_grad():
+        for i, batch in enumerate(iter(val_dataloader)):
+            image, attributes, certainty = batch['image'].cuda(), batch['attributes'].cuda(), batch['certainty'].cuda()
+            if args.attribute_idx_amount > 1:
+                arr = text_prompts[batch['attribute_idx']]
+                correct_prompts = ['. '.join(i) for i in list(arr)]
+            else:
+                correct_prompts = list(text_prompts[batch['attribute_idx']])
+            attributes_logits = model(correct_prompts, image)
+            attributes_logits = attributes_logits[classification_number]
+            truth = certainty >= args.certainty_threshold
+
+            for im_id in range(len(image)):
+                if args.attribute_idx_amount > 1:
+                    att_id = np.random.choice(args.attribute_idx_amount)
+                    att_id = batch['attribute_idx'][im_id][att_id]
+                else: att_id = batch['attribute_idx'][im_id]
+                att_id2 = np.random.choice(np.where(batch['attributes'][im_id] == 1)[0], size = 1)[0]
+                chosen = batch['attribute_idx'][im_id].numpy()
+                if args.attribute_idx_amount == 1: chosen = [chosen]
+                while att_id2 in chosen:
+                    att_id2 = np.random.choice(np.where(batch['attributes'][im_id] == 1)[0], size = 1)
+                
+                logit, label = attributes_logits[im_id, att_id], attributes[im_id, att_id]
+                logits_by_att[0].append(logit)
+                labels_by_att[0].append(label)
+
+                logit, label = attributes_logits[im_id, att_id2], attributes[im_id, att_id2]
+                logits_by_att[1].append(logit)
+                labels_by_att[1].append(label)
+
+        #print(logits_by_att[0])
+        acc_list, acc_list2 = [], []
+            
+        logits, labels = torch.tensor(logits_by_att[0]), torch.tensor(labels_by_att[0])
+        logits2, labels2 = torch.tensor(logits_by_att[1]), torch.tensor(labels_by_att[1])
+
+        acc = (torch.round(torch.sigmoid(logits)) == labels).type(torch.float32).mean().detach().cpu().numpy()
+        acc_list.append(acc)
+        acc2 = (torch.round(torch.sigmoid(logits2)) == labels2).type(torch.float32).mean().detach().cpu().numpy()
+        acc_list2.append(acc2)
+        print(acc, acc2)
+
+    val_metrics['Specific Attribute Accuracy {}'.format(classification_number + 1)] = np.mean(acc_list)
+    val_metrics['Random Present Attribute Accuracy {}'.format(classification_number + 1)] = np.mean(acc_list2)
+
+    if log and args.rank == 0:
+        logger(val_metrics, step, wandb = wandb, train = False, args = args, training_script = False)
+
 def validation_step(data: list, 
                     model: nn.Module, 
                     metrics: dict,
@@ -305,7 +359,10 @@ if __name__ == '__main__':
     now = time.time()
     
     #testing each classification network
-    for i in range(0):
+    for i in range(2):
+        eval_fn_with_attribute(model, i, val_dataloader, args, dataset.num_attributes, val_metrics, wandb, 0)
+
+    for i in range(2):
         eval_fn(model, i, val_dataloader, args, dataset.num_attributes, val_metrics, wandb, 0)
 
     evaluator = evaluator.Evaluator(
