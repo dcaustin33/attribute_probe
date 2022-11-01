@@ -106,11 +106,11 @@ def eval_fn(model, classification_number, val_dataloader, args, num_attributes, 
             image, attributes, certainty = batch['image'].cuda(), batch['attributes'].cuda(), batch['certainty'].cuda()
             prompt = 'The bird has a '
             if args.attribute_idx_amount > 1:
-                arr = text_prompts[data['attribute_idx']]
+                arr = text_prompts[batch['attribute_idx']]
                 
                 correct_prompts = [prompt + ', '.join(i) + '.' for i in list(arr)]
             else:
-                arr = text_prompts[data['attribute_idx']]
+                arr = text_prompts[batch['attribute_idx']]
                 correct_prompts = [prompt + i + '.' for i in list(arr)]
             attributes_logits, _ = model(correct_prompts, image)
             attributes_logits = attributes_logits[classification_number]
@@ -148,11 +148,11 @@ def eval_fn_with_attribute(model, classification_number, val_dataloader, args, n
             image, attributes, certainty = batch['image'].cuda(), batch['attributes'].cuda(), batch['certainty'].cuda()
             prompt = 'The bird has a '
             if args.attribute_idx_amount > 1:
-                arr = text_prompts[data['attribute_idx']]
+                arr = text_prompts[batch['attribute_idx']]
                 
                 correct_prompts = [prompt + ', '.join(i) + '.' for i in list(arr)]
             else:
-                arr = text_prompts[data['attribute_idx']]
+                arr = text_prompts[batch['attribute_idx']]
                 correct_prompts = [prompt + i + '.' for i in list(arr)]
             attributes_logits, _ = model(correct_prompts, image)
             attributes_logits = attributes_logits[classification_number]
@@ -187,7 +187,7 @@ def eval_fn_with_attribute(model, classification_number, val_dataloader, args, n
         acc_list.append(acc)
         acc2 = (torch.round(torch.sigmoid(logits2)) == labels2).type(torch.float32).mean().detach().cpu().numpy()
         acc_list2.append(acc2)
-        print(acc, acc2)
+
 
     val_metrics['Specific Attribute Accuracy {}'.format(classification_number + 1)] = np.mean(acc_list)
     val_metrics['Random Present Attribute Accuracy {}'.format(classification_number + 1)] = np.mean(acc_list2)
