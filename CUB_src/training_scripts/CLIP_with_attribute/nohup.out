@@ -1,0 +1,816 @@
+Distributed: initializing distributed mode. URL: env:// world_size: 1 rank: 0
+Normalizing in DataLoader
+Normalizing in DataLoader
+Working on device cuda
+wandb: Currently logged in as: dcaustin33. Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.13.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.2
+wandb: Run data is saved locally in /home/ec2-user/attribute_probe/CUB_src/training_scripts/CLIP_with_attribute/wandb/run-20221102_125019-3eyvnqm2
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run CUB_CLIP_with_2_attributes
+wandb: ⭐️ View project at https://wandb.ai/dcaustin33/attribute_probe
+wandb: 🚀 View run at https://wandb.ai/dcaustin33/attribute_probe/runs/3eyvnqm2
+Starting from step 0
+Training for 4001 steps
+10 16.82968044281006
+20 28.643563747406006
+30 41.88704013824463
+40 50.2846040725708
+50 65.54660892486572
+60 78.5758466720581
+70 91.87617683410645
+80 100.34932231903076
+90 111.58054089546204
+100 127.06684684753418
+110 136.13402652740479
+120 148.79329538345337
+130 161.02759885787964
+140 174.40834641456604
+150 183.6649947166443
+160 193.51982045173645
+170 208.68383264541626
+180 219.87952136993408
+190 230.6172649860382
+200 243.09842228889465
+210 256.991494178772
+220 268.90333676338196
+230 276.09355211257935
+240 290.55210518836975
+250 299.4800684452057
+260 315.33938908576965
+270 322.40937209129333
+280 335.5036280155182
+290 346.4898178577423
+300 Loss: 4273.54
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+300 357.2695360183716
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+310 427.8925197124481
+320 436.7325656414032
+330 452.64898347854614
+340 459.55369305610657
+350 472.9771931171417
+360 485.5943830013275
+370 498.13223457336426
+380 506.1994867324829
+390 516.9967694282532
+400 532.4706647396088
+410 541.5697281360626
+420 552.8836181163788
+430 564.0808970928192
+440 576.5333995819092
+450 587.8545114994049
+460 594.9326324462891
+470 608.5103204250336
+480 619.951877117157
+490 635.9628691673279
+500 644.0919420719147
+510 657.2964942455292
+520 670.3627660274506
+530 683.8334050178528
+540 692.4384291172028
+550 702.8321895599365
+560 717.1433062553406
+570 725.5350472927094
+580 739.1220343112946
+590 750.6283688545227
+600 Loss: 2071.72
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+600 763.6704897880554
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+610 832.8775036334991
+620 842.808146238327
+630 859.0415232181549
+640 869.9639737606049
+650 880.1764106750488
+660 892.1506426334381
+670 904.582099199295
+680 916.0650601387024
+690 923.0471751689911
+700 937.8981893062592
+710 947.8585622310638
+720 961.270646572113
+730 970.0951342582703
+740 982.8300085067749
+750 992.5809016227722
+760 1006.0355815887451
+770 1014.2839727401733
+780 1023.6811993122101
+790 1039.1506464481354
+800 1046.339167356491
+810 1060.0260162353516
+820 1071.9289813041687
+830 1084.7866129875183
+840 1093.563144683838
+850 1104.177922964096
+860 1119.0183095932007
+870 1130.0094454288483
+880 1140.5008826255798
+890 1153.0667536258698
+900 Loss: 1647.96
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+900 1166.360748052597
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+910 1235.986852645874
+920 1245.492624282837
+930 1260.8475501537323
+940 1271.386596441269
+950 1285.7800226211548
+960 1293.3575315475464
+970 1307.017971754074
+980 1319.064623117447
+990 1331.0251593589783
+1000 1340.3651933670044
+1010 1350.795935869217
+1020 1365.740074634552
+1030 1373.2479894161224
+1040 1386.4625792503357
+1050 1399.0956537723541
+1060 1412.122220993042
+1070 1420.6144533157349
+1080 1431.4859063625336
+1090 1446.4862747192383
+1100 1457.4745712280273
+1110 1467.8557426929474
+1120 1479.9799630641937
+1130 1493.2778055667877
+1140 1504.481053352356
+1150 1510.5753045082092
+1160 1525.5781145095825
+1170 1536.1683111190796
+1180 1547.4093918800354
+1190 1557.9658460617065
+1200 Loss: 1408.1
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+1200 1571.1530928611755
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+1210 1639.3859429359436
+1220 1653.4423201084137
+1230 1662.0213510990143
+1240 1672.5145576000214
+1250 1686.2652444839478
+1260 1694.360969543457
+1270 1707.2698397636414
+1280 1718.5962083339691
+1290 1732.5774958133698
+1300 1740.9340822696686
+1310 1751.3553528785706
+1320 1766.2030546665192
+1330 1776.6001551151276
+1340 1787.6406989097595
+1350 1798.790428161621
+1360 1811.071536064148
+1370 1819.8226053714752
+1380 1829.4766867160797
+1390 1843.4808983802795
+1400 1853.538429260254
+1410 1867.5226607322693
+1420 1875.8635051250458
+1430 1888.733978509903
+1440 1899.2183089256287
+1450 1913.5670211315155
+1460 1922.0852663516998
+1470 1932.9693005084991
+1480 1946.503267288208
+1490 1954.7730696201324
+1500 Loss: 1254.1
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+1500 1969.228548526764
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+1510 2037.2899312973022
+1520 2051.4794137477875
+1530 2060.326732635498
+1540 2070.4614713191986
+1550 2085.0744683742523
+1560 2094.688282251358
+1570 2106.354304075241
+1580 2118.4070053100586
+1590 2131.0038113594055
+1600 2139.866609096527
+1610 2149.469275712967
+1620 2164.105661392212
+1630 2174.3279218673706
+1640 2189.464016675949
+1650 2197.1762504577637
+1660 2210.3227722644806
+1670 2222.035756587982
+1680 2232.438852071762
+1690 2242.7627856731415
+1700 2253.340409040451
+1710 2267.0248413085938
+1720 2275.305373430252
+1730 2289.182159423828
+1740 2299.8274421691895
+1750 2312.700047492981
+1760 2321.394774198532
+1770 2330.5706667900085
+1780 2345.7133247852325
+1790 2355.300395965576
+1800 Loss: 1140.49
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+1800 2366.797648191452
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+1810 2434.763374567032
+1820 2447.577199459076
+1830 2458.5593943595886
+1840 2465.1564502716064
+1850 2478.7002477645874
+1860 2488.2668900489807
+1870 2500.5867052078247
+1880 2511.917210817337
+1890 2524.9312138557434
+1900 2534.99960565567
+1910 2550.269373655319
+1920 2557.6696338653564
+1930 2567.4041299819946
+1940 2580.682723760605
+1950 2589.209629058838
+1960 2602.1141653060913
+1970 2613.774555683136
+1980 2627.102158308029
+1990 2635.9511942863464
+2000 2645.1834881305695
+2010 2659.438512325287
+2020 2668.747282743454
+2030 2680.657726764679
+2040 2692.9272167682648
+2050 2704.9458706378937
+2060 2716.107263326645
+2070 2722.621465921402
+2080 2737.7615451812744
+2090 2746.5736227035522
+2100 Loss: 1058.75
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+2100 2758.5641992092133
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+2110 2828.0411670207977
+2120 2839.921368122101
+2130 2852.5585947036743
+2140 2862.866310119629
+2150 2872.967549562454
+2160 2883.3395092487335
+2170 2897.5468142032623
+2180 2905.4773454666138
+2190 2919.0844581127167
+2200 2931.247149705887
+2210 2942.537624359131
+2220 2952.135626554489
+2230 2962.125939846039
+2240 2976.7381937503815
+2250 2984.266641139984
+2260 2997.3854537010193
+2270 3009.9740631580353
+2280 3022.884081840515
+2290 3032.1355180740356
+2300 3040.9123935699463
+2310 3055.83859705925
+2320 3065.791400194168
+2330 3080.2995381355286
+2340 3088.2674911022186
+2350 3100.9182844161987
+2360 3113.4537358283997
+2370 3124.3895502090454
+2380 3133.6491305828094
+2390 3143.6637892723083
+2400 Loss: 999.32
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+2400 3160.1200363636017
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+2410 3226.0733551979065
+2420 3237.628443956375
+2430 3249.350240468979
+2440 3262.248128414154
+2450 3270.8917129039764
+2460 3281.364135980606
+2470 3295.867376089096
+2480 3306.6490569114685
+2490 3317.6715245246887
+2500 3329.434592485428
+2510 3342.1259183883667
+2520 3351.7358405590057
+2530 3360.3670778274536
+2540 3375.962214946747
+2550 3386.52002120018
+2560 3400.5631964206696
+2570 3408.998625278473
+2580 3422.232170820236
+2590 3432.9827353954315
+2600 3445.586941719055
+2610 3453.9856383800507
+2620 3464.2512435913086
+2630 3477.0474507808685
+2640 3485.792498588562
+2650 3498.991272687912
+2660 3510.3873748779297
+2670 3522.716091632843
+2680 3531.433294057846
+2690 3540.7415249347687
+2700 Loss: 958.47
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+2700 3555.4973390102386
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+2710 3622.433048248291
+2720 3634.8912522792816
+2730 3645.8691787719727
+2740 3659.262992620468
+2750 3671.8468658924103
+2760 3677.6426770687103
+2770 3693.334149122238
+2780 3703.8098204135895
+2790 3716.9804558753967
+2800 3725.845251560211
+2810 3738.471846103668
+2820 3747.954563140869
+2830 3760.1255490779877
+2840 3771.0661313533783
+2850 3780.638103246689
+2860 3795.4874970912933
+2870 3802.4005312919617
+2880 3814.9198694229126
+2890 3825.6738810539246
+2900 3839.5894815921783
+2910 3848.5059831142426
+2920 3857.9653718471527
+2930 3873.390958547592
+2940 3882.9392733573914
+2950 3893.4814054965973
+2960 3905.2449061870575
+2970 3917.979076862335
+2980 3926.260153055191
+2990 3936.0003159046173
+3000 Loss: 929.77
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+3000 3951.092955827713
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+3010 4016.8554816246033
+3020 4031.5963459014893
+3030 4040.0551879405975
+3040 4053.7391469478607
+3050 4065.635526418686
+3060 4078.2192940711975
+3070 4086.4050772190094
+3080 4096.997700929642
+3090 4110.352542877197
+3100 4118.850704908371
+3110 4132.303628444672
+3120 4144.250064134598
+3130 4156.913301706314
+3140 4165.029310464859
+3150 4175.080764293671
+3160 4190.392714977264
+3170 4199.660601854324
+3180 4211.637540817261
+3190 4223.766740322113
+3200 4236.017625570297
+3210 4244.493383407593
+3220 4254.827770233154
+3230 4269.63751578331
+3240 4279.845843553543
+3250 4290.9620752334595
+3260 4301.98393368721
+3270 4315.293365240097
+3280 4325.4022352695465
+3290 4336.831032514572
+3300 Loss: 911.09
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+3300 4347.695982933044
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+3310 4412.84073805809
+3320 4426.402058124542
+3330 4435.525188446045
+3340 4448.3748281002045
+3350 4459.478644609451
+3360 4472.194477796555
+3370 4480.631453752518
+3380 4490.4847366809845
+3390 4504.866441965103
+3400 4514.08903169632
+3410 4525.9216866493225
+3420 4538.015407800674
+3430 4551.123284101486
+3440 4561.913377285004
+3450 4568.568783044815
+3460 4583.420667171478
+3470 4592.658750534058
+3480 4605.676815271378
+3490 4615.223512411118
+3500 4627.989810466766
+3510 4639.358735084534
+3520 4650.497929096222
+3530 4661.110918521881
+3540 4670.437161445618
+3550 4685.295630931854
+3560 4693.058363199234
+3570 4705.385043144226
+3580 4717.577260255814
+3590 4728.895571231842
+3600 Loss: 901.08
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+3600 4738.658571004868
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+3610 4804.805278301239
+3620 4820.512477397919
+3630 4832.275854349136
+3640 4843.096971750259
+3650 4854.990643501282
+3660 4867.756061077118
+3670 4880.430554628372
+3680 4886.363012075424
+3690 4901.163325071335
+3700 4910.371368169785
+3710 4927.124831676483
+3720 4934.020052909851
+3730 4946.647994756699
+3740 4958.726572275162
+3750 4971.562182664871
+3760 4980.462787628174
+3770 4989.760725021362
+3780 5004.650374174118
+3790 5012.175680398941
+3800 5025.073750734329
+3810 5036.618546009064
+3820 5049.387570858002
+3830 5056.378777265549
+3840 5066.536552190781
+3850 5080.63396191597
+3860 5089.581967353821
+3870 5102.536114215851
+3880 5113.380763530731
+3890 5126.38548707962
+3900 Loss: 899.07
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+3900 5136.130538225174
+In Logging <wandb.sdk.wandb_run.Run object at 0x7f46c2268e50> 0
+logging
+3910 5199.701873540878
+3920 5215.926427364349
+3930 5225.58061671257
+3940 5238.077387809753
+3950 5247.561106443405
+3960 5260.88710975647
+3970 5272.687867641449
+3980 5285.577544212341
+3990 5293.937655210495
+4000 5303.555312633514
+5304.825923681259
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.001 MB of 0.001 MB uploaded (0.000 MB deduped)wandb: \ 0.001 MB of 0.001 MB uploaded (0.000 MB deduped)wandb: | 0.001 MB of 0.003 MB uploaded (0.000 MB deduped)wandb: / 0.001 MB of 0.031 MB uploaded (0.000 MB deduped)wandb: - 0.031 MB of 0.031 MB uploaded (0.000 MB deduped)wandb: \ 0.031 MB of 0.031 MB uploaded (0.000 MB deduped)wandb: | 0.031 MB of 0.031 MB uploaded (0.000 MB deduped)wandb: / 0.031 MB of 0.031 MB uploaded (0.000 MB deduped)wandb: - 0.031 MB of 0.031 MB uploaded (0.000 MB deduped)wandb: \ 0.031 MB of 0.031 MB uploaded (0.000 MB deduped)wandb: | 0.031 MB of 0.031 MB uploaded (0.000 MB deduped)wandb: / 0.031 MB of 0.031 MB uploaded (0.000 MB deduped)wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:            Accuracy 1 ▁▅▆▇▇████████
+wandb:            Accuracy 2 ▁▆▇▇▇████████
+wandb:            Accuracy 3 ▁▇███████████
+wandb:            Accuracy 4 ▁▇▇▇█████████
+wandb:               CE Loss █▃▃▂▂▂▁▁▁▁▁▁▁
+wandb:      Class Accuracy 1 ▁▆▆▇▇▇███████
+wandb:      Class Accuracy 2 ▁▆▇▇█████████
+wandb:      Class Accuracy 3 ▁▆▇▇█████████
+wandb:      Class Accuracy 4 ▁▇▇██████████
+wandb:                    LR ██▇▇▆▅▅▄▃▂▂▁▁
+wandb:     Majority Accuracy ▆█▅▆▄█▅▆▅▆▁▃▆
+wandb:            Total Loss █▃▃▂▂▂▁▁▁▁▁▁▁
+wandb:        Val Accuracy 1 ▁▃▅▆▇▇▇██████
+wandb:        Val Accuracy 2 ▁▆▇███▇▇▇████
+wandb:        Val Accuracy 3 ▂█▇▆▅▃▃▂▂▂▁▂▁
+wandb:        Val Accuracy 4 ▆█▇▇▅▄▃▂▂▁▁▁▁
+wandb:  Val Class Accuracy 1 ▁▃▅▆▆▇▇██████
+wandb:  Val Class Accuracy 2 ▁▆█▇▇▇▇▇█████
+wandb:  Val Class Accuracy 3 ▇█▆▄▁▄▄▂▄▂▂▄▅
+wandb:  Val Class Accuracy 4 █▆▅▃▁▄▄▅▅▄▄▆█
+wandb: Val Majority Accuracy ▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:           class total ▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:                 total ▅▂▅█▁▃▃▅▇▂▄▄▇
+wandb: 
+wandb: Run summary:
+wandb:            Accuracy 1 0.91621
+wandb:            Accuracy 2 0.92998
+wandb:            Accuracy 3 0.93245
+wandb:            Accuracy 4 0.94124
+wandb:               CE Loss 899.07153
+wandb:      Class Accuracy 1 0.75632
+wandb:      Class Accuracy 2 0.97714
+wandb:      Class Accuracy 3 0.98661
+wandb:      Class Accuracy 4 0.99345
+wandb:                    LR 0.0
+wandb:     Majority Accuracy 0.88744
+wandb:            Total Loss 899.07153
+wandb:        Val Accuracy 1 0.91589
+wandb:        Val Accuracy 2 0.92097
+wandb:        Val Accuracy 3 0.91972
+wandb:        Val Accuracy 4 0.9167
+wandb:  Val Class Accuracy 1 0.67176
+wandb:  Val Class Accuracy 2 0.73532
+wandb:  Val Class Accuracy 3 0.71747
+wandb:  Val Class Accuracy 4 0.72517
+wandb: Val Majority Accuracy 0.8876
+wandb:           class total 76800
+wandb:                 total 19854835
+wandb: 
+wandb: Synced CUB_CLIP_with_2_attributes: https://wandb.ai/dcaustin33/attribute_probe/runs/3eyvnqm2
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221102_125019-3eyvnqm2/logs
+Distributed: initializing distributed mode. URL: env:// world_size: 1 rank: 0
+Normalizing in DataLoader
+Working on device cuda
+wandb: Currently logged in as: dcaustin33. Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.13.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.2
+wandb: Run data is saved locally in /home/ec2-user/attribute_probe/CUB_src/training_scripts/CLIP_with_attribute/wandb/run-20221102_141921-fbpzkds8
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Eval_CUB_CLIP_with_2_attributes
+wandb: ⭐️ View project at https://wandb.ai/dcaustin33/attribute_probe
+wandb: 🚀 View run at https://wandb.ai/dcaustin33/attribute_probe/runs/fbpzkds8
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fe7b821ccd0> 0
+logging
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fe7b821ccd0> 0
+logging
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fe7b821ccd0> 0
+logging
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fe7b821ccd0> 0
+logging
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fe7b821ccd0> 0
+logging
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fe7b821ccd0> 0
+logging
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fe7b821ccd0> 0
+logging
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fe7b821ccd0> 0
+logging
+Now Evaluating
+Evaluating for 100 steps
+In Logging <wandb.sdk.wandb_run.Run object at 0x7fe7b821ccd0> 0
+logging
+67.93379163742065
+Done in 196.24991750717163
+wandb: Waiting for W&B process to finish... (success).
+wandb: - 0.001 MB of 0.001 MB uploaded (0.000 MB deduped)wandb: \ 0.001 MB of 0.001 MB uploaded (0.000 MB deduped)wandb: | 0.001 MB of 0.009 MB uploaded (0.000 MB deduped)wandb: / 0.001 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: - 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: \ 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: | 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: / 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: - 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb: \ 0.021 MB of 0.021 MB uploaded (0.000 MB deduped)wandb:                                                                                
+wandb: 
+wandb: Run history:
+wandb:                               Val AUC 1 ▁▁
+wandb:                               Val AUC 2 ▁▁
+wandb:                               Val AUC 3 ▁▁
+wandb:                               Val AUC 4 ▁▁
+wandb:                          Val Accuracy 1 █▁
+wandb:                          Val Accuracy 2 █▁
+wandb:                          Val Accuracy 3 █▁
+wandb:                          Val Accuracy 4 █▁
+wandb:                    Val Class Accuracy 1 ▁█
+wandb:                    Val Class Accuracy 2 ▁█
+wandb:                    Val Class Accuracy 3 ▁█
+wandb:                    Val Class Accuracy 4 ▁█
+wandb: Val Random Present Attribute Accuracy 1 █▁
+wandb: Val Random Present Attribute Accuracy 2 █▁
+wandb: Val Random Present Attribute Accuracy 3 █▁
+wandb: Val Random Present Attribute Accuracy 4 █▁
+wandb:       Val Specific Attribute Accuracy 1 █▁
+wandb:       Val Specific Attribute Accuracy 2 █▁
+wandb:       Val Specific Attribute Accuracy 3 █▁
+wandb:       Val Specific Attribute Accuracy 4 █▁
+wandb: 
+wandb: Run summary:
+wandb:                               Val AUC 1 0.7881
+wandb:                               Val AUC 2 0.82331
+wandb:                               Val AUC 3 0.81646
+wandb:                               Val AUC 4 0.80981
+wandb:                          Val Accuracy 1 0.0
+wandb:                          Val Accuracy 2 0.0
+wandb:                          Val Accuracy 3 0.0
+wandb:                          Val Accuracy 4 0.0
+wandb:                    Val Class Accuracy 1 0.67266
+wandb:                    Val Class Accuracy 2 0.73572
+wandb:                    Val Class Accuracy 3 0.71587
+wandb:                    Val Class Accuracy 4 0.72151
+wandb: Val Random Present Attribute Accuracy 1 0.0
+wandb: Val Random Present Attribute Accuracy 2 0.0
+wandb: Val Random Present Attribute Accuracy 3 0.0
+wandb: Val Random Present Attribute Accuracy 4 0.0
+wandb:       Val Specific Attribute Accuracy 1 0.0
+wandb:       Val Specific Attribute Accuracy 2 0.0
+wandb:       Val Specific Attribute Accuracy 3 0.0
+wandb:       Val Specific Attribute Accuracy 4 0.0
+wandb: 
+wandb: Synced Eval_CUB_CLIP_with_2_attributes: https://wandb.ai/dcaustin33/attribute_probe/runs/fbpzkds8
+wandb: Synced 6 W&B file(s), 0 media file(s), 0 artifact file(s) and 0 other file(s)
+wandb: Find logs at: ./wandb/run-20221102_141921-fbpzkds8/logs
+Distributed: initializing distributed mode. URL: env:// world_size: 1 rank: 0
+Normalizing in DataLoader
+Working on device cuda
+wandb: Currently logged in as: dcaustin33. Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.13.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.2
+wandb: Run data is saved locally in /home/ec2-user/attribute_probe/CUB_src/training_scripts/CLIP_with_attribute/wandb/run-20221102_142313-2vw1hxk0
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Eval_CUB_CLIP_with_3_attributes
+wandb: ⭐️ View project at https://wandb.ai/dcaustin33/attribute_probe
+wandb: 🚀 View run at https://wandb.ai/dcaustin33/attribute_probe/runs/2vw1hxk0
+WARNING:torch.distributed.elastic.agent.server.api:Received 2 death signal, shutting down workers
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 18549 closing signal SIGINT
+Error in sys.excepthook:
+Traceback (most recent call last):
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/wandb/sdk/lib/exit_hooks.py", line 54, in exc_handler
+    traceback.print_exception(exc_type, exc, tb)
+  File "/opt/conda/envs/pytorch/lib/python3.9/traceback.py", line 103, in print_exception
+    for line in TracebackException(
+  File "/opt/conda/envs/pytorch/lib/python3.9/traceback.py", line 517, in __init__
+    self.stack = StackSummary.extract(
+  File "/opt/conda/envs/pytorch/lib/python3.9/traceback.py", line 353, in extract
+    linecache.lazycache(filename, f.f_globals)
+KeyboardInterrupt
+
+Original exception was:
+Traceback (most recent call last):
+  File "/home/ec2-user/attribute_probe/CUB_src/training_scripts/CLIP_with_attribute/eval_with_attribute.py", line 327, in <module>
+    eval_fn_with_attribute(model, i, val_dataloader, args, dataset.num_attributes, val_metrics, wandb, 0)
+  File "/home/ec2-user/attribute_probe/CUB_src/training_scripts/CLIP_with_attribute/eval_with_attribute.py", line 170, in eval_fn_with_attribute
+    att_id2 = np.random.choice(np.where(batch['attributes'][im_id] == 1)[0], size = 1)
+KeyboardInterrupt
+wandb: Waiting for W&B process to finish... (failed 255). Press Control-C to abort syncing.
+wandb: - 0.001 MB of 0.001 MB uploaded (0.000 MB deduped)WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 18549 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/agent/server/api.py", line 709, in run
+    result = self._invoke_run(role)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/agent/server/api.py", line 850, in _invoke_run
+    time.sleep(monitor_interval)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 60, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 18536 got signal: 2
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/conda/envs/pytorch/bin/torchrun", line 33, in <module>
+    sys.exit(load_entry_point('torch==1.12.0', 'console_scripts', 'torchrun')())
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 345, in wrapper
+    return f(*args, **kwargs)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/run.py", line 761, in main
+    run(args)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/run.py", line 752, in run
+    elastic_launch(
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 131, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 236, in launch_agent
+    result = agent.run()
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/metrics/api.py", line 125, in wrapper
+    result = f(*args, **kwargs)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/agent/server/api.py", line 716, in run
+    self._shutdown(e.sigval)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/agent/server/local_elastic_agent.py", line 193, in _shutdown
+    self._pcontext.close(death_sig)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 330, in close
+    self._close(death_sig=death_sig, timeout=timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 707, in _close
+    handler.proc.wait(time_to_wait)
+  File "/opt/conda/envs/pytorch/lib/python3.9/subprocess.py", line 1189, in wait
+    return self._wait(timeout=timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/subprocess.py", line 1911, in _wait
+    time.sleep(delay)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 60, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 18536 got signal: 2
+wandb: \ 0.001 MB of 0.001 MB uploaded (0.000 MB deduped)Exception in thread MsgRouterThr:
+Traceback (most recent call last):
+  File "/opt/conda/envs/pytorch/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/opt/conda/envs/pytorch/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/wandb/sdk/interface/router.py", line 69, in message_loop
+    msg = self._read_message()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/wandb/sdk/interface/router_queue.py", line 32, in _read_message
+    msg = self._response_queue.get(timeout=1)
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/queues.py", line 117, in get
+    res = self._recv_bytes()
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/connection.py", line 217, in recv_bytes
+    self._check_closed()
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/connection.py", line 141, in _check_closed
+    raise OSError("handle is closed")
+OSError: handle is closed
+Distributed: initializing distributed mode. URL: env:// world_size: 1 rank: 0
+Normalizing in DataLoader
+Working on device cuda
+wandb: Currently logged in as: dcaustin33. Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.13.4 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.13.2
+wandb: Run data is saved locally in /home/ec2-user/attribute_probe/CUB_src/training_scripts/CLIP_with_attribute/wandb/run-20221102_145021-q4xnzycm
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run Eval_CUB_CLIP_with_3_attributes
+wandb: ⭐️ View project at https://wandb.ai/dcaustin33/attribute_probe
+wandb: 🚀 View run at https://wandb.ai/dcaustin33/attribute_probe/runs/q4xnzycm
+WARNING:torch.distributed.elastic.agent.server.api:Received 2 death signal, shutting down workers
+Traceback (most recent call last):
+WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 28892 closing signal SIGINT
+Error in sys.excepthook:
+Traceback (most recent call last):
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/wandb/sdk/lib/redirect.py", line 643, in write
+    cb(data)
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/wandb/sdk/wandb_run.py", line 1895, in <lambda>
+    lambda data: self._console_raw_callback("stderr", data),
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/wandb/sdk/wandb_run.py", line 1275, in _console_raw_callback
+    self._backend.interface.publish_output_raw(name, data)
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/wandb/sdk/interface/interface.py", line 615, in publish_output_raw
+    otype = pb.OutputRawRecord.OutputType.STDERR
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/google/protobuf/internal/enum_type_wrapper.py", line 109, in __getattr__
+    return super(
+KeyboardInterrupt
+
+Original exception was:
+Traceback (most recent call last):
+  File "/home/ec2-user/attribute_probe/CUB_src/training_scripts/CLIP_with_attribute/eval_with_attribute.py", line 327, in <module>
+    eval_fn_with_attribute(model, i, val_dataloader, args, dataset.num_attributes, val_metrics, wandb, 0)
+  File "/home/ec2-user/attribute_probe/CUB_src/training_scripts/CLIP_with_attribute/eval_with_attribute.py", line 170, in eval_fn_with_attribute
+    att_id2 = np.random.choice(np.where(batch['attributes'][im_id] == 1)[0], size = 1)
+KeyboardInterrupt
+wandb: Waiting for W&B process to finish... (failed 255). Press Control-C to abort syncing.
+wandb: - 0.001 MB of 0.001 MB uploaded (0.000 MB deduped)WARNING:torch.distributed.elastic.multiprocessing.api:Sending process 28892 closing signal SIGTERM
+Traceback (most recent call last):
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/agent/server/api.py", line 709, in run
+    result = self._invoke_run(role)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/agent/server/api.py", line 850, in _invoke_run
+    time.sleep(monitor_interval)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 60, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 28871 got signal: 2
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/agent/server/api.py", line 716, in run
+    self._shutdown(e.sigval)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/agent/server/local_elastic_agent.py", line 193, in _shutdown
+    self._pcontext.close(death_sig)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 330, in close
+    self._close(death_sig=death_sig, timeout=timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 707, in _close
+    handler.proc.wait(time_to_wait)
+  File "/opt/conda/envs/pytorch/lib/python3.9/subprocess.py", line 1189, in wait
+    return self._wait(timeout=timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/subprocess.py", line 1911, in _wait
+    time.sleep(delay)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 60, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 28871 got signal: 2
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/conda/envs/pytorch/bin/torchrun", line 33, in <module>
+    sys.exit(load_entry_point('torch==1.12.0', 'console_scripts', 'torchrun')())
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 345, in wrapper
+    return f(*args, **kwargs)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/run.py", line 761, in main
+    run(args)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/run.py", line 752, in run
+    elastic_launch(
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 131, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/launcher/api.py", line 236, in launch_agent
+    result = agent.run()
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/metrics/api.py", line 125, in wrapper
+    result = f(*args, **kwargs)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/agent/server/api.py", line 721, in run
+    self._shutdown()
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/agent/server/local_elastic_agent.py", line 193, in _shutdown
+    self._pcontext.close(death_sig)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 330, in close
+    self._close(death_sig=death_sig, timeout=timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 707, in _close
+    handler.proc.wait(time_to_wait)
+  File "/opt/conda/envs/pytorch/lib/python3.9/subprocess.py", line 1189, in wait
+    return self._wait(timeout=timeout)
+  File "/opt/conda/envs/pytorch/lib/python3.9/subprocess.py", line 1911, in _wait
+    time.sleep(delay)
+  File "/opt/conda/envs/pytorch/lib/python3.9/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 60, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 28871 got signal: 2
+wandb: \ 0.001 MB of 0.001 MB uploaded (0.000 MB deduped)Exception in thread MsgRouterThr:
+Traceback (most recent call last):
+  File "/opt/conda/envs/pytorch/lib/python3.9/threading.py", line 980, in _bootstrap_inner
+    self.run()
+  File "/opt/conda/envs/pytorch/lib/python3.9/threading.py", line 917, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/wandb/sdk/interface/router.py", line 69, in message_loop
+    msg = self._read_message()
+  File "/home/ec2-user/.local/lib/python3.9/site-packages/wandb/sdk/interface/router_queue.py", line 32, in _read_message
+    msg = self._response_queue.get(timeout=1)
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/queues.py", line 117, in get
+    res = self._recv_bytes()
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/connection.py", line 217, in recv_bytes
+    self._check_closed()
+  File "/opt/conda/envs/pytorch/lib/python3.9/multiprocessing/connection.py", line 141, in _check_closed
+    raise OSError("handle is closed")
+OSError: handle is closed
