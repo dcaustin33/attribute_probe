@@ -145,7 +145,6 @@ def eval_fn_with_attribute(model, classification_number, val_dataloader, args, n
     #print(text_prompts)
     with torch.no_grad():
         for i, batch in enumerate(iter(val_dataloader)):
-            print(i)
             image, attributes, certainty = batch['image'].cuda(), batch['attributes'].cuda(), batch['certainty'].cuda()
             prompt = 'The bird has a '
             if args.attribute_idx_amount > 1:
@@ -166,7 +165,9 @@ def eval_fn_with_attribute(model, classification_number, val_dataloader, args, n
                 att_id2 = np.random.choice(np.where(batch['attributes'][im_id] == 1)[0], size = 1)[0]
                 chosen = batch['attribute_idx'][im_id].numpy()
                 if args.attribute_idx_amount == 1: chosen = [chosen]
-                while att_id2 in chosen:
+                counter = 0
+                while att_id2 in chosen and counter <= 100:
+                    counter += 1
                     att_id2 = np.random.choice(np.where(batch['attributes'][im_id] == 1)[0], size = 1)
                 
                 logit, label = attributes_logits[im_id, att_id], attributes[im_id, att_id]
@@ -325,10 +326,8 @@ if __name__ == '__main__':
     
     #testing each classification network
     for i in range(4):
-        print(i)
         eval_fn_with_attribute(model, i, val_dataloader, args, dataset.num_attributes, val_metrics, wandb, 0)
     for i in range(4):
-        print(i)
         eval_fn(model, i, val_dataloader, args, dataset.num_attributes, val_metrics, wandb, 0)
 
     evaluator = evaluator.Evaluator(

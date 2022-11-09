@@ -26,7 +26,7 @@ def log_metrics(metrics: dict,
         if not train:
             new_metrics = {}
             for i in metrics:
-                if 'Accuracy' in i or 'AUC' in i:
+                if 'Accuracy' in i or 'AUC' in i or 'Accurate' in i:
                     new_metrics['Val ' + i] = metrics[i]
             print('logging')
             wandb.log(new_metrics, step = step)

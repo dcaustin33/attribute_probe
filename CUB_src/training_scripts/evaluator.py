@@ -38,6 +38,7 @@ class Evaluator:
             while val_steps < self.args.val_steps:
 
                 for k, val_data in enumerate(self.val_dataloader):
+                    print(val_steps)
                     if val_steps >= self.args.val_steps: 
                         break
                     if val_steps % self.args.log_n_val_steps == 0 and val_steps != 0:

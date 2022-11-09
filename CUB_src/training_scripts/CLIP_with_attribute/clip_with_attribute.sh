@@ -67,7 +67,7 @@ torchrun --nproc_per_node 1 eval_with_attribute.py \
                            --workers 8 \
                            --attribute_idx_amount 3 \
                            --certainty_threshold 2 \
-                           --saved_path checkpoints/CUB_CLIP_with_3_attributes/CUB_CLIP_with_3_attributes_Final.pt;# \
-                          # -log;
+                           --saved_path checkpoints/CUB_CLIP_with_3_attributes/CUB_CLIP_with_3_attributes_Final.pt \
+                           -log;
 
 #sudo shutdown -h;
