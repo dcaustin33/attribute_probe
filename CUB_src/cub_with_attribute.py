@@ -25,7 +25,7 @@ class Cub2011(Dataset):
         self.normalize = normalize
         self.train = train
         self.num_attributes = 312
-        if 'attribute_idx_amount' in args: self.attribute_idx_amount = args.attribute_idx_amount
+        if 'attribute_idx_amount' in args: self.attribute_idx_amount = args['attribute_idx_amount']
         else: self.attribute_idx_amount = 1
 
         if download:
@@ -152,6 +152,7 @@ class Cub2011(Dataset):
         if self.transform is not None: img = self.transform(img)
 
         batch = {}
+        batch['idx'] = idx
         batch['image'] = img
         batch['class'] = target
         batch['attributes'] = attributes

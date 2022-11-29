@@ -2,7 +2,7 @@ from PIL import Image
 import requests
 import torch
 
-from transformers import ViltProcessor, ViltModel, ViltForMaskedLM
+from transformers import ViltProcessor, ViltModel, ViltForMaskedLM, ViltForImageAndTextRetrieval
 import torch.nn as nn
 
 class ViLT(nn.Module):
@@ -52,6 +52,22 @@ class ViLT_MLM(nn.Module):
             inputs[i] = inputs[i].cuda()
 
         return self.model(**inputs)
+
+class ViLT_itc(nn.Module):
+
+    def __init__(self, args = None):
+        super().__init__()
+        self.args = args
+        self.processor = ViltProcessor.from_pretrained("dandelin/vilt-b32-finetuned-coco")
+        self.model = ViltForImageAndTextRetrieval.from_pretrained("dandelin/vilt-b32-finetuned-coco")
+
+    def forward(self,prompts, images):
+        images = [i.cpu() for i in images]
+        inputs = self.processor(images, prompts, return_tensors="pt", padding = True)
+        for i in inputs:
+            inputs[i] = inputs[i].cuda()
+        return self.model(**inputs)
+
 
 class ViLT_wings(nn.Module):
 
