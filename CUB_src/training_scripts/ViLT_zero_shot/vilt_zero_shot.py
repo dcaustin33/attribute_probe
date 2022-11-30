@@ -132,7 +132,7 @@ if __name__ == '__main__':
     import os
     os.environ["TOKENIZERS_PARALLELISM"] = "false" 
     
-    text_prompt = [['A photo of a bird with multi-colored wings'] * args.batch_size][0]
+    text_prompt = [['A photo of a bird with black wings and a white belly'] * args.batch_size][0]
 
     #create an empty tensor to store the image embeddings as floats
     similarity = torch.empty(0).float()
@@ -147,7 +147,7 @@ if __name__ == '__main__':
         #calculate the cosine similarity between the text and image embeddings
 
         values, idx = torch.topk(similarity, 100)
-        with open('multi_colored_wing_cosine_similarity.txt', 'w') as f:
+        with open('readouts/black_wings_white_belly_cosine_similarity.txt', 'w') as f:
             for i in range(len(values)):
                 f.write(str(indicies[idx[i]]) + ' ' + str(values[i].item()) + '\n')
     
