@@ -95,6 +95,7 @@ class MIT_states(Dataset):
             img = self.transform(img)
 
         batch = {}
+        batch['idx'] = idx
         batch['image'] = img
         batch['concat_labels'] = label['concat']
         batch['adjective_labels'] = label['adjective']

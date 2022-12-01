@@ -28,6 +28,25 @@ class CLIP_text_image(nn.Module):
 
 
         return (binary_pred1, classifier_pred1), outputs.logits_per_image
+    
+    def forward_image(self, images):
+        text =[ "random text"]
+        inputs = self.processor(text=text, return_tensors="pt", padding=True)
+        for i in inputs:
+            inputs[i] = inputs[i].cuda()
+        inputs['pixel_values'] = images.cuda()
+        outputs = self.clip(**inputs)
+        return outputs.image_embeds
+
+    def forward_text(self, prompts):
+        text = prompts
+        inputs = self.processor(text=text, return_tensors="pt", padding=True)
+        for i in inputs:
+            inputs[i] = inputs[i].cuda()
+        #give random pixel values
+        inputs['pixel_values'] = torch.rand(1, 3, 224, 224).cuda()
+        outputs = self.clip(**inputs)
+        return outputs.text_embeds
 
 
 class CLIP_text_image_concat(nn.Module):
