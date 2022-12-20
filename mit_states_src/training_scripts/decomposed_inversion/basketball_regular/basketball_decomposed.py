@@ -206,7 +206,7 @@ class TextualInversionDataset(Dataset):
         placeholder_string1 = self.placeholder_token1
         placeholder_string2 = self.placeholder_token2
         text = random.choice(templates).format(placeholder_string1, placeholder_string2)
-
+        print(text)
         example["input_ids"] = self.tokenizer(
             text,
             padding="max_length",
@@ -464,8 +464,8 @@ def training_function(text_encoder, vae, unet):
         torch.save(learned_embeds_dict, os.path.join(output_dir, "learned_embeds.bin"))
 
 
-import accelerate
-accelerate.notebook_launcher(training_function, args=(text_encoder, vae, unet), num_processes = 1)
+'''import accelerate
+accelerate.notebook_launcher(training_function, args=(text_encoder, vae, unet), num_processes = 1)'''
 
 
 #@title Set up the pipeline 
@@ -474,7 +474,7 @@ pipe = StableDiffusionPipeline.from_pretrained(
     torch_dtype=torch.float16,
 ).to("cuda")
 
-prompt = "a photo of a {} on the subway".format(placeholder_token1) #@param {type:"string"}
+'''prompt = "a photo of a {} with the color {}".format(placeholder_token1, placeholder_token2) #@param {type:"string"}
 
 num_samples = 4 #@param {type:"number"}
 num_rows = 1 #@param {type:"number"}
@@ -485,7 +485,116 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("decomposed_basketball_grid.png")
+grid.save("decomposed_basketball_grid0.png")
+
+prompt = "a photo of a {}".format(placeholder_token1) #@param {type:"string"}
+
+num_samples = 4 #@param {type:"number"}
+num_rows = 1 #@param {type:"number"}
+
+all_images = [] 
+for _ in range(num_rows):
+    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+    all_images.extend(images)
+
+grid = image_grid(all_images, num_samples, num_rows)
+grid.save("decomposed_basketball_grid1.png")
+
+prompt = "a photo of a bird with the color {}".format(placeholder_token2) #@param {type:"string"}
+
+num_samples = 4 #@param {type:"number"}
+num_rows = 1 #@param {type:"number"}
+
+all_images = [] 
+for _ in range(num_rows):
+    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+    all_images.extend(images)
+
+grid = image_grid(all_images, num_samples, num_rows)
+grid.save("decomposed_basketball_grid2.png")
+
+prompt = "a photo of a bird with the color {}".format(placeholder_token1) #@param {type:"string"}
+
+num_samples = 4 #@param {type:"number"}
+num_rows = 1 #@param {type:"number"}
+
+all_images = [] 
+for _ in range(num_rows):
+    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+    all_images.extend(images)
+
+grid = image_grid(all_images, num_samples, num_rows)
+grid.save("decomposed_basketball_grid3.png")'''
+
+print('Cosine Distance')
+print()
+import torch.nn.functional as F
+import torch.nn as nn
+embeddings = pipe.text_encoder.get_input_embeddings().weight
+objects_to_compare_to = ['volleyball', 'basketball', 'baseball', 'football', 'soccer', 'tennis']
+token_id = pipe.tokenizer.convert_tokens_to_ids(placeholder_token1)
+compare_embeddings = pipe.text_encoder.get_input_embeddings().weight[pipe.tokenizer.convert_tokens_to_ids(objects_to_compare_to)]
+cos = nn.CosineSimilarity(dim=1, eps=1e-3)
+output = cos(embeddings[token_id].unsqueeze(dim = 0), compare_embeddings)
+val, idx = torch.topk(output, k = len(objects_to_compare_to))
+print(val)
+print(idx)
+for i, index in enumerate(idx):
+    print(objects_to_compare_to[index.item()], round(val[i].item(), 3))
 
 
 
+
+print()
+print()
+print()
+print('Euclidean Distance')
+print()
+
+embeddings = pipe.text_encoder.get_input_embeddings().weight
+objects_to_compare_to = ['volleyball', 'basketball', 'baseball', 'football', 'soccer', 'tennis']
+token_id = pipe.tokenizer.convert_tokens_to_ids(placeholder_token1)
+compare_embeddings = pipe.text_encoder.get_input_embeddings().weight[pipe.tokenizer.convert_tokens_to_ids(objects_to_compare_to)]
+output = -torch.cdist(embeddings[token_id].unsqueeze(dim = 0).float(), compare_embeddings.float())
+val, idx = torch.topk(output, k = len(objects_to_compare_to))
+print(val)
+print(idx)
+for i, index in enumerate(idx[0]):
+    print(objects_to_compare_to[index.item()], round(val[0][i].item(), 3))
+
+
+print('Cosine Distance')
+print()
+import torch.nn.functional as F
+import torch.nn as nn
+embeddings = pipe.text_encoder.get_input_embeddings().weight
+objects_to_compare_to = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown', 'black', 'white', 'gray', 'gold', 'silver']
+token_id = pipe.tokenizer.convert_tokens_to_ids(placeholder_token2)
+compare_embeddings = pipe.text_encoder.get_input_embeddings().weight[pipe.tokenizer.convert_tokens_to_ids(objects_to_compare_to)]
+cos = nn.CosineSimilarity(dim=1, eps=1e-3)
+output = cos(embeddings[token_id].unsqueeze(dim = 0), compare_embeddings)
+val, idx = torch.topk(output, k = len(objects_to_compare_to))
+print(val)
+print(idx)
+for i, index in enumerate(idx):
+    print(objects_to_compare_to[index.item()], round(val[i].item(), 3))
+
+
+
+
+print()
+print()
+print()
+print('Euclidean Distance')
+print()
+
+embeddings = pipe.text_encoder.get_input_embeddings().weight
+objects_to_compare_to = ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown', 'black', 'white', 'gray', 'gold', 'silver']
+token_id = pipe.tokenizer.convert_tokens_to_ids(placeholder_token2)
+compare_embeddings = pipe.text_encoder.get_input_embeddings().weight[pipe.tokenizer.convert_tokens_to_ids(objects_to_compare_to)]
+output = -torch.cdist(embeddings[token_id].unsqueeze(dim = 0).float(), compare_embeddings.float())
+val, idx = torch.topk(output, k = len(objects_to_compare_to))
+print(val)
+print(idx)
+for i, index in enumerate(idx[0]):
+    print(objects_to_compare_to[index.item()], round(val[0][i].item(), 3))
