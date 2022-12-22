@@ -52,7 +52,7 @@ for i in os.listdir(directory):
   images.append(convert_rgb(directory + '/' + i))
 
 grid = image_grid(images, 1, len(images))
-grid.save('red_ball_color_output/training_images.png')
+grid.save('negation_output/training_images.png')
 
 
 # %%
@@ -391,8 +391,8 @@ def training_function(text_encoder, vae, unet):
         learned_embeds_dict = {placeholder_token1: learned_embeds1.detach().cpu()}
         torch.save(learned_embeds_dict, os.path.join(output_dir, "learned_embeds.bin"))
 
-import accelerate
-accelerate.notebook_launcher(training_function, args=(text_encoder, vae, unet), num_processes = 1)
+'''import accelerate
+accelerate.notebook_launcher(training_function, args=(text_encoder, vae, unet), num_processes = 1)'''
 
 # %%
 #@title Set up the pipeline 
@@ -412,7 +412,7 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("red_ball_color_output/red_ball_color_grid.png")
+grid.save("negation_output/red_ball_color_grid.png")
 
 prompt = "a photo of a bird with the color {}".format(placeholder_token1) #@param {type:"string"}
 
@@ -425,7 +425,20 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("red_ball_color_output/red_ball_color_bird.png")
+grid.save("negation_output/red_ball_color_bird.png")
+
+prompt = "a photo of a {} tailed hawk".format(placeholder_token1) #@param {type:"string"}
+
+num_samples = 4 #@param {type:"number"}
+num_rows = 1 #@param {type:"number"}
+
+all_images = [] 
+for _ in range(num_rows):
+    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+    all_images.extend(images)
+
+grid = image_grid(all_images, num_samples, num_rows)
+grid.save("negation_output/tailed_hawk.png")
 
 
 
@@ -471,18 +484,13 @@ print()
 print()
 print()
 
-
-pipe = StableDiffusionPipeline.from_pretrained(
-    'sliced-bread-concept',
-    torch_dtype=torch.float16,
-)
 print('Cosine Distance Before Training')
 print()
 import torch.nn.functional as F
 import torch.nn as nn
 embeddings = pipe.text_encoder.get_input_embeddings().weight
 objects_to_compare_to = ['red', 'yellow', 'green', 'blue', 'orange', 'purple', 'pink', 'brown', 'black', 'white', 'gray', 'grey']
-token_id = pipe.tokenizer.convert_tokens_to_ids(placeholder_token1)
+token_id = pipe.tokenizer.convert_tokens_to_ids(initializer_token1)
 compare_embeddings = pipe.text_encoder.get_input_embeddings().weight[pipe.tokenizer.convert_tokens_to_ids(objects_to_compare_to)]
 cos = nn.CosineSimilarity(dim=1, eps=1e-3)
 output = cos(embeddings[token_id].unsqueeze(dim = 0), compare_embeddings)
@@ -491,4 +499,3 @@ print(val)
 print(idx)
 for i, index in enumerate(idx):
     print(objects_to_compare_to[index.item()], val[i].item())
-

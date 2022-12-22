@@ -419,7 +419,7 @@ pipe = StableDiffusionPipeline.from_pretrained(
     torch_dtype=torch.float16,
 ).to("cuda")
 
-prompt = "a photo of a cucumber" #@param {type:"string"}
+'''prompt = "a photo of a {} cucumber".format(placeholder_token)  #@param {type:"string"}
 
 num_samples = 4 #@param {type:"number"}
 num_rows = 2 #@param {type:"number"}
@@ -430,22 +430,9 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("cucumber.png")
+grid.save("sliced_bread_output/cucumber.png")'''
 
-prompt = "a photo of a baseball" #@param {type:"string"}
-
-num_samples = 4 #@param {type:"number"}
-num_rows = 2 #@param {type:"number"}
-
-all_images = [] 
-for _ in range(num_rows):
-    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
-    all_images.extend(images)
-
-grid = image_grid(all_images, num_samples, num_rows)
-grid.save("baseball.png")
-
-prompt = "a photo of a tomato" #@param {type:"string"}
+prompt = "a photo of a {} baseball".format(placeholder_token) #@param {type:"string"}
 
 num_samples = 4 #@param {type:"number"}
 num_rows = 2 #@param {type:"number"}
@@ -456,9 +443,9 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("tomato.png")
+grid.save("sliced_bread_output/baseball.png")
 
-prompt = "a photo of an apple" #@param {type:"string"}
+'''prompt = "a photo of a {} tomato".format(placeholder_token)  #@param {type:"string"}
 
 num_samples = 4 #@param {type:"number"}
 num_rows = 2 #@param {type:"number"}
@@ -469,7 +456,20 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("apple.png")
+grid.save("sliced_bread_output/tomato.png")'''
+
+prompt = "a photo of a {} apple".format(placeholder_token)  #@param {type:"string"}
+
+num_samples = 4 #@param {type:"number"}
+num_rows = 2 #@param {type:"number"}
+
+all_images = [] 
+for _ in range(num_rows):
+    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+    all_images.extend(images)
+
+grid = image_grid(all_images, num_samples, num_rows)
+grid.save("sliced_bread_output/apple.png")
 
 # %%
 print('Cosine Distance')

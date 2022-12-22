@@ -480,7 +480,7 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("ball0.png")
+grid.save("sports_balls_output/ball0.png")
 
 prompt = "a photo of a {} on a graffiti wall".format(placeholder_token1) #@param {type:"string"}
 
@@ -493,9 +493,9 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("ball1.png")
+grid.save("sports_balls_output/ball1.png")
 
-prompt = "a photo of a {} bird on a graffiti wall".format(placeholder_token2) #@param {type:"string"}
+prompt = "a photo of a bird on a graffiti wall with the color {}".format(placeholder_token2) #@param {type:"string"}
 
 num_samples = 4 #@param {type:"number"}
 num_rows = 1 #@param {type:"number"}
@@ -506,7 +506,33 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("ball2.png")
+grid.save("sports_balls_output/ball2.png")
+
+prompt = "a photo of a ball shape with the color {}".format(placeholder_token2) #@param {type:"string"}
+
+num_samples = 4 #@param {type:"number"}
+num_rows = 1 #@param {type:"number"}
+
+all_images = [] 
+for _ in range(num_rows):
+    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+    all_images.extend(images)
+
+grid = image_grid(all_images, num_samples, num_rows)
+grid.save("sports_balls_output/ball3.png")
+
+prompt = "a photo of a bird with the color {}".format(placeholder_token2) #@param {type:"string"}
+
+num_samples = 4 #@param {type:"number"}
+num_rows = 1 #@param {type:"number"}
+
+all_images = [] 
+for _ in range(num_rows):
+    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+    all_images.extend(images)
+
+grid = image_grid(all_images, num_samples, num_rows)
+grid.save("sports_balls_output/ball4.png")
 
 # %%
 print('Cosine Distance')
@@ -538,3 +564,7 @@ print(val)
 print(idx)
 for i, index in enumerate(idx[0]):
     print(val[0][i].item(), pipe.tokenizer.decode([index]))
+
+
+import os
+#os.system('sudo shutdown -h')
