@@ -170,7 +170,7 @@ if __name__ == '__main__':
     import os
     os.environ["TOKENIZERS_PARALLELISM"] = "false" 
 
-    text_prompt = ['A photo of a bird with black wings and a white belly']
+    text_prompt = ['A photo of a bird with a red belly']
 
     text_embed = model.forward_text(text_prompt).cpu().detach()
     #create an empty tensor to store the image embeddings
@@ -198,7 +198,7 @@ if __name__ == '__main__':
         similarity = torch.nn.CosineSimilarity(dim=1, eps=1e-6)
         cosine_similarity = similarity(text_embed, image_embeddings)
         values, idx = torch.topk(cosine_similarity, 100)
-        with open('readouts/black_wings_white_belly_cosine_similarity.txt', 'w') as f:
+        with open('readouts/red_belly_cosine_similarity.txt', 'w') as f:
             for i in range(len(values)):
                 f.write(str(indicies[idx[i]]) + ' ' + str(values[i].item()) + '\n')
     
