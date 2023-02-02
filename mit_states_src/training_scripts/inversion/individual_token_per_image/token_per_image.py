@@ -25,6 +25,17 @@ from torchvision import transforms
 from tqdm.auto import tqdm
 from transformers import CLIPFeatureExtractor, CLIPTextModel, CLIPTokenizer
 
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--data_dir', type=str, default='red-ball-pics-4')
+parser.add_argument('--output_dir', type=str, default='output/red-ball-pics-4')
+parser.add_argument('-train', action='store_true')
+parser.add_argument('--name', type=str)
+args = parser.parse_args()
+if args.output_dir[-1] != '/':
+  args.output_dir += '/'
+
 pretrained_model_name_or_path = "CompVis/stable-diffusion-v1-4"
 
 def image_grid(imgs, rows, cols):
@@ -41,7 +52,7 @@ def image_grid(imgs, rows, cols):
 
 # %%
 from torchvision.datasets.folder import default_loader
-directory = 'neon_green_pics'
+directory = args.data_dir
 
 
 def convert_rgb(img):
@@ -52,7 +63,9 @@ for i in os.listdir(directory):
   images.append(convert_rgb(directory + '/' + i))
 
 grid = image_grid(images, 1, len(images))
-grid.save('red_ball_color_output/training_images.png')
+if os.path.exists(args.output_dir) == False:
+    os.mkdir(args.output_dir)
+grid.save(args.output_dir + 'training_images.png')
 
 
 # %%
@@ -60,15 +73,14 @@ grid.save('red_ball_color_output/training_images.png')
 #@markdown `what_to_teach`: what is it that you are teaching? `object` enables you to teach the model a new object to be used, `style` allows you to teach the model a new style one can use.
 what_to_teach = "object" #@param ["object", "style"]
 #@markdown `placeholder_token` is the token you are going to use to represent your new concept (so when you prompt the model, you will say "A `<my-placeholder-token>` in an amusement park"). We use angle brackets to differentiate a token from other words/tokens, to avoid collision.
-placeholder_token1 = "<color" #@param {type:"string"}
-placeholder_token_im2 = '<image1>'
-placeholder_token_im3 = '<image2>'
-placeholder_token_im4 = '<image3>'
-placeholder_token_im5 = '<image4>'
-placeholder_token_im6 = '<image5>'
-image_tokens = [placeholder_token_im2, placeholder_token_im3, placeholder_token_im4, placeholder_token_im5, placeholder_token_im6]
+placeholder_token1 = "<color>" #@param {type:"string"}
+image_tokens = []
+for i in range(len(images)):
+    image_tokens.append('<image' + str(i) + ">")
+
 #@markdown `initializer_token` is a word that can summarise what your new concept is, to be used as a starting point
-initializer_token1 = "color" #@param {type:"string"}
+initializer_token1 = "object" #@param {type:"string"}
+initializer_token2 = "color" #@param {type:"string"}
 
 #@title Setup the prompt templates for training 
 #@title Setup the prompt templates for training 
@@ -210,7 +222,6 @@ if len(token_ids1) > 1:
 initializer_token_id1 = token_ids1[0]
 placeholder_token_id1 = tokenizer.convert_tokens_to_ids(placeholder_token1)
 
-
 #@title Load the Stable Diffusion model
 # Load models and create wrapper for stable diffusion
 text_encoder = CLIPTextModel.from_pretrained(
@@ -222,9 +233,32 @@ vae = AutoencoderKL.from_pretrained(
 unet = UNet2DConditionModel.from_pretrained(
     pretrained_model_name_or_path, subfolder="unet"
 )
+
+
+for token in image_tokens:
+    num_added_tokens = tokenizer.add_tokens(token)
+    if num_added_tokens < 1:
+        raise ValueError(
+            f"The tokenizer already contains the token {token}. Please pass a different"
+            " `placeholder_token` that is not already in the tokenizer."
+        )
+
 text_encoder.resize_token_embeddings(len(tokenizer))
 token_embeds = text_encoder.get_input_embeddings().weight.data
 token_embeds[placeholder_token_id1] = token_embeds[initializer_token_id1]
+
+for token in image_tokens:
+    token_ids = tokenizer.encode(initializer_token2, add_special_tokens=False)
+    # Check if initializer_token is a single token or a sequence of tokens
+    if len(token_ids) > 1:
+        raise ValueError("The initializer token must be a single token.")
+    
+    initializer_token_id2 = token_ids[0]
+    placeholder_token_id2 = tokenizer.convert_tokens_to_ids(token)
+    text_encoder.resize_token_embeddings(len(tokenizer))
+    token_embeds[placeholder_token_id2] = token_embeds[initializer_token_id2]
+
+
 
 # %%
 def freeze_params(params):
@@ -267,7 +301,7 @@ hyperparameters = {
     "train_batch_size": 1,
     "gradient_accumulation_steps": 4,
     "seed": 42,
-    "output_dir": "red-ball-color-concept"
+    "output_dir": args.name,
 }
 
 # %%
@@ -403,8 +437,11 @@ def training_function(text_encoder, vae, unet):
         torch.save(learned_embeds_dict, os.path.join(output_dir, "learned_embeds.bin"))
 
 import accelerate
-accelerate.notebook_launcher(training_function, args=(text_encoder, vae, unet), num_processes = 1)
+if args.train:
+    accelerate.notebook_launcher(training_function, args=(text_encoder, vae, unet), num_processes = 1)
 
+if os.path.exists(args.output_dir) == False:
+    os.mkdir(args.output_dir)
 
 #@title Set up the pipeline 
 pipe = StableDiffusionPipeline.from_pretrained(
@@ -423,7 +460,7 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("neon_green_output/red_ball_color_grid.png")
+grid.save(args.output_dir + "ball.png")
 
 prompt = "a photo of a bird with the color {}".format(placeholder_token1) #@param {type:"string"}
 
@@ -436,9 +473,9 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("neon_green_output/red_ball_color_bird.png")
+grid.save(args.output_dir + "bird.png")
 
-prompt = "a photo of a {} tailed hawk".format(placeholder_token1) #@param {type:"string"}
+prompt = "a photo of a cup with the color {}".format(placeholder_token1) #@param {type:"string"}
 
 num_samples = 4 #@param {type:"number"}
 num_rows = 1 #@param {type:"number"}
@@ -449,7 +486,7 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save("neon_green_output/tailed_hawk.png")
+grid.save(args.output_dir + "cup.png")
 
 
 
