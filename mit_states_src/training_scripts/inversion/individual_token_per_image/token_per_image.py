@@ -414,6 +414,26 @@ def training_function(text_encoder, vae, unet):
             if global_step >= max_train_steps:
                 break
 
+            if step % 1000 == 0:
+                pipeline = StableDiffusionPipeline(
+                    text_encoder=accelerator.unwrap_model(text_encoder),
+                    vae=vae,
+                    unet=unet,
+                    tokenizer=tokenizer,
+                    scheduler=PNDMScheduler(
+                        beta_start=0.00085, beta_end=0.012, beta_schedule="scaled_linear", skip_prk_steps=True
+                    ),
+                    safety_checker=StableDiffusionSafetyChecker.from_pretrained("CompVis/stable-diffusion-safety-checker"),
+                    feature_extractor=CLIPFeatureExtractor.from_pretrained("openai/clip-vit-base-patch32"),
+                )
+                pipeline.save_pretrained(output_dir + '/step_' + str(step))
+                # Also save the newly trained embeddings
+                learned_embeds1 = accelerator.unwrap_model(text_encoder).get_input_embeddings().weight[placeholder_token_id1]
+                learned_embeds_dict = {placeholder_token1: learned_embeds1.detach().cpu()}
+                torch.save(learned_embeds_dict, os.path.join(output_dir + '/step_' + str(step), "learned_embeds.bin"))
+                
+
+
         accelerator.wait_for_everyone()
 
 
@@ -436,9 +456,19 @@ def training_function(text_encoder, vae, unet):
         learned_embeds_dict = {placeholder_token1: learned_embeds1.detach().cpu()}
         torch.save(learned_embeds_dict, os.path.join(output_dir, "learned_embeds.bin"))
 
+def visualize(pipe, prompt, num_samples, num_rows, name, step):
+    all_images = [] 
+    for _ in range(num_rows):
+        images = pipe([prompt] * num_samples, num_inference_steps=1000, temperature=0.99, top_k=0, top_p=0.9)
+        all_images.extend(images)
+    grid = image_grid(all_images, num_samples, num_rows)
+    grid.save(args.output_dir + name + "_step_{}.png".format(step))
+
 import accelerate
 if args.train:
     accelerate.notebook_launcher(training_function, args=(text_encoder, vae, unet), num_processes = 1)
+
+
 
 if os.path.exists(args.output_dir) == False:
     os.mkdir(args.output_dir)

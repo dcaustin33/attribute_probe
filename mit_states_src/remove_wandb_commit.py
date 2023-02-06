@@ -11,7 +11,7 @@ if __name__ == '__main__':
                 #os.rmdir(os.path.join(root, name))
 
     try:
-        os.system("git add -- . ':!*.pt' ':!*.tar' ':!*.bin'")
+        os.system("git add -- . ':!*.pt' ':!*.tar' ':!*.bin' ':!*.jpeg' ':!*.webp'")
         inp = input("Commit message: ")
         os.system("git commit -m '" + inp + "'")
         os.system("git push")
