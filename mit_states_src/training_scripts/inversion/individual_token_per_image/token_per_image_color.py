@@ -26,6 +26,7 @@ from tqdm.auto import tqdm
 from transformers import CLIPFeatureExtractor, CLIPTextModel, CLIPTokenizer
 
 import argparse
+import wandb
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--data_dir', type=str, default='red-ball-pics-4')
@@ -37,6 +38,7 @@ if args.output_dir[-1] != '/':
   args.output_dir += '/'
 
 pretrained_model_name_or_path = "CompVis/stable-diffusion-v1-4"
+wandb = wandb.init(config = args, name = args.name, project = 'attribute-inversion')
 
 def image_grid(imgs, rows, cols):
     assert len(imgs) == rows*cols
@@ -361,6 +363,8 @@ def training_function(text_encoder, vae, unet):
     progress_bar = tqdm(range(max_train_steps), disable=not accelerator.is_local_main_process)
     progress_bar.set_description("Steps")
     global_step = 0
+    logging_loss = 0
+    logging_steps = 0
 
     for epoch in range(num_train_epochs):
         text_encoder.train()
@@ -387,6 +391,8 @@ def training_function(text_encoder, vae, unet):
                 noise_pred = unet(noisy_latents, timesteps, encoder_hidden_states).sample
 
                 loss = F.mse_loss(noise_pred, noise, reduction="none").mean([1, 2, 3]).mean()
+                logging_loss += loss.item()
+                logging_steps += 1
                 accelerator.backward(loss)
 
                 # Zero out the gradients for all token embeddings except the newly added
@@ -402,6 +408,11 @@ def training_function(text_encoder, vae, unet):
 
                 optimizer.step()
                 optimizer.zero_grad()
+
+                if logging_steps % 100 == 0:
+                    wandb.log({"loss": logging_loss / logging_steps})
+                    logging_loss = 0
+                    logging_steps = 0
 
             # Checks if the accelerator has performed an optimization step behind the scenes
             if accelerator.sync_gradients:
@@ -517,6 +528,45 @@ for _ in range(num_rows):
 
 grid = image_grid(all_images, num_samples, num_rows)
 grid.save(args.output_dir + "cup.png")
+
+prompt = "a photo of a ball with the color magenta".format(placeholder_token1) #@param {type:"string"}
+
+num_samples = 4 #@param {type:"number"}
+num_rows = 1 #@param {type:"number"}
+
+all_images = [] 
+for _ in range(num_rows):
+    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+    all_images.extend(images)
+
+grid = image_grid(all_images, num_samples, num_rows)
+grid.save(args.output_dir + "actual_ng_ball.png")
+
+prompt = "a photo of a bird with the color magenta".format(placeholder_token1) #@param {type:"string"}
+
+num_samples = 4 #@param {type:"number"}
+num_rows = 1 #@param {type:"number"}
+
+all_images = [] 
+for _ in range(num_rows):
+    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+    all_images.extend(images)
+
+grid = image_grid(all_images, num_samples, num_rows)
+grid.save(args.output_dir + "actual_ng_bird.png")
+
+prompt = "a photo of a cup with the color magenta".format(placeholder_token1) #@param {type:"string"}
+
+num_samples = 4 #@param {type:"number"}
+num_rows = 1 #@param {type:"number"}
+
+all_images = [] 
+for _ in range(num_rows):
+    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+    all_images.extend(images)
+
+grid = image_grid(all_images, num_samples, num_rows)
+grid.save(args.output_dir + "actual_ng_cup.png")
 
 
 
