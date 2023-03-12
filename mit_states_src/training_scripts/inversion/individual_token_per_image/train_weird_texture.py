@@ -34,6 +34,7 @@ parser.add_argument('--output_dir', type=str, default='output/red-ball-pics-4')
 parser.add_argument('-train', action='store_true')
 parser.add_argument('-resized_crop', action='store_true')
 parser.add_argument('--name', type=str)
+parser.add_argument('--steps', type=int, default=3000)
 args = parser.parse_args()
 if args.output_dir[-1] != '/':
   args.output_dir += '/'
@@ -88,26 +89,26 @@ initializer_token2 = "color" #@param {type:"string"}
 #@title Setup the prompt templates for training 
 
 imagenet_templates_small = [
-"a photo of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a rendering of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a cropped photo of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"the photo of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a photo of a clean {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a photo of a dirty {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a dark photo of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a photo of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a close-up photo of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a bright photo of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a good photo of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a photo of one {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a close-up photo of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a rendition of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a photo of a nice {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a good photo of a {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a photo of a weird {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a photo of a large {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a photo of a cool {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
-"a photo of a small {} with the texture {} and not the texture of an armadillo, a dog, a cat, a bear",
+"a photo of a small {} with the main concept being {}",
+"a rendering of a small {} with the main concept being {}",
+"a cropped photo of a small {} with the main concept being {}",
+"the photo of a small {} with the main concept being {}",
+"a photo of a clean small {} with the main concept being {}",
+"a photo of a dirty small {} with the main concept being {}",
+"a dark photo of a small {} with the main concept being {}",
+"a photo of a small {} with the main concept being {}",
+"a close-up photo of a small {} with the main concept being {}",
+"a bright photo of a small {} with the main concept being {}",
+"a good photo of a small {} with the main concept being {}",
+"a photo of one small {} with the main concept being {}",
+"a close-up photo of a small {} with the main concept being {}",
+"a rendition of a small {} with the main concept being {}",
+"a photo of a nice small {} with the main concept being {}",
+"a good photo of a small {} with the main concept being {}",
+"a photo of a weird small {} with the main concept being {}",
+"a photo of a large small {} with the main concept being {}",
+"a photo of a cool small {} with the main concept being {}",
+"a photo of a small small {} with the main concept being {}"
 ]
 
 
@@ -306,7 +307,7 @@ noise_scheduler = DDPMScheduler(
 hyperparameters = {
     "learning_rate": 5e-04,
     "scale_lr": True,
-    "max_train_steps": 3000,
+    "max_train_steps": args.steps,
     "train_batch_size": 1,
     "gradient_accumulation_steps": 4,
     "seed": 42,
@@ -498,7 +499,7 @@ pipe = StableDiffusionPipeline.from_pretrained(
     torch_dtype=torch.float16,
 ).to("cuda")
 
-prompt = "a photo of a ball with the texture{}".format(placeholder_token1) #@param {type:"string"}
+prompt = "a photo of a person with {}".format(placeholder_token1) #@param {type:"string"}
 
 num_samples = 4 #@param {type:"number"}
 num_rows = 1 #@param {type:"number"}
@@ -509,9 +510,9 @@ for _ in range(num_rows):
     all_images.extend(images)
 
 grid = image_grid(all_images, num_samples, num_rows)
-grid.save(args.output_dir + "ball.png")
+grid.save(args.output_dir + "person.png")
 
-prompt = "a photo of a bird with the texture {}".format(placeholder_token1) #@param {type:"string"}
+prompt = "a photo of a bird with {}".format(placeholder_token1) #@param {type:"string"}
 
 num_samples = 4 #@param {type:"number"}
 num_rows = 1 #@param {type:"number"}
@@ -524,7 +525,7 @@ for _ in range(num_rows):
 grid = image_grid(all_images, num_samples, num_rows)
 grid.save(args.output_dir + "bird.png")
 
-prompt = "a photo of a cup with the texture {}".format(placeholder_token1) #@param {type:"string"}
+prompt = "a photo of a cup with {}".format(placeholder_token1) #@param {type:"string"}
 
 num_samples = 4 #@param {type:"number"}
 num_rows = 1 #@param {type:"number"}

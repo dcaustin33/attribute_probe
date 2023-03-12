@@ -8,7 +8,7 @@ if __name__ == '__main__':
                 print(os.path.join(root, name))
                 #remove the directory
                 os.system("rm -rf " + os.path.join(root, name))
-                #os.rmdir(os.path.join(root, name))
+                os.rmdir(os.path.join(root, name))
 
     try:
         os.system("git add -- . ':!*.pt' ':!*.tar' ':!*.bin' ':!*.jpeg' ':!*.webp'")
