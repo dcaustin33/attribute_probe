@@ -35,6 +35,7 @@ parser.add_argument('-train', action='store_true')
 parser.add_argument('-resized_crop', action='store_true')
 parser.add_argument('--name', type=str)
 parser.add_argument('--steps', type=int, default=3000)
+parser.add_argument('-generate', action='store_true')
 args = parser.parse_args()
 if args.output_dir[-1] != '/':
   args.output_dir += '/'
@@ -88,28 +89,26 @@ initializer_token2 = "color" #@param {type:"string"}
 #@title Setup the prompt templates for training 
 #@title Setup the prompt templates for training 
 
-imagenet_templates_small = [
-"a photo of a small {} with the main concept being {}",
-"a rendering of a small {} with the main concept being {}",
-"a cropped photo of a small {} with the main concept being {}",
-"the photo of a small {} with the main concept being {}",
-"a photo of a clean small {} with the main concept being {}",
-"a photo of a dirty small {} with the main concept being {}",
-"a dark photo of a small {} with the main concept being {}",
-"a photo of a small {} with the main concept being {}",
-"a close-up photo of a small {} with the main concept being {}",
-"a bright photo of a small {} with the main concept being {}",
-"a good photo of a small {} with the main concept being {}",
-"a photo of one small {} with the main concept being {}",
-"a close-up photo of a small {} with the main concept being {}",
-"a rendition of a small {} with the main concept being {}",
-"a photo of a nice small {} with the main concept being {}",
-"a good photo of a small {} with the main concept being {}",
-"a photo of a weird small {} with the main concept being {}",
-"a photo of a large small {} with the main concept being {}",
-"a photo of a cool small {} with the main concept being {}",
-"a photo of a small small {} with the main concept being {}"
-]
+imagenet_templates_small = ["a photo of a small {} with the texture {}",
+                            "a rendering of a small {} with the texture {}",
+                            "a cropped photo of a small {} with the texture {}",
+                            "the photo of a small {} with the texture {}",
+                            "a photo of a clean small {} with the texture {}",
+                            "a photo of a dirty small {} with the texture {}",
+                            "a dark photo of a small {} with the texture {}",
+                            "a photo of a small {} with the texture {}",
+                            "a close-up photo of a small {} with the texture {}",
+                            "a bright photo of a small {} with the texture {}",
+                            "a good photo of a small {} with the texture {}",
+                            "a photo of one small {} with the texture {}",
+                            "a close-up photo of a small {} with the texture {}",
+                            "a rendition of a small {} with the texture {}",
+                            "a photo of a nice small {} with the texture {}",
+                            "a good photo of a small {} with the texture {}",
+                            "a photo of a weird small {} with the texture {}",
+                            "a photo of a large small {} with the texture {}",
+                            "a photo of a cool small {} with the texture {}",
+                            "a photo of a small small {} with the texture {}"]
 
 
 #@title Setup the dataset
@@ -488,80 +487,80 @@ import accelerate
 if args.train:
     accelerate.notebook_launcher(training_function, args=(text_encoder, vae, unet, wandb), num_processes = 1)
 
+if args.generate:
+
+    if os.path.exists(args.output_dir) == False:
+        os.mkdir(args.output_dir)
+
+    #@title Set up the pipeline 
+    pipe = StableDiffusionPipeline.from_pretrained(
+        hyperparameters["output_dir"],
+        torch_dtype=torch.float16,
+    ).to("cuda")
+
+    prompt = "a photo of a person with {}".format(placeholder_token1) #@param {type:"string"}
+
+    num_samples = 4 #@param {type:"number"}
+    num_rows = 1 #@param {type:"number"}
+
+    all_images = [] 
+    for _ in range(num_rows):
+        images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+        all_images.extend(images)
+
+    grid = image_grid(all_images, num_samples, num_rows)
+    grid.save(args.output_dir + "person.png")
+
+    prompt = "a photo of a bird with {}".format(placeholder_token1) #@param {type:"string"}
+
+    num_samples = 4 #@param {type:"number"}
+    num_rows = 1 #@param {type:"number"}
+
+    all_images = [] 
+    for _ in range(num_rows):
+        images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+        all_images.extend(images)
+
+    grid = image_grid(all_images, num_samples, num_rows)
+    grid.save(args.output_dir + "bird.png")
+
+    prompt = "a photo of a cup with {}".format(placeholder_token1) #@param {type:"string"}
+
+    num_samples = 4 #@param {type:"number"}
+    num_rows = 1 #@param {type:"number"}
+
+    all_images = [] 
+    for _ in range(num_rows):
+        images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+        all_images.extend(images)
+
+    grid = image_grid(all_images, num_samples, num_rows)
+    grid.save(args.output_dir + "cup.png")
+
+    prompt = "a photo of a person's hair with the texture {}".format(placeholder_token1) #@param {type:"string"}
+
+    num_samples = 4 #@param {type:"number"}
+    num_rows = 1 #@param {type:"number"}
+
+    all_images = [] 
+    for _ in range(num_rows):
+        images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+        all_images.extend(images)
+
+    grid = image_grid(all_images, num_samples, num_rows)
+    grid.save(args.output_dir + "hair.png")
 
 
-if os.path.exists(args.output_dir) == False:
-    os.mkdir(args.output_dir)
+    prompt = "a photo of a drapes with the texture {}".format(placeholder_token1) #@param {type:"string"}
 
-#@title Set up the pipeline 
-pipe = StableDiffusionPipeline.from_pretrained(
-    hyperparameters["output_dir"],
-    torch_dtype=torch.float16,
-).to("cuda")
+    num_samples = 4 #@param {type:"number"}
+    num_rows = 1 #@param {type:"number"}
 
-prompt = "a photo of a person with {}".format(placeholder_token1) #@param {type:"string"}
+    all_images = [] 
+    for _ in range(num_rows):
+        images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
+        all_images.extend(images)
 
-num_samples = 4 #@param {type:"number"}
-num_rows = 1 #@param {type:"number"}
-
-all_images = [] 
-for _ in range(num_rows):
-    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
-    all_images.extend(images)
-
-grid = image_grid(all_images, num_samples, num_rows)
-grid.save(args.output_dir + "person.png")
-
-prompt = "a photo of a bird with {}".format(placeholder_token1) #@param {type:"string"}
-
-num_samples = 4 #@param {type:"number"}
-num_rows = 1 #@param {type:"number"}
-
-all_images = [] 
-for _ in range(num_rows):
-    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
-    all_images.extend(images)
-
-grid = image_grid(all_images, num_samples, num_rows)
-grid.save(args.output_dir + "bird.png")
-
-prompt = "a photo of a cup with {}".format(placeholder_token1) #@param {type:"string"}
-
-num_samples = 4 #@param {type:"number"}
-num_rows = 1 #@param {type:"number"}
-
-all_images = [] 
-for _ in range(num_rows):
-    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
-    all_images.extend(images)
-
-grid = image_grid(all_images, num_samples, num_rows)
-grid.save(args.output_dir + "cup.png")
-
-prompt = "a photo of a person's hair with the texture {}".format(placeholder_token1) #@param {type:"string"}
-
-num_samples = 4 #@param {type:"number"}
-num_rows = 1 #@param {type:"number"}
-
-all_images = [] 
-for _ in range(num_rows):
-    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
-    all_images.extend(images)
-
-grid = image_grid(all_images, num_samples, num_rows)
-grid.save(args.output_dir + "hair.png")
-
-
-prompt = "a photo of a drapes with the texture {}".format(placeholder_token1) #@param {type:"string"}
-
-num_samples = 4 #@param {type:"number"}
-num_rows = 1 #@param {type:"number"}
-
-all_images = [] 
-for _ in range(num_rows):
-    images = pipe([prompt] * num_samples, num_inference_steps=50, guidance_scale=7.5).images
-    all_images.extend(images)
-
-grid = image_grid(all_images, num_samples, num_rows)
-grid.save(args.output_dir + "drapes.png")
+    grid = image_grid(all_images, num_samples, num_rows)
+    grid.save(args.output_dir + "drapes.png")
 
